@@ -1,2 +1,1 @@
-# ts-express-template
-
+# ${APP_NAME}
