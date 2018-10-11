@@ -1,15 +1,13 @@
 import _ from 'lodash';
 import ioredis, { Redis } from 'ioredis';
 import { BaseConnection } from './base.connection';
-
-type RedisConfig = {
-    readonly host: string;
-    readonly port: number;
-    readonly name: string;
-    readonly password: string;
-};
+import { RedisConfig } from 'config';
 
 export class RedisConnector extends BaseConnection<RedisConfig, Redis> {
+    constructor (options: RedisConfig) {
+        super(options);
+    }
+
     connect (callback: Function): void {
         const options = _.defaults({
             retryStrategy: () => 1000

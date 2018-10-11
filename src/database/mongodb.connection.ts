@@ -1,19 +1,14 @@
 import mongoose, { Connection } from 'mongoose';
 import { BaseConnection } from './base.connection';
-
-type MongodbConfig = {
-    readonly mongod: {
-        readonly host: string,
-        readonly port: number
-    };
-    readonly user: string;
-    readonly password: string;
-};
-
+import { MongodbConfig } from 'config';
 export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> {
+    constructor (options: MongodbConfig) {
+        super(options);
+    }
+
     private get mongoUri(): string {
         const o = this._options;
-        return `mongod://${ o.user }:${ o.password }@${ o.mongod.host }:${ o.mongod.port }`;
+        return `mongod://${ o.user }:${ o.password }@${ o.mongod.host }:${ o.mongod.port }/${ o.db }`;
     }
 
     connect (callback: Function) {

@@ -1,4 +1,3 @@
-
 export abstract class BaseConnection<ConfigType, ConnectionType> {
     protected readonly _options: ConfigType;
     protected _connected: boolean;

@@ -1,0 +1,19 @@
+{
+    "database": {
+        "mongodb": {
+            "mongod": {
+                "host": "localhost",
+                "port": 27017
+            },
+            "user": "admin",
+            "password": "!passw0rd",
+            "db": "data"
+        },
+        "redis": {
+            "name": "redis",
+            "host": "localhost",
+            "port": 6379,
+            "password": "!passw0rd"
+        }
+    }
+}

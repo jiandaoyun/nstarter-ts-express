@@ -1,37 +1,28 @@
 import { MongodbConnector } from "./mongodb.connection";
 import { RedisConnector } from "./redis.connection";
-
-let mongodb: MongodbConnector,
-    redis: RedisConnector;
+import { config } from "../config";
 
 export class Database {
+    private static _mongodb: MongodbConnector;
+    private static _redis: RedisConnector;
+
     static get mongodb(): MongodbConnector {
-        if (mongodb) {
-            return mongodb;
+        if (Database._mongodb) {
+            return Database._mongodb;
         }
-        mongodb = new MongodbConnector({
-            mongod: {
-                host: 'localhost',
-                port: 27017
-            },
-            user: 'admin',
-            password: '!passw0rd'
-        });
+        const mongodb = new MongodbConnector(config.database.mongodb);
         mongodb.connect(() => {});
+        Database._mongodb = mongodb;
         return mongodb;
     }
 
     static get redis(): RedisConnector {
-        if (redis) {
-            return redis;
+        if (Database._redis) {
+            return Database._redis;
         }
-        redis = new RedisConnector({
-            name: 'redis',
-            host: 'localhost',
-            port: 6379,
-            password: '!passw0rd'
-        });
+        const redis = new RedisConnector(config.database.redis);
         redis.connect(() => {});
+        Database._redis = redis;
         return redis;
     }
 }

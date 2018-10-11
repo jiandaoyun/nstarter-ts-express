@@ -16,10 +16,6 @@
         "env_develop": {
             "NODE_ENV": "develop",
             "TZ": "UTC"
-        },
-        "env_test": {
-            "NODE_ENV": "test",
-            "TZ": "UTC"
         }
     }]
 }
