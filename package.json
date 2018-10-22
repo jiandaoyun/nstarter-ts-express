@@ -17,6 +17,7 @@
         "@sentry/node": "^4.1.1",
         "@types/ioredis": "^4.0.3",
         "async": "^2.6.1",
+        "connect-redis": "^3.4.0",
         "cookie-parser": "^1.4.3",
         "express": "^4.16.3",
         "express-session": "^1.15.6",

@@ -1,4 +1,24 @@
 {
+    "server": {
+        "http": {
+            "port": 3000
+        },
+        "static": {
+            "views": "./views",
+            "public": "./public"
+        },
+        "session": {
+            "secret": "!passw0rd",
+            "name": "SID"
+        },
+        "cookie": {
+            "policy": {
+                "httpOnly": true,
+                "signed": true,
+                "secure": false
+            }
+        }
+    },
     "database": {
         "mongodb": {
             "mongod": {
