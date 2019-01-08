@@ -1,42 +1,45 @@
 {
-    "name": "${APP_NAME}",
-    "description": "",
-    "license": "MIT",
-    "private": false,
-    "version": "0.0.0",
-    "readme": "README.md",
-    "repository": {
-        "type": "git",
-        "url": ""
-    },
-    "scripts": {
-        "prestart": "tsc --build tsconfig.json",
-        "start": "node ./dist/app.js"
-    },
-    "dependencies": {
-        "@sentry/node": "^4.1.1",
-        "@types/ioredis": "^4.0.3",
-        "async": "^2.6.1",
-        "connect-redis": "^3.4.0",
-        "cookie-parser": "^1.4.3",
-        "express": "^4.16.3",
-        "express-session": "^1.15.6",
-        "ioredis": "^4.0.2",
-        "lodash": "^4.17.11",
-        "moment": "^2.22.2",
-        "moment-timezone": "^0.5.21",
-        "mongoose": "^5.3.2",
-        "pug": "^2.0.3"
-    },
-    "devDependencies": {
-        "@types/cookie-parser": "^1.4.1",
-        "@types/express": "^4.16.0",
-        "@types/express-session": "^1.15.11",
-        "@types/lodash": "^4.14.117",
-        "@types/moment-timezone": "^0.5.9",
-        "@types/mongoose": "^5.2.19",
-        "@types/node": "^10.11.6",
-        "tslint": "^5.11.0",
-        "typescript": "^3.1.2"
-    }
+  "name": "${APP_NAME}",
+  "description": "",
+  "license": "MIT",
+  "private": false,
+  "version": "0.0.0",
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "prestart": "tsc --build tsconfig.json",
+    "start": "node ./dist/app.js",
+    "test": "nyc mocha --opts ./mocha.opts",
+    "tslint": "tslint --project ./"
+  },
+  "dependencies": {
+    "@sentry/node": "^4.1.1",
+    "@types/ioredis": "^4.0.3",
+    "async": "^2.6.1",
+    "connect-redis": "^3.4.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "ioredis": "^4.0.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
+    "mongoose": "^5.3.2",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.1",
+    "@types/express": "^4.16.0",
+    "@types/express-session": "^1.15.11",
+    "@types/lodash": "^4.14.117",
+    "@types/moment-timezone": "^0.5.9",
+    "@types/mongoose": "^5.2.19",
+    "@types/node": "^10.11.6",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.2"
+  }
 }
