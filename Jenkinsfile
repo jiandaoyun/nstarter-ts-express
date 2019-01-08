@@ -2,43 +2,41 @@
 pipeline {
     agent any
 
-    environment {}
-
-    nvm(
-        'version': 'v0.33.11',
-        'nvmNodeJsOrgMirror': 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
-    ) {
-        stages {
-            stage('Build') {
-
+    environment {
+        NODE_VERSION = 'v10.15.0'
+        NODE_MIRROR = 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
+    }
+    stages {
+        stage('Prepare') {
+            steps {
+                nvm(
+                    'version': env.NODE_VERSION,
+                    'nvmNodeJsOrgMirror': env.NODE_MIRROR
+                ) {
+                    sh "node -v"
+                    sh "npm -v"
+                    sh "npm install"
+                }
             }
+        }
+        stage('Build') {
             parallel {
                 stage('Lint') {
                     steps {
-                        sh """
-                        which node
-                        node -v
-                        """
+                        nvm('version': env.NODE_VERSION) {
+                            sh "npm run tslint"
+                        }
                     }
                 }
-                state('Compile') {
+                stage('Compile') {
                     steps {
-                        sh """
-                        which npm
-                        npm -v
-                        """
+                        nvm('version': env.NODE_VERSION) {
+                            sh "npm run build"
+                        }
                     }
                 }
             }
         }
-    }
 
-    post {
-        fixed {
-
-        }
-        regression {
-
-        }
     }
 }

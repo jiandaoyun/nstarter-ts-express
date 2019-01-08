@@ -1,5 +1,5 @@
 {
-  "name": "${APP_NAME}",
+  "name": "tsapp",
   "description": "",
   "license": "MIT",
   "private": false,
@@ -10,7 +10,8 @@
     "url": ""
   },
   "scripts": {
-    "prestart": "tsc --build tsconfig.json",
+    "build": "tsc --build tsconfig.json",
+    "prestart": "npm run build",
     "start": "node ./dist/app.js",
     "test": "nyc mocha --opts ./mocha.opts",
     "tslint": "tslint --project ./"
