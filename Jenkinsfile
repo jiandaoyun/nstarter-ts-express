@@ -6,27 +6,27 @@ pipeline {
 
     nvm(
         'version': 'v0.33.11',
+        'nvmInstallNodeVersion': 'v10.15.0',
         'nvmNodeJsOrgMirror': 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
     ) {
         stages {
             stage('Build') {
-
-            }
-            parallel {
-                stage('Lint') {
-                    steps {
-                        sh """
-                        which node
-                        node -v
-                        """
+                parallel {
+                    stage('Lint') {
+                        steps {
+                            sh """
+                            which node
+                            node -v
+                            """
+                        }
                     }
-                }
-                state('Compile') {
-                    steps {
-                        sh """
-                        which npm
-                        npm -v
-                        """
+                    state('Compile') {
+                        steps {
+                            sh """
+                            which npm
+                            npm -v
+                            """
+                        }
                     }
                 }
             }
