@@ -44,6 +44,9 @@ interface ConfigInterface {
         }
     };
     readonly database: DatabaseConfig;
+    readonly system: {
+        readonly locale: string;
+    }
 }
 
 class Config implements ConfigInterface {
@@ -51,19 +54,23 @@ class Config implements ConfigInterface {
     private readonly _config: ConfigInterface;
 
     constructor () {
-        const config = require('../../config/config.example.json');
+        const config = require('../../config/config.default.json');
         this._config = config;
     }
 
-    get server() {
+    public get server() {
         return this._config.server;
     }
 
-    get database() {
+    public get database() {
         return this._config.database;
     }
 
-    static getInstance(): Config {
+    public get system() {
+        return this._config.system;
+    }
+
+    public static getInstance(): Config {
         return Config._instance;
     }
 }

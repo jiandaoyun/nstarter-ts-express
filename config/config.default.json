@@ -35,5 +35,8 @@
             "port": 6379,
             "password": "!passw0rd"
         }
+    },
+    "system": {
+        "locale": "en_us"
     }
 }
