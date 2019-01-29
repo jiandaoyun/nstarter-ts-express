@@ -34,6 +34,7 @@ interface ConfigInterface {
             readonly name: string;
         };
         readonly cookie: {
+            readonly secret: string;
             readonly policy: {
                 readonly httpOnly: boolean
                 readonly maxAge?: number

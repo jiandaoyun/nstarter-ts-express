@@ -1,4 +1,4 @@
-import { ServiceDaemon } from './services';
+import ServiceDaemon from './services';
 
 ServiceDaemon.daemonize(() => {
     if (process.send) {

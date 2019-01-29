@@ -1,6 +1,6 @@
 import { BaseService } from './service.base';
-import { i18n } from '../i18n';
 import { Services } from './enum';
+import i18n from '../i18n';
 
 class I18nService extends BaseService {
     public name = Services.i18n;

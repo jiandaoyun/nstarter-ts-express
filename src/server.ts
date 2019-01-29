@@ -4,10 +4,10 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 import cookieParser from 'cookie-parser';
 
-import { router } from './routes';
+import router from './routes';
 import { config } from './config';
-import { Database } from './database';
-import { i18n } from './i18n';
+import Database from './database';
+import i18n from './i18n';
 
 export const app = express();
 

@@ -20,7 +20,7 @@ const services = [
 type TasksType = AsyncAutoTasks<Dictionary<any>, Error>;
 type TaskType = AsyncAutoTask<never, Dictionary<any>, Error>;
 
-export class ServiceDaemon {
+class ServiceDaemon {
     private _services: BaseService[];
     constructor () {
         this._services = _.filter(services, (service: BaseService) =>
@@ -106,3 +106,5 @@ export class ServiceDaemon {
         process.on('SIGINT', () => daemon.shutdown());
     }
 }
+
+export = ServiceDaemon;

@@ -13,6 +13,8 @@ requestRouter.post('/ping', DemoRoute.doPing);
 requestRouter.use(ErrorHandler.requestErrorHandler);
 
 // main router
-export const router = Router();
+const router = Router();
 router.use('/', viewRouter);
 router.use('/', requestRouter);
+
+export = router;
