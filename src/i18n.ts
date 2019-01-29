@@ -19,14 +19,14 @@ interface I18nOptions {
 
 export class I18n {
     private _options: I18nOptions;
-    private _locales: string[];
+    private _locales: string[] = [];
     private _i18next: i18next.i18n;
     private _translations: {
         [locale: string]: i18next.ResourceLanguage
-    };
+    } = {};
     private _translators: {
         [locale: string]: i18next.TFunction;
-    };
+    } = {};
     private static _instance: I18n;
 
     constructor (options?: I18nOptions) {

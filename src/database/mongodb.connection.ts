@@ -11,7 +11,7 @@ export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> 
         return `mongod://${ o.user }:${ o.password }@${ o.mongod.host }:${ o.mongod.port }/${ o.db }`;
     }
 
-    connect (callback: Function) {
+    public connect (callback: Function) {
         mongoose.createConnection(this.mongoUri, {
             autoReconnect: true,
             connectTimeoutMS: 10000,
@@ -38,7 +38,7 @@ export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> 
         });
     }
 
-    disconnect (callback: Function) {
+    public disconnect (callback: Function) {
         if (!this._connected) {
             return callback();
         }

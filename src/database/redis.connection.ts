@@ -8,7 +8,7 @@ export class RedisConnector extends BaseConnection<RedisConfig, Redis> {
         super(options);
     }
 
-    connect (callback: Function): void {
+    public connect (callback: Function): void {
         const options = _.defaults({
             retryStrategy: () => 1000
         }, this._options);
@@ -16,9 +16,10 @@ export class RedisConnector extends BaseConnection<RedisConfig, Redis> {
         this.connection.on('error', (err) => {
             // TODO
         });
+        return callback();
     }
 
-    disconnect (callback: Function): void {
+    public disconnect (callback: Function): void {
         if (!this._connected) {
             return callback();
         }

@@ -1,6 +1,6 @@
-import { MongodbConnector } from "./mongodb.connection";
-import { RedisConnector } from "./redis.connection";
-import { config } from "../config";
+import { MongodbConnector } from './mongodb.connection';
+import { RedisConnector } from './redis.connection';
+import { config } from '../config';
 
 export class Database {
     private static _mongodb: MongodbConnector;

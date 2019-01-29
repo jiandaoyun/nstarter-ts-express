@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import i18next from 'i18next';
 
 export interface RequestExt extends Request {
@@ -8,4 +8,8 @@ export interface RequestExt extends Request {
     },
     getLocale(): string;
     setLocale(locale: string): void;
+}
+
+export interface RequestHandlerExt {
+    (req: RequestExt, res: Response, next: NextFunction): any;
 }
