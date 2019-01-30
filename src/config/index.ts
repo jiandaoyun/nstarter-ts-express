@@ -20,6 +20,10 @@ type DatabaseConfig = {
     readonly redis: RedisConfig;
 };
 
+export interface ServiceConfig {
+    readonly enabled: true;
+}
+
 interface ConfigInterface {
     readonly server: {
         readonly http: {
@@ -48,6 +52,13 @@ interface ConfigInterface {
     readonly system: {
         readonly locale: string;
     }
+    readonly service: {
+        readonly http: ServiceConfig,
+        readonly i18n: ServiceConfig,
+        readonly mongodb: ServiceConfig,
+        readonly redis: ServiceConfig,
+        readonly websocket: ServiceConfig
+    }
 }
 
 class Config implements ConfigInterface {
@@ -69,6 +80,10 @@ class Config implements ConfigInterface {
 
     public get system() {
         return this._config.system;
+    }
+
+    public get service() {
+        return this._config.service;
     }
 
     public static getInstance(): Config {

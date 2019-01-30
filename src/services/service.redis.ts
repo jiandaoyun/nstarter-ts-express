@@ -4,7 +4,6 @@ import Database from '../database';
 
 class RedisService extends BaseService {
     public name = Services.redis;
-    public enabled = true;
 
     public start (callback: Function) {
         Database.redis.connect(() => super.start(callback));

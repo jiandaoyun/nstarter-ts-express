@@ -38,5 +38,22 @@
     },
     "system": {
         "locale": "en_us"
+    },
+    "service": {
+        "http": {
+            "enabled": true
+        },
+        "i18n": {
+            "enabled": true
+        },
+        "mongodb": {
+            "enabled": true
+        },
+        "redis": {
+            "enabled": true
+        },
+        "websocket": {
+            "enabled": true
+        }
     }
 }

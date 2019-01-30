@@ -4,7 +4,6 @@ import Database from '../database';
 
 class MongodbService extends BaseService {
     public name = Services.mongodb;
-    public enabled = true;
 
     public start (callback: Function) {
         Database.mongodb.connect(() => super.start(callback) );

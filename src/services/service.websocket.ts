@@ -5,7 +5,6 @@ import WebSocket from '../websocket/socket';
 
 class WebSocketService extends BaseService {
     public name = 'websocket';
-    public enabled = true;
     public wanted = [
         Services.redis,
         Services.http

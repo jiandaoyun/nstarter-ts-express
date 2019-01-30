@@ -5,7 +5,6 @@ import { Services } from './enum';
 
 export class HttpService extends BaseService {
     public name = Services.http;
-    public enabled = true;
     public wanted = [
         Services.i18n,
         Services.mongodb,
