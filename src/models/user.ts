@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import Database from '../database';
+import { Database } from '../database';
 
 const db = Database.mongodb.connection;
 

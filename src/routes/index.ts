@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { DemoRoute } from './demo';
 import { ErrorHandler } from '../middlewares/error.handler';
+import { DemoRoute } from './demo';
 
 const viewRouter = Router(),
     requestRouter = Router();
@@ -13,8 +13,6 @@ requestRouter.post('/ping', DemoRoute.doPing);
 requestRouter.use(ErrorHandler.requestErrorHandler);
 
 // main router
-const router = Router();
+export const router = Router();
 router.use('/', viewRouter);
 router.use('/', requestRouter);
-
-export = router;

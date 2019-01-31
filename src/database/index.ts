@@ -2,7 +2,7 @@ import { MongodbConnector } from './mongodb.connection';
 import { RedisConnector } from './redis.connection';
 import { config } from '../config';
 
-class Database {
+export class Database {
     private static _mongodb: MongodbConnector;
     private static _redis: RedisConnector;
 
@@ -26,5 +26,3 @@ class Database {
         return redis;
     }
 }
-
-export = Database;

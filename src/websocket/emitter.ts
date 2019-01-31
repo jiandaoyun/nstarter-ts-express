@@ -1,5 +1,5 @@
 import SocketIOEmitter, { Emitter } from 'socket.io-emitter';
-import Database from '../database';
+import { Database } from '../database';
 
 /**
  * Websocket emitter for sending messages
@@ -16,5 +16,4 @@ class WsEmitter {
     }
 }
 
-const emitter = new WsEmitter();
-export = emitter;
+export const emitter = new WsEmitter();

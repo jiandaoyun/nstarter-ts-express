@@ -10,6 +10,6 @@ export interface RequestExt extends Request {
     setLocale(locale: string): void;
 }
 
-export interface RequestHandlerExt {
+export interface RequestHandler {
     (req: RequestExt, res: Response, next: NextFunction): any;
 }

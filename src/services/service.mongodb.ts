@@ -1,6 +1,6 @@
 import { BaseService } from './service.base';
 import { Services } from './enum';
-import Database from '../database';
+import { Database } from '../database';
 
 class MongodbService extends BaseService {
     public name = Services.mongodb;

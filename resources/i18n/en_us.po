@@ -14,4 +14,4 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "page.demo.title"
-msgstr "To boldly go where no man has gone before."
+msgstr "To Infinity and Beyond!"

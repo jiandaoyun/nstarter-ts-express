@@ -7,7 +7,7 @@ import { gettextToI18next } from 'i18next-conv';
 import { RequestHandler } from 'express';
 
 import { config } from './config';
-import Consts from './constants';
+import { Consts } from './constants';
 import { RequestExt } from './middlewares/extensions';
 
 const _translationPath = './resources/i18n/';
@@ -145,6 +145,4 @@ class I18n {
     }
 }
 
-const i18n = I18n.getInstance();
-
-export = i18n;
+export const i18n = I18n.getInstance();

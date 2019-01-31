@@ -10,13 +10,13 @@ import { Response } from 'express';
 
 import { server } from '../server';
 import { config } from '../config';
-import Database from '../database';
+import { Database } from '../database';
 
-import channels from './channels';
+import { channels } from './channels';
 
 const RedisStore = connectRedis(session);
 
-class WebSocket {
+export class WebSocket {
     public static createServer(): SocketIO.Server {
         const io = SocketIO(server, {
             path: '/socket',
@@ -67,5 +67,3 @@ class WebSocket {
         return io;
     }
 }
-
-export = WebSocket;

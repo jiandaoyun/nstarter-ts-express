@@ -20,6 +20,7 @@ export abstract class BaseService {
                 enabled = enabled && this._getServiceConfig(wanted).enabled;
                 return;
             });
+            this._enabled = enabled;
         }
         return this._enabled;
     }

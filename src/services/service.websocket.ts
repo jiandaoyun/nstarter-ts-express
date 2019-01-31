@@ -1,10 +1,10 @@
 import SocketIO from 'socket.io';
 import { BaseService } from './service.base';
 import { Services } from './enum';
-import WebSocket from '../websocket/socket';
+import { WebSocket } from '../websocket/socket';
 
 class WebSocketService extends BaseService {
-    public name = 'websocket';
+    public name = Services.websocket;
     public wanted = [
         Services.redis,
         Services.http

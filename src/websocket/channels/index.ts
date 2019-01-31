@@ -1,9 +1,7 @@
-import BaseChannel from './channel.base';
+import { BaseChannel } from './channel.base';
 
-import messageChannel from './channel.message';
+import { messageChannel } from './channel.message';
 
-const channels: BaseChannel[] = [
+export const channels: BaseChannel[] = [
     messageChannel
 ];
-
-export = channels;

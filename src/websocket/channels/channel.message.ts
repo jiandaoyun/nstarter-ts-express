@@ -1,6 +1,6 @@
-import BaseChannel from './channel.base';
+import { BaseChannel } from './channel.base';
 import { Socket } from 'socket.io';
-import Consts from '../../constants';
+import { Consts } from '../../constants';
 
 class MessageChannel extends BaseChannel {
     public connect(socket: Socket, callback: Function) {
@@ -19,6 +19,4 @@ class MessageChannel extends BaseChannel {
     }
 }
 
-const messageChannel = new MessageChannel();
-
-export = messageChannel;
+export const messageChannel = new MessageChannel();

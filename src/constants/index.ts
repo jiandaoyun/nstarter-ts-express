@@ -1,7 +1,5 @@
 import * as System from './system';
 
-const Consts = {
+export const Consts = {
     System
 };
-
-export = Consts;

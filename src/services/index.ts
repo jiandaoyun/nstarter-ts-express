@@ -9,18 +9,20 @@ import { httpService } from './service.http';
 import { mongodbService } from './service.mongodb';
 import { i18nService } from './service.i18n';
 import { redisService } from './service.redis';
+import { webSocketService } from './service.websocket';
 
 const services = [
     i18nService,
     mongodbService,
     redisService,
-    httpService
+    httpService,
+    webSocketService
 ];
 
 type TasksType = AsyncAutoTasks<Dictionary<any>, Error>;
 type TaskType = AsyncAutoTask<never, Dictionary<any>, Error>;
 
-class ServiceDaemon {
+export class ServiceDaemon {
     private _services: BaseService[];
     constructor () {
         this._services = _.filter(services, (service: BaseService) =>
@@ -106,5 +108,3 @@ class ServiceDaemon {
         process.on('SIGINT', () => daemon.shutdown());
     }
 }
-
-export = ServiceDaemon;
