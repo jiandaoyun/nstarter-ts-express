@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import os from 'os';
 import winston, { format } from 'winston';
 import Transport from 'winston-transport';
@@ -7,6 +8,7 @@ import RotateFileTransport, {
 import Graylog2Transport from 'winston-graylog2';
 
 import { config } from '../config';
+import { Consts } from '../constants';
 
 const errLevels = new Set(['error', 'warn']);
 
@@ -30,56 +32,99 @@ const errFilter = format((info) =>
 );
 
 // console transport
-transports.push(new winston.transports.Console({
-    level: 'info',
-    stderrLevels: ['error'],
-    consoleWarnLevels: ['warn', 'debug'],
-    format: format.combine(
-        winston.format.colorize(),
-        format.timestamp(),
-        formatter
-    )
-}));
+const { console: consoleLogConf } = config.system.log;
+if (consoleLogConf.enabled) {
+    transports.push(new winston.transports.Console({
+        level: consoleLogConf.level,
+        stderrLevels: ['error'],
+        consoleWarnLevels: ['warn', 'debug'],
+        format: format.combine(
+            winston.format.colorize(),
+            format.timestamp(),
+            formatter
+        )
+    }));
+}
 
 // file transport
-const baseFileLogOptions: DailyRotateFileTransportOptions = {
-    dirname: './log',
-    datePattern: 'YYYY-MM-DD',
-    zippedArchive: true,
-    maxFiles: '14d'
-};
+const { file: fileLogConf } = config.system.log;
+if (fileLogConf.enabled) {
+    const baseFileLogOptions: DailyRotateFileTransportOptions = {
+        dirname: fileLogConf.dir || './log/',
+        datePattern: 'YYYY-MM-DD',
+        zippedArchive: fileLogConf.zip || true,
+        maxFiles: `${
+            _.toInteger(fileLogConf.rotate_days) || Consts.System.DEFAULT_LOG_ROTATE_DAYS
+        }d`
+    };
 
-transports.push(new RotateFileTransport({
-    ...baseFileLogOptions,
-    level: 'info',
-    filename: 'app_%DATE%.log',
-    format: format.combine(
-        msgFilter(),
-        format.timestamp(),
-        formatter
-    )
-}));
-transports.push(new RotateFileTransport({
-    ...baseFileLogOptions,
-    level: 'warn',
-    filename: 'error_%DATE%.log',
-    format: format.combine(
-        errFilter(),
-        format.timestamp(),
-        formatter
-    )
-}));
+    transports.push(new RotateFileTransport({
+        ...baseFileLogOptions,
+        level: fileLogConf.level,
+        filename: 'app_%DATE%.log',
+        format: format.combine(
+            msgFilter(),
+            format.timestamp(),
+            formatter
+        )
+    }));
+    transports.push(new RotateFileTransport({
+        ...baseFileLogOptions,
+        level: fileLogConf.level,
+        filename: 'error_%DATE%.log',
+        format: format.combine(
+            errFilter(),
+            format.timestamp(),
+            formatter
+        )
+    }));
+}
 
 // graylog transport
-transports.push(new Graylog2Transport({
-    level: 'info',
-    graylog: {
-        servers: [],
-        hostname: config.hostname
-    }
-}) as Transport);
+const { graylog: graylogConf } = config.system.log;
+if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
+    transports.push(new Graylog2Transport({
+        level: graylogConf.level,
+        graylog: {
+            servers: graylogConf.servers,
+            hostname: config.hostname
+        }
+    }) as Transport);
+}
 
-export const logger = winston.createLogger({
-    transports,
-    exitOnError: false
-});
+type LogMessage = string | Error;
+
+class Logger {
+    private _logger = winston.createLogger({
+        transports,
+        exitOnError: false
+    });
+
+    private _log(level: string, msg: LogMessage, meta?: object) {
+        if (typeof msg === 'string') {
+            // log string
+            this._logger.log(level, msg, meta);
+        } else {
+            // log error
+            this._logger.log(level, msg.message, { ...meta, error: msg });
+        }
+    }
+
+    public debug (msg: LogMessage, meta?: object) {
+        this._log('debug', msg, meta);
+    }
+
+    public info (msg: LogMessage, meta?: object) {
+        this._log('info', msg, meta);
+    }
+
+    public warn (msg: LogMessage, meta?: object) {
+        this._log('warn', msg, meta);
+    }
+
+    public error (msg: LogMessage, meta?: object) {
+        this._log('error', msg, meta);
+    }
+}
+
+export const logger = new Logger();

@@ -37,7 +37,29 @@
         }
     },
     "system": {
-        "locale": "en_us"
+        "locale": "en_us",
+        "log": {
+            "console": {
+                "enabled": true
+            },
+            "file": {
+                "anabled": true,
+                "dir": "./log/",
+                "zip": true,
+                "rotate_days": 14
+            },
+            "graylog": {
+                "enabled": false,
+                "servers": [{
+                    "host": "localhost",
+                    "port": 12201
+                }]
+            },
+            "sentry": {
+                "enabled": false,
+                "dsn": ""
+            }
+        }
     },
     "service": {
         "http": {
