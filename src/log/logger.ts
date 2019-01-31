@@ -6,6 +6,7 @@ import RotateFileTransport, {
     DailyRotateFileTransportOptions
 } from 'winston-daily-rotate-file';
 import Graylog2Transport from 'winston-graylog2';
+import { SentryTransport } from './transports';
 
 import { config } from '../config';
 import { Consts } from '../constants';
@@ -90,6 +91,15 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
             hostname: config.hostname
         }
     }) as Transport);
+}
+
+// sentry transport
+const { sentry: sentryConf } = config.system.log;
+if (sentryConf.enabled && sentryConf.dsn) {
+    transports.push(new SentryTransport({
+        level: sentryConf.level,
+        dsn: sentryConf.dsn
+    }));
 }
 
 type LogMessage = string | Error;
