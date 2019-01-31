@@ -1,12 +1,13 @@
 import _ from 'lodash';
-import { config, ServiceConfig } from '../config';
+import { config } from '../config';
+import { ServiceOptions } from '../config/config.service';
 
 export abstract class BaseService {
     public abstract name: string;
     public wanted: string[] = [];
 
     public active = false;
-    protected _config: ServiceConfig;
+    protected _config: ServiceOptions;
     protected _enabled: boolean;
 
     public get enabled(): boolean {
@@ -25,13 +26,13 @@ export abstract class BaseService {
         return this._enabled;
     }
 
-    protected _getServiceConfig(name: string): ServiceConfig {
+    protected _getServiceConfig(name: string): ServiceOptions {
         return _.get(config.service, name, {
             enabled: false
         });
     }
 
-    protected _getConfig(): ServiceConfig {
+    protected _getConfig(): ServiceOptions {
         if (!this._config) {
             this._config = this._getServiceConfig(this.name);
         }

@@ -2,10 +2,10 @@
     "apps": [{
         "name": "${APP_NAME}",
         "script": "./dist/app.js",
-        "log_date_format": "MM-DD HH:mm:ss",
         "max_memory_restart": "1024M",
         "kill_timeout": 5000,
-        "combine_logs": true,
+        "out_file": "NULL",
+        "error_file": "NULL",
         "exec_mode": "cluster",
         "instances": 1,
         "node_args": "--max-old-space-size=2048",
@@ -13,8 +13,8 @@
             "NODE_ENV": "production",
             "TZ": "UTC"
         },
-        "env_develop": {
-            "NODE_ENV": "develop",
+        "env_local": {
+            "NODE_ENV": "local",
             "TZ": "UTC"
         }
     }]

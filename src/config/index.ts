@@ -1,64 +1,20 @@
-export type MongodbConfig = {
-    readonly mongod: {
-        readonly host: string,
-        readonly port: number
-    };
-    readonly user: string;
-    readonly password: string;
-    readonly db: string;
-};
+import os from 'os';
+import { DatabaseConfig } from './config.database';
+import { ServerConfig } from './config.server';
+import { ServiceConfig } from './config.service';
+import { SystemConfig } from './config.system';
 
-export type RedisConfig = {
-    readonly host: string;
-    readonly port: number;
-    readonly name: string;
-    readonly password: string;
-};
-
-type DatabaseConfig = {
-    readonly mongodb: MongodbConfig;
-    readonly redis: RedisConfig;
-};
-
-export interface ServiceConfig {
-    readonly enabled: true;
+enum RunEnv {
+    local = 'local',
+    test = 'test',
+    production = 'production'
 }
 
 interface ConfigInterface {
-    readonly server: {
-        readonly http: {
-            readonly port: number;
-        };
-        readonly static: {
-            readonly views: string;
-            readonly public: string;
-        };
-        readonly session: {
-            readonly secret: string;
-            readonly name: string;
-        };
-        readonly cookie: {
-            readonly secret: string;
-            readonly policy: {
-                readonly httpOnly: boolean
-                readonly maxAge?: number
-                readonly signed: boolean
-                readonly secure: boolean
-                readonly domain?: string
-            };
-        }
-    };
+    readonly server: ServerConfig;
     readonly database: DatabaseConfig;
-    readonly system: {
-        readonly locale: string;
-    }
-    readonly service: {
-        readonly http: ServiceConfig,
-        readonly i18n: ServiceConfig,
-        readonly mongodb: ServiceConfig,
-        readonly redis: ServiceConfig,
-        readonly websocket: ServiceConfig
-    }
+    readonly system: SystemConfig;
+    readonly service: ServiceConfig;
 }
 
 class Config implements ConfigInterface {
@@ -69,6 +25,8 @@ class Config implements ConfigInterface {
         const config = require('../../config/config.default.json');
         this._config = config;
     }
+
+    public readonly hostname = os.hostname();
 
     public get server() {
         return this._config.server;

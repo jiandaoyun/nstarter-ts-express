@@ -1,6 +1,6 @@
 import mongoose, { Connection } from 'mongoose';
 import { BaseConnection } from './base.connection';
-import { MongodbConfig } from 'config';
+import { MongodbConfig } from '../config/config.database';
 export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> {
     constructor (options: MongodbConfig) {
         super(options);
