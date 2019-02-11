@@ -11,15 +11,37 @@ import { SentryTransport } from './transports';
 import { config } from '../config';
 import { Consts } from '../constants';
 
-const errLevels = new Set(['error', 'warn']);
+export enum LogLevel {
+    debug = 'debug',
+    info = 'info',
+    warn = 'warn',
+    error = 'error'
+}
+
+const levelConf = {
+    levels: {
+        error: 20,
+        warn: 50,
+        info: 80,
+        debug: 90
+    },
+    colors: {
+        debug: 'blue',
+        info: 'green',
+        warn: 'yellow',
+        error: 'red'
+    }
+};
+
+const errLevels = new Set<string>([LogLevel.error, LogLevel.warn]);
 
 const transports: Transport[] = [];
 
 // custom log formatter
 const formatter = format.printf((info) => {
-    let output = `${ info.timestamp } - [${ info.level.toUpperCase() }] ${ info.message }`;
+    let output = `${info.timestamp} - [${info.level.toUpperCase()}] ${info.message}`;
     if (info.error) {
-        output = `${ output }${ os.EOL }\t${ info.error.stack }`;
+        output = `${output}${os.EOL}\t${info.error.stack}`;
     }
     return output;
 });
@@ -37,11 +59,13 @@ const { console: consoleLogConf } = config.system.log;
 if (consoleLogConf.enabled) {
     transports.push(new winston.transports.Console({
         level: consoleLogConf.level,
-        stderrLevels: ['error'],
-        consoleWarnLevels: ['warn', 'debug'],
+        stderrLevels: [LogLevel.error],
+        consoleWarnLevels: [LogLevel.warn, LogLevel.debug],
         format: format.combine(
-            winston.format.colorize(),
             format.timestamp(),
+            winston.format.colorize({
+                colors: levelConf.colors
+            }),
             formatter
         )
     }));
@@ -56,7 +80,7 @@ if (fileLogConf.enabled) {
         zippedArchive: fileLogConf.zip || true,
         maxFiles: `${
             _.toInteger(fileLogConf.rotate_days) || Consts.System.DEFAULT_LOG_ROTATE_DAYS
-        }d`
+            }d`
     };
 
     transports.push(new RotateFileTransport({
@@ -107,6 +131,7 @@ type LogMessage = string | Error;
 class Logger {
     private _logger = winston.createLogger({
         transports,
+        levels: levelConf.levels,
         exitOnError: false
     });
 
@@ -120,19 +145,19 @@ class Logger {
         }
     }
 
-    public debug (msg: LogMessage, meta?: object) {
+    public debug(msg: LogMessage, meta?: object) {
         this._log('debug', msg, meta);
     }
 
-    public info (msg: LogMessage, meta?: object) {
+    public info(msg: LogMessage, meta?: object) {
         this._log('info', msg, meta);
     }
 
-    public warn (msg: LogMessage, meta?: object) {
+    public warn(msg: LogMessage, meta?: object) {
         this._log('warn', msg, meta);
     }
 
-    public error (msg: LogMessage, meta?: object) {
+    public error(msg: LogMessage, meta?: object) {
         this._log('error', msg, meta);
     }
 }

@@ -1,6 +1,7 @@
 import { BaseService } from './service.base';
 import { server } from '../server';
 import { config } from '../config';
+import { logger } from '../logger';
 import { Services } from './enum';
 
 export class HttpService extends BaseService {
@@ -15,8 +16,7 @@ export class HttpService extends BaseService {
         const port = config.server.http.port;
         server.listen(port);
         server.on('error', (err) => {
-            // TODO logger
-            console.error(err.stack);
+            logger.error(err);
             process.exit(1);
         });
         server.on('listening', () => {

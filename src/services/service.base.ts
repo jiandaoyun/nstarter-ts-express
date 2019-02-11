@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { config } from '../config';
+import { logger } from '../logger';
 import { ServiceOptions } from '../config/config.service';
 
 export abstract class BaseService {
@@ -52,7 +53,6 @@ export abstract class BaseService {
     }
 
     protected log (msg: string): void {
-        // TODO logger
-        console.log(`[INFO] ${ msg }`);
+        logger.info(msg);
     }
 }

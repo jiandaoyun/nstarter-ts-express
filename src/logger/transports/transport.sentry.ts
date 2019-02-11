@@ -21,15 +21,16 @@ export class SentryTransport extends Transport {
         });
         const level = info[LEVEL],
             message = info[MESSAGE];
-        if (typeof message === 'string') {
-            // string info
-            Sentry.captureMessage(info);
-        } else {
+        // @see https://github.com/winstonjs/winston#streams-objectmode-and-info-objects
+        if (info.error) {
             // error info
             Sentry.withScope((scope) => {
                 scope.setLevel(level);
-                Sentry.captureException(message);
+                Sentry.captureException(info.error);
             });
+        } else {
+            // string info
+            Sentry.captureMessage(message, level);
         }
         return callback();
     }
