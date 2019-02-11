@@ -24,14 +24,14 @@ export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> 
             this._connected = true;
 
             connection.on('error', (err) => {
-                // TODO logger
+                logger.error('Mognodb connection failed', { error: err });
             });
             connection.on('disconnected', () => {
-                // TODO logger
+                logger.error('Mognodb disconnected');
                 return process.exit(1);
             });
             connection.on('reconnected', () => {
-                // TODO logger
+                logger.error('Mognodb reconnected');
             });
             return callback();
         }, (err) => callback(err));

@@ -3,6 +3,10 @@ interface LogConf {
     readonly level: string;
 }
 
+interface ConsoleLogConf extends LogConf {
+    readonly colorize?: boolean;
+}
+
 interface FileLogConf extends LogConf {
     readonly dir?: string;
     readonly zip?: boolean;
@@ -23,7 +27,7 @@ interface SentryConf extends LogConf {
 export interface SystemConfig {
     readonly locale: string;
     readonly log: {
-        readonly console: LogConf,
+        readonly console: ConsoleLogConf,
         readonly file: FileLogConf,
         readonly graylog: GraylogConf,
         readonly sentry: SentryConf

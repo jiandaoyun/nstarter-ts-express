@@ -1,5 +1,6 @@
-import { logger } from './logger';
+import { logger, LogLevel } from './logger';
 
 export {
-    logger
+    logger,
+    LogLevel
 };

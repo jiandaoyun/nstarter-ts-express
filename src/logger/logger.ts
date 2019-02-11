@@ -57,17 +57,20 @@ const errFilter = format((info) =>
 // console transport
 const { console: consoleLogConf } = config.system.log;
 if (consoleLogConf.enabled) {
+    const formats = [
+        format.timestamp(),
+        formatter
+    ];
+    if (config.system.log.console.colorize) {
+        formats.unshift(winston.format.colorize({
+            colors: levelConf.colors
+        }));
+    }
     transports.push(new winston.transports.Console({
         level: consoleLogConf.level,
         stderrLevels: [LogLevel.error],
         consoleWarnLevels: [LogLevel.warn, LogLevel.debug],
-        format: format.combine(
-            format.timestamp(),
-            winston.format.colorize({
-                colors: levelConf.colors
-            }),
-            formatter
-        )
+        format: format.combine(...formats)
     }));
 }
 

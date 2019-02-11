@@ -40,7 +40,8 @@
         "locale": "en_us",
         "log": {
             "console": {
-                "enabled": true
+                "enabled": true,
+                "colorize": false
             },
             "file": {
                 "enabled": true,
