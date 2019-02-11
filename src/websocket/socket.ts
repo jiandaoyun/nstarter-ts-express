@@ -10,6 +10,7 @@ import { Response } from 'express';
 
 import { server } from '../server';
 import { config } from '../config';
+import { logger } from '../logger';
 import { Database } from '../database';
 
 import { channels } from './channels';
@@ -58,7 +59,7 @@ export class WebSocket {
                     return socket.disconnect();
                 }
                 socket.on('error', (err) => {
-                    // TODO logger
+                    logger.error(err);
                 });
                 return;
             });

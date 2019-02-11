@@ -2,6 +2,7 @@ import _ from 'lodash';
 import ioredis, { Redis } from 'ioredis';
 import { BaseConnection } from './base.connection';
 import { RedisConfig } from '../config/config.database';
+import { logger } from '../logger';
 
 export class RedisConnector extends BaseConnection<RedisConfig, Redis> {
     constructor (options: RedisConfig) {
@@ -14,7 +15,7 @@ export class RedisConnector extends BaseConnection<RedisConfig, Redis> {
         }, this._options);
         this.connection = new ioredis(options);
         this.connection.on('error', (err) => {
-            // TODO logger
+            logger.error(err);
         });
         return callback();
     }
