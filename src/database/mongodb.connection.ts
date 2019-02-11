@@ -1,8 +1,6 @@
 import mongoose, { Connection } from 'mongoose';
 import { BaseConnection } from './base.connection';
 import { MongodbConfig } from '../config/config.database';
-import { logger } from '../logger';
-
 export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> {
     constructor (options: MongodbConfig) {
         super(options);
@@ -34,7 +32,10 @@ export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> 
                 // TODO logger
             });
             return callback();
-        }, (err) => callback(err));
+        }, (err) => {
+            // TODO Error
+            return callback(err);
+        });
     }
 
     public disconnect (callback: Function) {

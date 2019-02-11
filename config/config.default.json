@@ -43,7 +43,7 @@
                 "enabled": true
             },
             "file": {
-                "enabled": true,
+                "anabled": true,
                 "dir": "./log/",
                 "zip": true,
                 "rotate_days": 14

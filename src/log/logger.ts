@@ -11,14 +11,7 @@ import { SentryTransport } from './transports';
 import { config } from '../config';
 import { Consts } from '../constants';
 
-export enum LogLevel {
-    debug = 'debug',
-    info = 'info',
-    warn = 'warn',
-    error = 'error'
-}
-
-const errLevels = new Set<string>([LogLevel.error, LogLevel.warn]);
+const errLevels = new Set(['error', 'warn']);
 
 const transports: Transport[] = [];
 
@@ -44,8 +37,8 @@ const { console: consoleLogConf } = config.system.log;
 if (consoleLogConf.enabled) {
     transports.push(new winston.transports.Console({
         level: consoleLogConf.level,
-        stderrLevels: [LogLevel.error],
-        consoleWarnLevels: [LogLevel.warn, LogLevel.debug],
+        stderrLevels: ['error'],
+        consoleWarnLevels: ['warn', 'debug'],
         format: format.combine(
             winston.format.colorize(),
             format.timestamp(),
