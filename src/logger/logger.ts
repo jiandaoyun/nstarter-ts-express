@@ -62,9 +62,7 @@ if (consoleLogConf.enabled) {
         formatter
     ];
     if (config.system.log.console.colorize) {
-        formats.unshift(winston.format.colorize({
-            colors: levelConf.colors
-        }));
+        formats.unshift(winston.format.colorize());
     }
     transports.push(new winston.transports.Console({
         level: consoleLogConf.level,
@@ -130,6 +128,8 @@ if (sentryConf.enabled && sentryConf.dsn) {
 }
 
 type LogMessage = string | Error;
+
+winston.addColors(levelConf.colors);
 
 class Logger {
     private _logger = winston.createLogger({

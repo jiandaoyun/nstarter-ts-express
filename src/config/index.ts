@@ -17,6 +17,8 @@ interface ConfigInterface {
     readonly service: ServiceConfig;
 }
 
+const pkg = require('../../package.json');
+
 class Config implements ConfigInterface {
     private static _instance = new Config();
     private readonly _config: ConfigInterface;
@@ -27,6 +29,9 @@ class Config implements ConfigInterface {
     }
 
     public readonly hostname = os.hostname();
+    public readonly version = pkg.version;
+    // TODO
+    public readonly env = '';
 
     public get server() {
         return this._config.server;
