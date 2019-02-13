@@ -16,13 +16,6 @@ enum RunEnv {
     prod = 'production'
 }
 
-interface ConfigInterface {
-    readonly server: ServerConfig;
-    readonly database: DatabaseConfig;
-    readonly system: SystemConfig;
-    readonly service: ServiceConfig;
-}
-
 const configFormat: Record<string, nconf.IFormat> = {
     yaml: {
         parse: (str: string) => safeLoad(str),
@@ -31,11 +24,16 @@ const configFormat: Record<string, nconf.IFormat> = {
     json: nconf.formats.json
 };
 
-class Config implements ConfigInterface {
+class Config {
     public readonly hostname = os.hostname();
     public readonly version = pkg.version;
     public readonly env: RunEnv;
     public readonly homePath: string;
+
+    public readonly server: ServerConfig;
+    public readonly database: DatabaseConfig;
+    public readonly system: SystemConfig;
+    public readonly service: ServiceConfig;
 
     constructor () {
         nconf.use('memory');
@@ -46,6 +44,12 @@ class Config implements ConfigInterface {
         this._loadConf(`./conf.d/config.${ this.env }`, this.env);
         // load default config
         this._loadConf('./conf.d/config.default', 'default');
+
+        // init config
+        this.server = nconf.get('server');
+        this.database = nconf.get('database');
+        this.system = nconf.get('system');
+        this.service = nconf.get('service');
     }
 
     private _loadConf(path: string, env: string): void {
@@ -59,22 +63,6 @@ class Config implements ConfigInterface {
             // only load same env for one format
             return false;
         });
-    }
-
-    public get server() {
-        return nconf.get('server');
-    }
-
-    public get database() {
-        return nconf.get('database');
-    }
-
-    public get system() {
-        return nconf.get('system');
-    }
-
-    public get service() {
-        return nconf.get('service');
     }
 }
 
