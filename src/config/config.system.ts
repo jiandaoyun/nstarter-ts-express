@@ -32,4 +32,7 @@ export interface SystemConfig {
         readonly graylog: GraylogConf,
         readonly sentry: SentryConf
     };
+    readonly req_log: {
+        readonly enabled: boolean;
+    }
 }

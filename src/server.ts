@@ -8,8 +8,10 @@ import { router } from './routes';
 import { config } from './config';
 import { Database } from './database';
 import { i18n } from './i18n';
+import { reqLogger } from './logger';
 
 export const app = express();
+app.enable('trust proxy');
 
 // view engine setup
 app.set('views', config.server.static.views);
@@ -41,6 +43,11 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(i18n.middleware);
+
+// request log
+if (config.system.req_log.enabled) {
+    app.use(reqLogger.middleware);
+}
 
 app.use('/', router);
 

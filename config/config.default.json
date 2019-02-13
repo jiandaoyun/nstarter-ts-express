@@ -57,10 +57,13 @@
                 }]
             },
             "sentry": {
-                "enabled": true,
+                "enabled": false,
                 "level": "warn",
-                "dsn": "https://d5c8f6c07eb94c20a9eabecc55dae115@sentry.home.huhamhire.com/6"
+                "dsn": ""
             }
+        },
+        "req_log": {
+            "enabled": true
         }
     },
     "service": {

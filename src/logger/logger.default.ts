@@ -114,6 +114,11 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
         graylog: {
             servers: graylogConf.servers,
             hostname: config.hostname
+        },
+        staticMeta: {
+            type: 'log',
+            env: config.env,
+            version: config.version
         }
     }) as Transport);
 }
@@ -123,7 +128,7 @@ const { sentry: sentryConf } = config.system.log;
 if (sentryConf.enabled && sentryConf.dsn) {
     transports.push(new SentryTransport({
         level: sentryConf.level,
-        dsn: sentryConf.dsn
+        dsn: sentryConf.dsn,
     }));
 }
 
