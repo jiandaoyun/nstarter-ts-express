@@ -81,7 +81,8 @@ class RequestLogger {
 
     private _formatRequest(req: Request, res: Response, duration: string) {
         return `${ req.ip } ${ req.method } ${ req.originalUrl } HTTP/${
-            req.httpVersion } ${ res.statusCode || '-' } ${ res.getHeader('content-length') } - ${ duration }`;
+            req.httpVersion } ${ res.statusCode || '-' } ${
+            res.getHeader('content-length')|| '-' } - ${ duration } ms`;
     }
 
     private _logRequest(req: Request, res: Response, startAt: [number, number]) {

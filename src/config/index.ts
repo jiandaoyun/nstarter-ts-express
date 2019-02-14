@@ -40,6 +40,7 @@ class Config {
         nconf.env();
         this.env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.dev;
         this.homePath = nconf.any(['USERPROFILE', 'HOME']);
+        this._loadConf('./conf.d/config.override', 'override');
         // load config by environment
         this._loadConf(`./conf.d/config.${ this.env }`, this.env);
         // load default config

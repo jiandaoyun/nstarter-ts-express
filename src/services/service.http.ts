@@ -9,7 +9,8 @@ export class HttpService extends BaseService {
     public wanted = [
         Services.i18n,
         Services.mongodb,
-        Services.redis
+        Services.redis,
+        Services.websocket
     ];
 
     public start (callback: Function) {
@@ -26,9 +27,8 @@ export class HttpService extends BaseService {
     }
 
     public stop (callback: Function) {
-        server.close(() => {
-            return super.stop(callback);
-        });
+        server.close();
+        return super.stop(callback);
     }
 }
 

@@ -6,8 +6,7 @@ import { WebSocket } from '../websocket/socket';
 class WebSocketService extends BaseService {
     public name = Services.websocket;
     public wanted = [
-        Services.redis,
-        Services.http
+        Services.redis
     ];
     private _io: SocketIO.Server;
 

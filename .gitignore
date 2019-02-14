@@ -3,6 +3,8 @@
 
 /log/
 
+/conf.d/config.override.*
+
 package-lock.json
 
 .vscode/

@@ -1,6 +1,8 @@
 /node_modules/
 /log/
 
+/conf.d/config.override.*
+
 .vscode/
 .idea/
 

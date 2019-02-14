@@ -41,16 +41,19 @@
         "log": {
             "console": {
                 "enabled": true,
+                "level": "info",
                 "colorize": false
             },
             "file": {
                 "enabled": true,
+                "level": "info",
                 "dir": "./log/",
                 "zip": true,
                 "rotate_days": 14
             },
             "graylog": {
                 "enabled": false,
+                "level": "info",
                 "servers": [{
                     "host": "localhost",
                     "port": 12201
