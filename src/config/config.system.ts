@@ -26,6 +26,7 @@ interface SentryConf extends LogConf {
 
 export interface SystemConfig {
     readonly locale: string;
+    readonly timezone: string;
     readonly log: {
         readonly console: ConsoleLogConf,
         readonly file: FileLogConf,

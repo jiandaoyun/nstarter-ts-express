@@ -29,6 +29,7 @@ database:
 
 system:
   locale: 'en_us'
+  timezone: 'UTC'
   log:
     console:
       enabled: true
@@ -63,4 +64,6 @@ service:
   redis:
     enabled: true
   websocket:
+    enabled: true
+  cron:
     enabled: true

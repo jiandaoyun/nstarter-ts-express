@@ -10,13 +10,15 @@ import { mongodbService } from './service.mongodb';
 import { i18nService } from './service.i18n';
 import { redisService } from './service.redis';
 import { webSocketService } from './service.websocket';
+import { cronService } from './service.cron';
 
 const services = [
     i18nService,
     mongodbService,
     redisService,
     httpService,
-    webSocketService
+    webSocketService,
+    cronService
 ];
 
 type TasksType = AsyncAutoTasks<Dictionary<any>, Error>;

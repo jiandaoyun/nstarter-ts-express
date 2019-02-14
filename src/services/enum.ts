@@ -3,5 +3,6 @@ export enum Services {
     mongodb = 'mongodb',
     redis = 'redis',
     websocket = 'websocket',
-    http = 'http'
+    http = 'http',
+    cron = 'cron'
 }

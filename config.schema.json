@@ -152,6 +152,10 @@
           "enum": ["en_us", "zh_cn"],
           "default": "en_us"
         },
+        "timezone": {
+          "type": "string",
+          "default": "UTC"
+        },
         "log": {
           "$ref": "#/definitions/config_obj",
           "properties": {
@@ -267,6 +271,9 @@
           "$ref": "#/definitions/service_conf"
         },
         "websocket": {
+          "$ref": "#/definitions/service_conf"
+        },
+        "cron": {
           "$ref": "#/definitions/service_conf"
         }
       }

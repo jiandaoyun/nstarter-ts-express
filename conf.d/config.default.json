@@ -38,6 +38,7 @@
     },
     "system": {
         "locale": "en_us",
+        "timezone": "UTC",
         "log": {
             "console": {
                 "enabled": true,
@@ -83,6 +84,9 @@
             "enabled": true
         },
         "websocket": {
+            "enabled": true
+        },
+        "cron": {
             "enabled": true
         }
     }
