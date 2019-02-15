@@ -39,11 +39,16 @@ const transports: Transport[] = [];
 
 // custom log formatter
 const formatter = format.printf((info) => {
-    let output = `${info.timestamp} - [${info.level.toUpperCase()}] ${info.message}`;
+    let output = `${info.timestamp} - [${info.level}] ${info.message}`;
     if (info.error) {
         output = `${output}${os.EOL}\t${info.error.stack}`;
     }
     return output;
+});
+
+const levelFormatter = winston.format((info) => {
+    info.level = info.level.toUpperCase();
+    return info;
 });
 
 // log filter
@@ -64,6 +69,7 @@ if (consoleLogConf.enabled) {
     if (config.system.log.console.colorize) {
         formats.unshift(winston.format.colorize());
     }
+    formats.unshift(levelFormatter());
     transports.push(new winston.transports.Console({
         level: consoleLogConf.level,
         stderrLevels: [LogLevel.error],

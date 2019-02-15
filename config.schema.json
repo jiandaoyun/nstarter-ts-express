@@ -250,7 +250,9 @@
         "req_log": {
           "$ref": "#/definitions/config_obj",
           "properties": {
-            "enabled": true
+            "enabled": {
+              "type": "boolean"
+            }
           }
         }
       }
