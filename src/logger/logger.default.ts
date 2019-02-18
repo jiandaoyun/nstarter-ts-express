@@ -112,6 +112,7 @@ if (fileLogConf.enabled) {
     }));
 }
 
+//#module graylog
 // graylog transport
 const { graylog: graylogConf } = config.system.log;
 if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
@@ -128,7 +129,9 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
         }
     }) as Transport);
 }
+//#endmodule graylog
 
+//#module sentry
 // sentry transport
 const { sentry: sentryConf } = config.system.log;
 if (sentryConf.enabled && sentryConf.dsn) {
@@ -137,6 +140,7 @@ if (sentryConf.enabled && sentryConf.dsn) {
         dsn: sentryConf.dsn,
     }));
 }
+//#endmodule sentry
 
 type LogMessage = string | Error;
 

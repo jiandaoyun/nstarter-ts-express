@@ -53,6 +53,7 @@ if (fileLogConf.enabled) {
     }));
 }
 
+//#module graylog
 // graylog transport
 const { graylog: graylogConf } = config.system.log;
 if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
@@ -69,6 +70,7 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
         }
     }) as Transport);
 }
+//#endmodule graylog
 
 class RequestLogger {
     private _logger = winston.createLogger({

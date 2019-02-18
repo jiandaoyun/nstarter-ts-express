@@ -7,10 +7,18 @@ import { Services } from './enum';
 export class HttpService extends BaseService {
     public name = Services.http;
     public wanted = [
+        //#module i18n
         Services.i18n,
+        //#endmodule i18n
+        //#module mongodb
         Services.mongodb,
+        //#endmodule mongodb
+        //#module redis
         Services.redis,
+        //#endmodule redis
+        //#module websocket
         Services.websocket
+        //#endmodule websocket
     ];
 
     public start (callback: Function) {

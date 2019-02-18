@@ -6,19 +6,39 @@ import async, {
 } from 'async';
 import { BaseService } from './service.base';
 import { httpService } from './service.http';
+//#module mongodb
 import { mongodbService } from './service.mongodb';
+//#endmodule mongodb
+//#module i18n
 import { i18nService } from './service.i18n';
+//#endmodule i18n
+//#module redis
 import { redisService } from './service.redis';
+//#endmodule redis
+//#module websocket
 import { webSocketService } from './service.websocket';
+//#endmodule websocket
+//#module cron
 import { cronService } from './service.cron';
+//#endmodule cron
 
 const services = [
+    //#module i18n
     i18nService,
+    //#endmodule i18n
+    //#module mongodb
     mongodbService,
+    //#endmodule mongodb
+    //#module redis
     redisService,
+    //#endmodule redis
     httpService,
+    //#module websocket
     webSocketService,
+    //#endmodule websocket
+    //#module cron
     cronService
+    //#endmodule cron
 ];
 
 type TasksType = AsyncAutoTasks<Dictionary<any>, Error>;

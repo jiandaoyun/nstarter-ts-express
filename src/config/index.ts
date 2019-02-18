@@ -2,7 +2,9 @@ import _ from 'lodash';
 import os from 'os';
 import fs from 'fs';
 import nconf from 'nconf';
+//#module conf_yaml
 import { safeLoad, safeDump } from 'js-yaml';
+//#endmodule conf_yaml
 
 import { DatabaseConfig } from './config.database';
 import { ServerConfig } from './config.server';
@@ -17,10 +19,12 @@ enum RunEnv {
 }
 
 const configFormat: Record<string, nconf.IFormat> = {
+    //#module conf_yaml
     yaml: {
         parse: (str: string) => safeLoad(str),
         stringify: (obj: object) => safeDump(obj)
     },
+    //#endmodule conf_yaml
     json: nconf.formats.json
 };
 

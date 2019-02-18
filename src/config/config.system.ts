@@ -13,16 +13,20 @@ interface FileLogConf extends LogConf {
     readonly rotate_days?: number;
 }
 
+//#module graylog
 interface GraylogConf extends LogConf {
     readonly servers: {
         readonly host: string,
         readonly port: number
     }[];
 }
+//#endmodule graylog
 
+//#module sentry
 interface SentryConf extends LogConf {
     readonly dsn: string;
 }
+//#endmodule sentry
 
 export interface SystemConfig {
     readonly locale: string;
@@ -30,8 +34,12 @@ export interface SystemConfig {
     readonly log: {
         readonly console: ConsoleLogConf,
         readonly file: FileLogConf,
+        //#module graylog
         readonly graylog: GraylogConf,
+        //#endmodule graylog
+        //#module sentry
         readonly sentry: SentryConf
+        //#endmodule sentry
     };
     readonly req_log: {
         readonly enabled: boolean;

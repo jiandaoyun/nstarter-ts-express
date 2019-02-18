@@ -57,8 +57,6 @@ system:
 service:
   http:
     enabled: true
-  i18n:
-    enabled: true
   mongodb:
     enabled: true
   redis:

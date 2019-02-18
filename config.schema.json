@@ -263,9 +263,6 @@
         "http": {
           "$ref": "#/definitions/service_conf"
         },
-        "i18n": {
-          "$ref": "#/definitions/service_conf"
-        },
         "mongodb": {
           "$ref": "#/definitions/service_conf"
         },

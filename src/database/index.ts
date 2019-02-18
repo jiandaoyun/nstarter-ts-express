@@ -3,9 +3,14 @@ import { RedisConnector } from './redis.connection';
 import { config } from '../config';
 
 export class Database {
+    //#module mongodb
     private static _mongodb: MongodbConnector;
+    //#endmodule mongodb
+    //#module redis
     private static _redis: RedisConnector;
+    //#endmodule redis
 
+    //#module mongodb
     static get mongodb(): MongodbConnector {
         if (Database._mongodb) {
             return Database._mongodb;
@@ -15,7 +20,9 @@ export class Database {
         Database._mongodb = mongodb;
         return mongodb;
     }
+    //#endmodule mongodb
 
+    //#module redis
     static get redis(): RedisConnector {
         if (Database._redis) {
             return Database._redis;
@@ -25,4 +32,5 @@ export class Database {
         Database._redis = redis;
         return redis;
     }
+    //#endmodule redis
 }

@@ -1,0 +1,165 @@
+# Project template module description file
+#
+# modules:
+#   - storage
+#   |- mongodb
+#   |- redis
+#   - conponents
+#   |- web
+#   |- websocket
+#   |- cron
+#   |- i18n
+#   - devops
+#   |- graylog
+#   |- sentry
+#   |- conf_yaml
+#   - utils
+#   |- util_request
+#   `- util_moment
+
+modules:
+  - name: mongodb
+    label: Mongodb
+    type: storage
+    default: true
+    files:
+      - ./src/database/mongodb.connection.ts
+      - ./src/services/service.mongodb.ts
+      - ./src/models/
+      - ./src/controllers/
+    config:
+      - database.mongodb
+      - service.mongodb
+    packages:
+      - mongoose
+      - '@types/mongoose'
+
+  - name: redis
+    label: Redis
+    type: storage
+    default: true
+    files:
+      - ./src/database/redis.connection.ts
+      - ./src/services/service.redis.ts
+      - ./src/types/connect-redis
+    config:
+      - database.redis
+    packages:
+      - connect-redis
+      - ioredis
+      - '@types/ioredis'
+
+  - name: web
+    label: Web HTTP Service
+    type: conponents
+    default: true
+    files:
+      - ./views/
+      - ./src/routes/
+
+  - name: websocket
+    label: Websocket Service
+    type: conponents
+    files:
+      - ./src/websocket/
+      - ./src/services/service.websocket.ts
+      - ./src/types/socket.io-emitter/
+    config:
+      - service.websocket
+    dependencies:
+      - cron
+    packages:
+      - socket.io
+      - socket.io-emitter
+      - socket.io-redis
+      - '@types/socket.io'
+      - '@types/socket.io-redis'
+
+  - name: cron
+    label: Cron Job
+    type: conponents
+    files:
+      - ./src/cron_job/
+      - ./src/services/service.cron.ts
+    config:
+      - service.cron
+    packages:
+      - cron
+      - '@types/cron'
+
+  - name: i18n
+    label: i18n
+    type: conponents
+    files:
+      - ./src/i18n.ts
+      - ./src/services/service.i18n.ts
+      - ./src/types/i18next-conv/
+      - ./resources/i18n/
+      - ./tools/i18n_scan.js
+    packages:
+      - i18next
+      - i18next-conv
+      - '@types/i18next'
+    scripts:
+      - i18n-scan
+
+  - name: graylog
+    label: Graylog (Logging)
+    type: devops
+    config:
+      - system.log.graylog
+    packages:
+      - 'winston-graylog2'
+
+  - name: sentry
+    label: Sentry (Error tracking)
+    type: devops
+    files:
+      - ./src/logger/transports/transport.sentry.ts
+    config:
+      - system.log.sentry
+    packages:
+      - '@sentry/node'
+
+  - name: conf_yaml
+    label: YAML Config
+    type: devops
+    files:
+      - ./conf.d/*.yaml
+    packages:
+      - '@types/js-yaml'
+
+  - name: util_request
+    label: 'npm: request (Send HTTP request)'
+    type: utils
+    default: true
+    packages:
+      - requset
+
+  - name: util_moment
+    label: 'npm: moment & moment-timezone'
+    type: utils
+    default: true
+    packages:
+      - moment
+      - moment-timezone'
+      - '@types/moment-timezone'
+
+module_types:
+  - name: storage
+    label: DataStorage
+  - name: conponents
+    lable: Conponents
+  - name: devops
+    lable: DevOps Tools
+  - name: utils
+    label: Utility packages
+
+ignore_files:
+  - ./.idea/
+  - ./.vscode/
+  - ./dist/
+  - ./log/
+  - ./node_modules/
+  - ./conf.d/config.override.*
+  - ./package-lock.json
