@@ -26,7 +26,7 @@ const levelConf = {
         debug: 90
     },
     colors: {
-        debug: 'blue',
+        debug: 'cyan',
         info: 'green',
         warn: 'yellow',
         error: 'red'

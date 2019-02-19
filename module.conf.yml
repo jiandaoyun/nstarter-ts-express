@@ -23,10 +23,10 @@ modules:
     type: storage
     default: true
     files:
-      - ./src/database/mongodb.connection.ts
-      - ./src/services/service.mongodb.ts
-      - ./src/models/
-      - ./src/controllers/
+      - src/database/mongodb.connection.ts
+      - src/services/service.mongodb.ts
+      - src/models/**
+      - src/controllers/**
     config:
       - database.mongodb
       - service.mongodb
@@ -39,11 +39,12 @@ modules:
     type: storage
     default: true
     files:
-      - ./src/database/redis.connection.ts
-      - ./src/services/service.redis.ts
-      - ./src/types/connect-redis
+      - src/database/redis.connection.ts
+      - src/services/service.redis.ts
+      - src/types/connect-redis/**
     config:
       - database.redis
+      - service.redis
     packages:
       - connect-redis
       - ioredis
@@ -54,16 +55,18 @@ modules:
     type: conponents
     default: true
     files:
-      - ./views/
-      - ./src/routes/
+      - views/**
+      - src/routes/**
+      - temp/upload/**
+      - public/**
 
   - name: websocket
     label: Websocket Service
     type: conponents
     files:
-      - ./src/websocket/
-      - ./src/services/service.websocket.ts
-      - ./src/types/socket.io-emitter/
+      - src/websocket/**
+      - src/services/service.websocket.ts
+      - src/types/socket.io-emitter/**
     config:
       - service.websocket
     dependencies:
@@ -79,8 +82,8 @@ modules:
     label: Cron Job
     type: conponents
     files:
-      - ./src/cron_job/
-      - ./src/services/service.cron.ts
+      - src/cron_job/**
+      - src/services/service.cron.ts
     config:
       - service.cron
     packages:
@@ -91,11 +94,11 @@ modules:
     label: i18n
     type: conponents
     files:
-      - ./src/i18n.ts
-      - ./src/services/service.i18n.ts
-      - ./src/types/i18next-conv/
-      - ./resources/i18n/
-      - ./tools/i18n_scan.js
+      - src/i18n.ts
+      - src/services/service.i18n.ts
+      - src/types/i18next-conv/**
+      - resources/i18n/**
+      - tools/i18n_scan.js
     packages:
       - i18next
       - i18next-conv
@@ -115,7 +118,7 @@ modules:
     label: Sentry (Error tracking)
     type: devops
     files:
-      - ./src/logger/transports/transport.sentry.ts
+      - src/logger/transports/transport.sentry.ts
     config:
       - system.log.sentry
     packages:
@@ -124,13 +127,14 @@ modules:
   - name: conf_yaml
     label: YAML Config
     type: devops
+    default: true
     files:
-      - ./conf.d/*.yaml
+      - conf.d/*.yaml
     packages:
       - '@types/js-yaml'
 
   - name: util_request
-    label: 'npm: request (Send HTTP request)'
+    label: 'npm: request'
     type: utils
     default: true
     packages:
@@ -147,19 +151,22 @@ modules:
 
 module_types:
   - name: storage
-    label: DataStorage
+    label: Data Storage
   - name: conponents
-    lable: Conponents
+    label: Conponents
   - name: devops
-    lable: DevOps Tools
+    label: DevOps Tools
   - name: utils
     label: Utility packages
 
 ignore_files:
-  - ./.idea/
-  - ./.vscode/
-  - ./dist/
-  - ./log/
-  - ./node_modules/
-  - ./conf.d/config.override.*
-  - ./package-lock.json
+  - .git/**
+  - .idea/**
+  - .vscode/**
+  - dist/**
+  - log/**
+  - coverage/**
+  - node_modules/**
+  - conf.d/config.override.*
+  - package-lock.json
+  - module.conf.yml

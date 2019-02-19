@@ -1,5 +1,9 @@
+//#module mongodb
 import { MongodbConnector } from './mongodb.connection';
+//#endmodule mongodb
+//#module redis
 import { RedisConnector } from './redis.connection';
+//#endmodule redis
 import { config } from '../config';
 
 export class Database {

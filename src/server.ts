@@ -8,6 +8,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 
 import { router } from './routes';
+import { reqLogger } from './logger';
 //#endmodule web
 import { config } from './config';
 //#module redis
@@ -16,7 +17,6 @@ import { Database } from './database';
 //#module i18n
 import { i18n } from './i18n';
 //#endmodule i18n
-import { reqLogger } from './logger';
 
 export const app = express();
 app.enable('trust proxy');
