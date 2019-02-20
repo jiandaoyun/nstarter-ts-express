@@ -57,6 +57,7 @@ modules:
     files:
       - views/**
       - src/routes/**
+      - src/middlewares/**
       - temp/upload/**
       - public/**
 
@@ -70,7 +71,7 @@ modules:
     config:
       - service.websocket
     dependencies:
-      - cron
+      - redis
     packages:
       - socket.io
       - socket.io-emitter
