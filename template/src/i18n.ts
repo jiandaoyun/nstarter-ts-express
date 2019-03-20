@@ -4,11 +4,10 @@ import i18next from 'i18next';
 import fs from 'fs';
 import path from 'path';
 import { gettextToI18next } from 'i18next-conv';
-import { RequestHandler } from 'express';
+import { Request, RequestHandler } from 'express';
 
 import { config } from './config';
 import { Consts } from './constants';
-import { RequestExt } from './middlewares/extensions';
 
 const _translationPath = './resources/i18n/';
 
@@ -117,7 +116,7 @@ class I18n {
     }
 
     public get middleware (): RequestHandler {
-        return (req: RequestExt, res, next) => {
+        return (req: Request, res, next) => {
             req._locale = _.get(req.cookies, Consts.System.LOCALE_COOKIE_KEY);
             req.i18n = {
                 t: this._getTranslator(req._locale)

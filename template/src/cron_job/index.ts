@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import * as jobs from './jobs';
-import { BaseCronJob } from './jobs/job.base';
+import { BaseCronJob } from './jobs/base.job';
 
 export function startJobs () {
     _.forEach(jobs, (cronJob: BaseCronJob) => {

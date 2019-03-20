@@ -1,4 +1,4 @@
-import { BaseService } from './service.base';
+import { BaseService } from './base.service';
 import { Services } from './enum';
 import { i18n } from '../i18n';
 

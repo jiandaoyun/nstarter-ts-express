@@ -1,4 +1,4 @@
-import { BaseChannel } from './channel.base';
+import { BaseChannel } from './base.channel';
 import { Socket } from 'socket.io';
 import { Consts } from '../../constants';
 

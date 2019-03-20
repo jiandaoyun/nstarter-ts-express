@@ -1,5 +1,5 @@
 import { CronJob } from 'cron';
-import { BaseCronJob } from './job.base';
+import { BaseCronJob } from './base.job';
 import { logger } from '../../logger';
 import { config } from '../../config';
 

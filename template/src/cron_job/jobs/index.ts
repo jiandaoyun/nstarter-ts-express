@@ -1,4 +1,4 @@
-import { demoCronJob as demo } from './job.demo';
+import { demoCronJob as demo } from './demo.job';
 
 export {
     demo

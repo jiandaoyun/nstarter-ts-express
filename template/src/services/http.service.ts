@@ -1,4 +1,4 @@
-import { BaseService } from './service.base';
+import { BaseService } from './base.service';
 import { server } from '../server';
 import { config } from '../config';
 import { logger } from '../logger';

@@ -6,10 +6,10 @@ import nconf from 'nconf';
 import { safeLoad, safeDump } from 'js-yaml';
 //#endmodule conf_yaml
 
-import { DatabaseConfig } from './config.database';
-import { ServerConfig } from './config.server';
-import { ServiceConfig } from './config.service';
-import { SystemConfig } from './config.system';
+import { DatabaseConfig } from './database.config';
+import { ServerConfig } from './server.config';
+import { ServiceConfig } from './service.config';
+import { SystemConfig } from './system.config';
 import { pkg } from './pkg';
 
 enum RunEnv {

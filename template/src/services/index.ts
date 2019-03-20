@@ -4,22 +4,22 @@ import async, {
     AsyncAutoTask,
     Dictionary
 } from 'async';
-import { BaseService } from './service.base';
-import { httpService } from './service.http';
+import { BaseService } from './base.service';
+import { httpService } from './http.service';
 //#module mongodb
-import { mongodbService } from './service.mongodb';
+import { mongodbService } from './mongodb.service';
 //#endmodule mongodb
 //#module i18n
-import { i18nService } from './service.i18n';
+import { i18nService } from './i18n.service';
 //#endmodule i18n
 //#module redis
-import { redisService } from './service.redis';
+import { redisService } from './redise.service';
 //#endmodule redis
 //#module websocket
-import { webSocketService } from './service.websocket';
+import { webSocketService } from './websocket.service';
 //#endmodule websocket
 //#module cron
-import { cronService } from './service.cron';
+import { cronService } from './cron.service';
 //#endmodule cron
 
 const services = [

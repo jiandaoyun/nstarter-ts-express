@@ -1,4 +1,4 @@
-import { RequestHandler } from '../middlewares/extensions';
+import { RequestHandler } from 'express';
 
 export class DemoRoute {
     public static goWelcomeView: RequestHandler = (req, res, next) => {

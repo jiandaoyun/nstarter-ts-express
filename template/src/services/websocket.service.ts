@@ -1,5 +1,5 @@
 import SocketIO from 'socket.io';
-import { BaseService } from './service.base';
+import { BaseService } from './base.service';
 import { Services } from './enum';
 import { WebSocket } from '../websocket/socket';
 

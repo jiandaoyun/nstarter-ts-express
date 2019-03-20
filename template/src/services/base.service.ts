@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { config } from '../config';
 import { logger } from '../logger';
-import { ServiceOptions } from '../config/config.service';
+import { ServiceOptions } from '../config/service.config';
 
 export abstract class BaseService {
     public abstract name: string;
