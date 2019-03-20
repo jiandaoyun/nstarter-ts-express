@@ -4,7 +4,6 @@ import { i18n } from '../i18n';
 
 class I18nService extends BaseService {
     public name = Services.i18n;
-    public enabled = true;
 
     public start(callback: Function) {
         i18n.init((err) => {
