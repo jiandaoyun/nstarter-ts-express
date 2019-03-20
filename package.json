@@ -1,5 +1,5 @@
 {
-    "name": "@nstarter/ts-express",
+    "name": "nstarter-ts-express",
     "version": "0.1.0-alpha",
     "description": "A node express project template with typescript for nstarter.",
     "repository": {
