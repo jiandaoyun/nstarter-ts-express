@@ -1,11 +1,13 @@
-/node_modules/
-/log/
+node_modules/
+log/
 
-/conf.d/config.override.*
+conf.d/config.override.*
 
 .vscode/
 .idea/
 
+*.code-workspace
+
 .git/
 .gitkeep
-.gitignore
+/.gitignore
