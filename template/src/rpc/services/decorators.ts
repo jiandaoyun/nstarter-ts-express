@@ -3,33 +3,17 @@ import 'reflect-metadata';
 import {
     handleUnaryCall,
     handleServerStreamingCall,
-    handleCall,
-    ServerWriteableStream
+    handleCall
 } from 'grpc';
 
-import { proto } from './proto';
-import { server } from './server';
+import { proto } from '../proto';
+import { server } from '../server';
+import { GrpcHandler } from '../interfaces';
 
-
-interface UnaryHandler<T, R> {
-    (conf: T, callback?: {
-        (err: Error | null | undefined, result: R): any
-    }): void
-}
-
-interface ServerStreamingHandler<T, R> {
-    (conf: T, call: ServerWriteableStream<R>): void
-}
-
-/**
- * gRPC handling methods type
- */
-type GrpcHandler<T, R> = UnaryHandler<T, R>
-    | ServerStreamingHandler<T, R>;
 
 const METHOD_PREFIX = 'grpc:method:';
 
-function MessageHandler<T, R>(run: handleCall<T, R>) {
+function messageHandler<T, R>(run: handleCall<T, R>) {
     return (
         target: any,
         key: string,
@@ -74,7 +58,7 @@ export function grpcUnaryMethod<T, R>() {
         const run: handleUnaryCall<T, R> = (call, callback) => {
             method.apply(null, [call.request, callback]);
         };
-        MessageHandler(run)(target, key, descriptor);
+        messageHandler(run)(target, key, descriptor);
     };
 }
 
@@ -91,6 +75,6 @@ export function grcpServerStreamingMethod<T, R>() {
         const run: handleServerStreamingCall<T, R> = (call) => {
             method.apply(null, [call.request, call]);
         };
-        MessageHandler(run)(target, key, descriptor);
+        messageHandler(run)(target, key, descriptor);
     };
 }
