@@ -12,7 +12,7 @@ const CLIENT_META = 'grpc:client';
 
 export function grpcClient<T extends Function>(pkg: string, service?: string) {
     return (constructor: T) => {
-        const target = constructor.prototype;
+        const target = constructor;
         if (!service) {
             service = _.upperFirst(_.camelCase(_.replace(constructor.name, /client$/i, '')));
         }

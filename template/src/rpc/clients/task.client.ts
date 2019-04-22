@@ -10,8 +10,8 @@ import { TaskConf, TaskResult, TaskReply } from '../task.types';
 @grpcClient('worker')
 export class TaskClient {
     @grpcUnaryCall()
-    public runTask(conf: TaskConf, callback: sendUnaryData<TaskResult>): void {}
+    public static runTask(conf: TaskConf, callback: sendUnaryData<TaskResult>): void {}
 
     @grpcServerStreamingCall()
-    public runTaskProgress(conf: TaskConf, callback: ServerStreamingCallback<TaskReply>) {}
+    public static runTaskProgress(conf: TaskConf, callback: ServerStreamingCallback<TaskReply>) {}
 }
