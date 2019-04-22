@@ -1,0 +1,21 @@
+syntax = "proto3";
+package worker;
+
+service Task {
+    rpc RunTask(TaskConf) returns (TaskResult) {}
+    rpc RunTaskProgress(TaskConf) returns (stream TaskReply) {}
+}
+
+message TaskConf {
+    string id = 1;
+    string job = 2;
+}
+
+message TaskResult {
+    string status = 1;
+    string result = 2;
+}
+
+message TaskReply {
+    string message = 1;
+}
