@@ -257,6 +257,48 @@
         }
       }
     },
+    "components": {
+      "$ref": "#/definitions/config_obj",
+      "properties": {
+        "grpc": {
+          "$ref": "#/definitions/config_obj",
+          "description": "gRPC service config",
+          "properties": {
+            "server": {
+              "description": "gRPC server config",
+              "$ref": "#/definitions/config_obj",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "port": {
+                  "$ref": "#/definitions/port_number",
+                  "default": 9050
+                }
+              }
+            },
+            "clients": {
+              "type": "array",
+              "description": "gRPC clients configuration",
+              "items": {
+                "$ref": "#/definitions/config_obj",
+                "properties": {
+                  "package": {
+                    "type": "string",
+                    "description": "gRPC package name."
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Server address for gRPC package."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "service": {
       "$ref": "#/definitions/config_obj",
       "properties": {

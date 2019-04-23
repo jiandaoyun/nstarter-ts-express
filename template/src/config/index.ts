@@ -9,6 +9,7 @@ import { safeLoad, safeDump } from 'js-yaml';
 import { DatabaseConfig } from './database.config';
 import { ServerConfig } from './server.config';
 import { ServiceConfig } from './service.config';
+import { ComponentsConfig } from './components.config';
 import { SystemConfig } from './system.config';
 import { pkg } from './pkg';
 
@@ -37,6 +38,7 @@ class Config {
     public readonly server: ServerConfig;
     public readonly database: DatabaseConfig;
     public readonly system: SystemConfig;
+    public readonly components: ComponentsConfig;
     public readonly service: ServiceConfig;
 
     constructor () {
@@ -54,6 +56,7 @@ class Config {
         this.server = nconf.get('server');
         this.database = nconf.get('database');
         this.system = nconf.get('system');
+        this.components = nconf.get('components');
         this.service = nconf.get('service');
     }
 

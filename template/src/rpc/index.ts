@@ -1,9 +1,13 @@
 import { server } from './server';
-import * as Services from './services';
+import * as Clients from './clients';
 
-server.start();
+import { config } from '../config';
+
+if (config.components.grpc.server.enabled) {
+    server.start();
+}
 
 export {
-    Services,
-    server
+    server,
+    Clients
 };

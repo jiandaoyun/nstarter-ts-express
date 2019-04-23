@@ -70,6 +70,18 @@
             "enabled": true
         }
     },
+    "components": {
+        "grpc": {
+            "server": {
+                "enabled": true,
+                "port": 9050
+            },
+            "clients": [{
+                "package": "worker",
+                "address": "localhost:9050"
+            }]
+        }
+    },
     "service": {
         "http": {
             "enabled": true
