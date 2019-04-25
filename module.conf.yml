@@ -4,7 +4,7 @@
 #   - storage
 #   |- mongodb
 #   |- redis
-#   - conponents
+#   - components
 #   |- web
 #   |- websocket
 #   |- cron
@@ -52,7 +52,7 @@ modules:
 
   - name: web
     label: Web HTTP Service
-    type: conponents
+    type: components
     default: true
     files:
       - views/**
@@ -63,7 +63,7 @@ modules:
 
   - name: websocket
     label: Websocket Service
-    type: conponents
+    type: components
     files:
       - src/websocket/**
       - src/services/service.websocket.ts
@@ -81,7 +81,7 @@ modules:
 
   - name: cron
     label: Cron Job
-    type: conponents
+    type: components
     files:
       - src/cron_job/**
       - src/services/service.cron.ts
@@ -93,7 +93,7 @@ modules:
 
   - name: i18n
     label: i18n
-    type: conponents
+    type: components
     files:
       - src/i18n.ts
       - src/services/service.i18n.ts
@@ -106,6 +106,18 @@ modules:
       - '@types/i18next'
     scripts:
       - i18n-scan
+
+  - name: grpc
+    label: gRPC
+    type: components
+    files:
+      - src/rpc/**
+    packages:
+      - grpc
+      - '@grpc/proto-loader'
+      - prodobufjs
+    config:
+      - components.grpc
 
   - name: graylog
     label: Graylog (Logging)
@@ -153,8 +165,8 @@ modules:
 module_types:
   - name: storage
     label: Data Storage
-  - name: conponents
-    label: Conponents
+  - name: components
+    label: components
   - name: devops
     label: DevOps Tools
   - name: utils

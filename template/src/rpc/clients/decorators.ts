@@ -7,6 +7,7 @@ import {
     UnaryCall,
     ServerStreamingCall
 } from '../interfaces';
+import { config } from '../../config';
 
 const CLIENT_META = 'grpc:client';
 
@@ -17,9 +18,13 @@ export function grpcClient<T extends Function>(pkg: string, service?: string) {
             service = _.upperFirst(_.camelCase(_.replace(constructor.name, /client$/i, '')));
         }
         const GrpcClient: typeof Client = _.get(proto, [pkg, service]);
-        // TODO replace with config
-        const client = new GrpcClient('localhost:9050', grpc.credentials.createInsecure());
-        Reflect.defineMetadata(CLIENT_META, { client }, target);
+        const conf = _.find(config.components.grpc.clients, { package: pkg });
+        let meta = {};
+        if (conf && conf.address) {
+            const client = new GrpcClient(conf.address, grpc.credentials.createInsecure());
+            meta = { client };
+        }
+        Reflect.defineMetadata(CLIENT_META, meta, target);
     };
 }
 
