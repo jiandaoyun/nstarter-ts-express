@@ -6,8 +6,8 @@ import path from 'path';
 import { gettextToI18next } from 'i18next-conv';
 import { Request, RequestHandler } from 'express';
 
-import { config } from './config';
-import { Consts } from './constants';
+import { config } from '../../config';
+import { Consts } from '../../constants';
 
 const _translationPath = './resources/i18n/';
 
@@ -16,7 +16,7 @@ interface I18nOptions {
     defaultLocale: string
 }
 
-class I18n {
+export class I18n {
     private _options: I18nOptions;
     private _locales: string[] = [];
     private _i18next: i18next.i18n;
@@ -26,7 +26,6 @@ class I18n {
     private _translators: {
         [locale: string]: i18next.TFunction;
     } = {};
-    private static _instance: I18n;
 
     constructor (options?: I18nOptions) {
         this._options = _.defaults(options, {
@@ -135,13 +134,4 @@ class I18n {
             return next();
         };
     }
-
-    public static getInstance(): I18n {
-        if (!I18n._instance) {
-            I18n._instance = new I18n();
-        }
-        return I18n._instance;
-    }
 }
-
-export const i18n = I18n.getInstance();

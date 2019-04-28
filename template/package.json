@@ -10,7 +10,7 @@
     "url": "https://github.com/jiandaoyun/nstarter-ts-express"
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json",
+    "build": "rimraf dist && tsc --build tsconfig.json",
     "prestart": "npm run build",
     "start": "node ./dist/app.js",
     "serve": "startOrReload ./pm2.json --update-env",

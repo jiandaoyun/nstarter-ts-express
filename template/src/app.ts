@@ -1,11 +1,13 @@
-import { ServiceDaemon } from './services';
+import { config } from './config';
+import { server } from './server';
+import { logger } from './logger';
 
-ServiceDaemon.daemonize(() => {
-    if (process.send) {
-        process.send('ready');
-    }
+const port = config.server.http.port;
+server.listen(port);
+server.on('error', (err) => {
+    logger.error(err);
+    process.exit(1);
 });
-
-process.on('uncaughtException', (err) => {
-    return false;
+server.on('listening', () => {
+    logger.info(`Listening on：${ port }`);
 });

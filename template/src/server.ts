@@ -12,10 +12,10 @@ import { reqLogger } from './logger';
 //#endmodule web
 import { config } from './config';
 //#module redis
-import { Database } from './database';
+import { redis } from './components';
 //#endmodule redis
 //#module i18n
-import { i18n } from './i18n';
+import { i18n } from './components';
 //#endmodule i18n
 
 export const app = express();
@@ -40,7 +40,7 @@ app.use(session({
     saveUninitialized: false,
     //#module redis
     store: new RedisStore({
-        client: Database.redis.connection
+        client: redis.connection
     }),
     //#endmodule redis
     cookie: config.server.cookie.policy
