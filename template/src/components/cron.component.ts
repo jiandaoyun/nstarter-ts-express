@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
 import { BaseComponent } from './base.component';
-import * as jobs from '../cron_jobs';
-import { BaseCronJob } from '../cron_jobs/base.job';
+import * as jobs from '../jobs/cron';
+import { BaseCronJob } from '../jobs/cron/base.job';
 import { provideComponent } from './container';
 
 @provideComponent()
