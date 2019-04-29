@@ -1,11 +1,9 @@
-import { injectable } from 'inversify';
-import { lazyInject } from './container';
-import { items } from './items';
+import { lazyInject, provideService } from './container';
 import { ServiceA } from './a.service';
 
-@injectable()
+@provideService()
 export class ServiceB {
-    @lazyInject(items.ServiceA)
+    @lazyInject(ServiceA)
     protected _x: ServiceA;
 
     public run() {

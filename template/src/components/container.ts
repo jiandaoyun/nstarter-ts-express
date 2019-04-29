@@ -1,12 +1,28 @@
-import { Container } from 'inversify';
+import _ from 'lodash';
+import { Container, injectable } from 'inversify';
 import 'reflect-metadata';
 import getDecorators from 'inversify-inject-decorators';
 
 const container = new Container({
     defaultScope: 'Singleton',
-    autoBindInjectable: true
+    autoBindInjectable: false
 });
 
 const { lazyInject } = getDecorators(container);
 
 export { container, lazyInject };
+
+interface Ctor {
+    new(...args: any[]): {}
+}
+
+export function provideComponent<T extends Ctor>(name?: string) {
+    return (constructor: T) => {
+        const target = constructor.prototype;
+        if (!name) {
+            name = _.snakeCase(_.replace(constructor.name, /component$/i, ''));
+        }
+        target._name = name;
+        container.bind(constructor).to(injectable()(constructor));
+    };
+}

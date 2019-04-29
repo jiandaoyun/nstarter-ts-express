@@ -1,13 +1,10 @@
-import { injectable } from 'inversify';
-
-import { Components } from './components';
 import { BaseComponent } from './base.component';
 import { RedisConnector } from './lib/database/redis.connection';
 import { config } from '../config';
+import { provideComponent } from './container';
 
-@injectable()
+@provideComponent()
 export class RedisComponent extends BaseComponent {
-    protected _name = Components.redis;
     private _redis: RedisConnector;
 
     constructor () {

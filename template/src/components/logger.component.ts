@@ -1,13 +1,9 @@
-import { injectable } from 'inversify';
-
 import { BaseComponent } from './base.component';
-import { Components } from './components';
 import { logger, reqLogger } from './lib/logger';
+import { provideComponent } from './container';
 
-@injectable()
+@provideComponent()
 export class LoggerComponent extends BaseComponent {
-    protected _name = Components.logger;
-
     private _logger = logger;
     private _reqLogger = reqLogger;
 
