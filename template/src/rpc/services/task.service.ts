@@ -7,7 +7,7 @@ import {
     grpcUnaryMethod,
     grcpServerStreamingMethod
 } from './decorators';
-import { TaskConf, TaskResult, TaskReply } from '../task.types';
+import { TaskConf, TaskResult, TaskReply } from '../types/task.types';
 
 @grpcService('worker')
 export class TaskService {

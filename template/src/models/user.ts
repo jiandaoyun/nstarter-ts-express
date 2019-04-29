@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import { Database } from '../database';
+import { mongodb } from '../components';
 
-const db = Database.mongodb.connection;
+const db = mongodb.connection;
 
 export type User = {
     username: string,

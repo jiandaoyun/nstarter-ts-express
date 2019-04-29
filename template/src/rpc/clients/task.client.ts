@@ -5,7 +5,7 @@ import {
     grpcServerStreamingCall
 } from './decorators';
 import { ServerStreamingCallback } from '../interfaces';
-import { TaskConf, TaskResult, TaskReply } from '../task.types';
+import { TaskConf, TaskResult, TaskReply } from '../types/task.types';
 
 @grpcClient('worker')
 export class TaskClient {

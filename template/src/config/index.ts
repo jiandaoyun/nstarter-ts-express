@@ -21,7 +21,7 @@ enum RunEnv {
 
 const configFormat: Record<string, nconf.IFormat> = {
     //#module conf_yaml
-    yaml: {
+    yml: {
         parse: (str: string) => safeLoad(str),
         stringify: (obj: object) => safeDump(obj)
     },

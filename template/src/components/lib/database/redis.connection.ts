@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import ioredis, { Redis } from 'ioredis';
 import { BaseConnection } from './base.connection';
-import { RedisConfig } from '../config/database.config';
-import { logger } from '../logger';
+import { RedisConfig } from '../../../config/database.config';
+import { logger } from '../../../logger';
 
 export class RedisConnector extends BaseConnection<RedisConfig, Redis> {
     constructor (options: RedisConfig) {

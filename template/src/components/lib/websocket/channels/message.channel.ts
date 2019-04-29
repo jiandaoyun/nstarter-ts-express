@@ -1,6 +1,7 @@
-import { BaseChannel } from './base.channel';
 import { Socket } from 'socket.io';
-import { Consts } from '../../constants';
+
+import { BaseChannel } from './base.channel';
+import { Consts } from '../../../../constants';
 
 class MessageChannel extends BaseChannel {
     public connect(socket: Socket, callback: Function) {

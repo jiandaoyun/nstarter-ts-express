@@ -8,17 +8,17 @@ import session from 'express-session';
 import { ServerResponse } from 'http';
 import { Response } from 'express';
 
-import { server } from '../server';
-import { config } from '../config';
-import { logger } from '../logger';
-import { Database } from '../database';
+import { server } from '../../../server';
+import { config } from '../../../config';
+import { logger } from '../../../logger';
 
 import { channels } from './channels';
+import { RedisConnector } from '../database/redis.connection';
 
 const RedisStore = connectRedis(session);
 
 export class WebSocket {
-    public static createServer(): SocketIO.Server {
+    public static createServer(redis: RedisConnector): SocketIO.Server {
         const io = SocketIO(server, {
             path: '/socket',
             serveClient: false,
@@ -37,7 +37,7 @@ export class WebSocket {
                             config.server.session,
                             {
                                 store: new RedisStore({
-                                    client: Database.redis.connection
+                                    client: redis.connection
                                 }),
                                 cookie: config.server.cookie.policy
                             }
@@ -46,8 +46,8 @@ export class WebSocket {
                 }, (err) => callback(0, !err));
             },
             adapter: SocketIORedis({
-                pubClient: Database.redis.connection,
-                subClient: Database.redis.connection
+                pubClient: redis.connection,
+                subClient: redis.connection
             })
         });
 
