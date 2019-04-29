@@ -5,6 +5,7 @@ export const items = {
     WsEmitter: Symbol('WsEmitter'),
     Cron: Symbol('Cron'),
     I18n: Symbol('I18n'),
+    Logger: Symbol('Logger'),
     RpcServer: Symbol('RpcServer'),
     RpcClient: Symbol('RpcClient')
 };
@@ -17,6 +18,7 @@ export enum Components {
     ws_emitter = 'ws_emitter',
     http = 'http',
     cron = 'cron',
+    logger = 'logger',
     rpc_server = 'rpc_server',
     rpc_client = 'rpc_client'
 }

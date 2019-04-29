@@ -15,7 +15,6 @@ export class WsServerComponent extends BaseComponent {
 
     @lazyInject(items.Redis)
     private _redisComponent: RedisComponent;
-
     constructor() {
         super();
         const redis = this._redisComponent.redis;

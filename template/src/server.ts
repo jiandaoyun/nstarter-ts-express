@@ -8,7 +8,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 
 import { router } from './routes';
-import { reqLogger } from './logger';
+import { reqLogger } from './components';
 //#endmodule web
 import { config } from './config';
 //#module redis

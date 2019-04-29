@@ -8,15 +8,9 @@ import RotateFileTransport, {
 import Graylog2Transport from 'winston-graylog2';
 import { SentryTransport } from './transports';
 
-import { config } from '../config';
-import { Consts } from '../constants';
-
-export enum LogLevel {
-    debug = 'debug',
-    info = 'info',
-    warn = 'warn',
-    error = 'error'
-}
+import { config } from '../../../config';
+import { Consts } from '../../../constants';
+import { LogLevel } from '../../../enums/logger.enum';
 
 const levelConf = {
     levels: {
@@ -146,7 +140,7 @@ type LogMessage = string | Error;
 
 winston.addColors(levelConf.colors);
 
-class Logger {
+export class Logger {
     private _logger = winston.createLogger({
         transports,
         levels: levelConf.levels,
@@ -179,5 +173,3 @@ class Logger {
         this._log('error', msg, meta);
     }
 }
-
-export const logger = new Logger();

@@ -1,5 +1,5 @@
-import { logger } from '../logger';
 import { injectable } from 'inversify';
+import { logger } from './lib/logger';
 
 @injectable()
 export abstract class BaseComponent {
