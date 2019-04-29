@@ -1,7 +1,7 @@
 import { CronJob } from 'cron';
 import { BaseCronJob } from './base.job';
-import { logger } from '../../components';
-import { config } from '../../config';
+import { logger } from '../components';
+import { config } from '../config';
 
 class DemoCronJob extends BaseCronJob {
     public readonly name = 'demo';
