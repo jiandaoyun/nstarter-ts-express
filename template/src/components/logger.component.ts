@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
+
 import { BaseComponent } from './base.component';
-import { Components } from './items';
+import { Components } from './components';
 import { logger, reqLogger } from './lib/logger';
 
 @injectable()

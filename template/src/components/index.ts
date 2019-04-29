@@ -1,32 +1,22 @@
-import { items } from './items';
+import { container } from './container';
+
 import { MongodbComponent } from './mongodb.component';
 import { RedisComponent } from './redis.component';
 import { WsServerComponent } from './ws_server.components';
 import { WsEmitterComponent } from './ws_emitter.components';
 import { CronComponent } from './cron.component';
 import { I18nComponent } from './i18n.component';
-import { container } from './container';
 import { RpcServerComponent } from './rpc_server.component';
 import { RpcClientComponent } from './rpc_client.component';
 import { LoggerComponent } from './logger.component';
 
-container.bind(items.Mongodb).to(MongodbComponent).inSingletonScope();
-container.bind(items.Redis).to(RedisComponent).inSingletonScope();
-container.bind(items.WsServer).to(WsServerComponent).inSingletonScope();
-container.bind(items.WsEmitter).to(WsEmitterComponent).inSingletonScope();
-container.bind(items.Cron).to(CronComponent).inSingletonScope();
-container.bind(items.I18n).to(I18nComponent).inSingletonScope();
-container.bind(items.Logger).to(LoggerComponent).inSingletonScope();
-container.bind(items.RpcServer).to(RpcServerComponent).inSingletonScope();
-container.bind(items.RpcClient).to(RpcClientComponent).inSingletonScope();
-
-export const mongodb = container.get<MongodbComponent>(items.Mongodb).db;
-export const redis = container.get<RedisComponent>(items.Redis).redis;
-export const wsServer = container.get<WsServerComponent>(items.WsServer).server;
-export const wsEmitter = container.get<WsEmitterComponent>(items.WsEmitter).emitter;
-export const cron = container.get<CronComponent>(items.Cron);
-export const i18n = container.get<I18nComponent>(items.I18n).i18n;
-export const logger = container.get<LoggerComponent>(items.Logger).logger;
-export const reqLogger = container.get<LoggerComponent>(items.Logger).reqLogger;
-export const rpcServer = container.get<RpcServerComponent>(items.RpcServer).server;
-export const rpcClient = container.get<RpcClientComponent>(items.RpcClient).clients;
+export const mongodb = container.get(MongodbComponent).db;
+export const redis = container.get(RedisComponent).redis;
+export const wsServer = container.get(WsServerComponent).server;
+export const wsEmitter = container.get(WsEmitterComponent).emitter;
+export const cron = container.get(CronComponent);
+export const i18n = container.get(I18nComponent).i18n;
+export const logger = container.get(LoggerComponent).logger;
+export const reqLogger = container.get(LoggerComponent).reqLogger;
+export const rpcServer = container.get(RpcServerComponent).server;
+export const rpcClient = container.get(RpcClientComponent).clients;

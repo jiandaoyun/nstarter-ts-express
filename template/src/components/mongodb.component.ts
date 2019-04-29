@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
 
-import { Components } from './items';
+import { Components } from './components';
 import { BaseComponent } from './base.component';
 import { MongodbConnector } from './lib/database/mongodb.connection';
 import { config } from '../config';

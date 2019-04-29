@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import { Server } from 'grpc';
 
 import { BaseComponent } from './base.component';
-import { Components } from './items';
+import { Components } from './components';
 import { server } from '../rpc';
 
 @injectable()

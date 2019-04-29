@@ -1,9 +1,8 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
 import SocketIO from 'socket.io';
 
 import { BaseComponent } from './base.component';
-import { Components, items } from './items';
+import { Components } from './components';
 import { WebSocket } from './lib/websocket/socket';
 import { lazyInject } from './container';
 import { RedisComponent } from './redis.component';
@@ -13,7 +12,7 @@ export class WsServerComponent extends BaseComponent {
     protected _name = Components.ws_server;
     private _server: SocketIO.Server;
 
-    @lazyInject(items.Redis)
+    @lazyInject(RedisComponent)
     private _redisComponent: RedisComponent;
     constructor() {
         super();

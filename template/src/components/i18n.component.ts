@@ -1,8 +1,7 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
 
 import { BaseComponent } from './base.component';
-import { Components } from './items';
+import { Components } from './components';
 import { I18n } from './lib/i18n';
 
 @injectable()

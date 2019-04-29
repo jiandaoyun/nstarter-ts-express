@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import { injectable } from 'inversify';
-import 'reflect-metadata';
 
 import { BaseComponent } from './base.component';
-import { Components } from './items';
+import { Components } from './components';
 import * as jobs from '../cron_jobs';
 import { BaseCronJob } from '../cron_jobs/base.job';
 

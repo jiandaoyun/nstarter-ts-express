@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { BaseComponent } from './base.component';
-import { Components } from './items';
+import { Components } from './components';
 import { Clients } from '../rpc';
 
 @injectable()
