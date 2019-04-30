@@ -1,16 +1,6 @@
 import { Router } from 'express';
-import { ErrorHandler } from '../middlewares/error.handler';
-import { DemoRoute } from './demo';
-
-const viewRouter = Router(),
-    requestRouter = Router();
-
-viewRouter.get('/', DemoRoute.goWelcomeView);
-viewRouter.get('/error', DemoRoute.goErrorView);
-viewRouter.use(ErrorHandler.viewErrorHandler);
-
-requestRouter.post('/ping', DemoRoute.doPing);
-requestRouter.use(ErrorHandler.requestErrorHandler);
+import { viewRouter } from './view.route';
+import { requestRouter } from './request.route';
 
 // main router
 export const router = Router();

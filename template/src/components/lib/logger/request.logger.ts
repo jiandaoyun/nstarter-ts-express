@@ -6,8 +6,8 @@ import RotateFileTransport, {
 } from 'winston-daily-rotate-file';
 import Graylog2Transport from 'winston-graylog2';
 
-import { config } from '../config';
-import { Consts } from '../constants';
+import { config } from '../../../config';
+import { Consts } from '../../../constants';
 import { RequestHandler, Request, Response } from 'express';
 
 const transports: Transport[] = [];
@@ -72,7 +72,7 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
 }
 //#endmodule graylog
 
-class RequestLogger {
+export class RequestLogger {
     private _logger = winston.createLogger({
         transports
     });
@@ -116,5 +116,3 @@ class RequestLogger {
         };
     }
 }
-
-export const reqLogger = new RequestLogger();

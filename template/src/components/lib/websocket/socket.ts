@@ -10,7 +10,7 @@ import { Response } from 'express';
 
 import { server } from '../../../server';
 import { config } from '../../../config';
-import { logger } from '../../../logger';
+import { logger } from '../logger';
 
 import { channels } from './channels';
 import { RedisConnector } from '../database/redis.connection';

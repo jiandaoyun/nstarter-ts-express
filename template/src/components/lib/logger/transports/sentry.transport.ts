@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Transport, { TransportStreamOptions } from 'winston-transport';
 import * as Sentry from '@sentry/node';
 import { LEVEL } from 'triple-beam';
-import { config } from '../../config';
+import { config } from '../../../../config';
 
 export interface SentryTransportOptions extends TransportStreamOptions {
     dsn: string

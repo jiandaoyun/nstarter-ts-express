@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-export class DemoRoute {
+export class DemoController {
     public static goWelcomeView: RequestHandler = (req, res, next) => {
         return res.render('welcome', {
             //#module i18n

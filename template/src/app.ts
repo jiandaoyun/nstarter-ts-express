@@ -1,6 +1,6 @@
 import { config } from './config';
 import { server } from './server';
-import { logger } from './logger';
+import { logger } from './components/lib/logger';
 
 const port = config.server.http.port;
 server.listen(port);

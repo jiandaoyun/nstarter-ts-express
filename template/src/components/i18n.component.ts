@@ -1,13 +1,9 @@
-import { injectable } from 'inversify';
-import 'reflect-metadata';
-
 import { BaseComponent } from './base.component';
-import { Components } from './items';
 import { I18n } from './lib/i18n';
+import { provideComponent } from './container';
 
-@injectable()
+@provideComponent('i18n')
 export class I18nComponent extends BaseComponent {
-    protected _name = Components.i18n;
     private _i18n: I18n;
 
     constructor() {
