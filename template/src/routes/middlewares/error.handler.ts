@@ -1,15 +1,22 @@
 import { ErrorRequestHandler } from 'express';
+import httpStatus from 'http-status';
 
 export class ErrorHandler {
     public static viewErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-        return res.status(400).render('error', {
+        if (err && !err.isCustomError) {
+            return res.status(httpStatus.BAD_REQUEST);
+        }
+        return res.status(httpStatus.BAD_REQUEST).render('error', {
             title: err.message,
             error: err
         });
     }
 
     public static requestErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-        return res.status(400).json({
+        if (err && !err.isCustomError) {
+            return res.status(httpStatus.BAD_REQUEST);
+        }
+        return res.status(httpStatus.BAD_REQUEST).json({
             error: err.message
         });
     }

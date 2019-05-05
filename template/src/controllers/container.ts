@@ -15,7 +15,7 @@ interface Ctor {
     new(...args: any[]): {}
 }
 
-export function provideService<T extends Ctor>() {
+export function provideController<T extends Ctor>() {
     return (constructor: T) => {
         container.bind(constructor).to(injectable()(constructor));
     };

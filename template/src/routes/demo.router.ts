@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
+import { Errors } from '../errors';
 
-export class DemoController {
+export class DemoRouter {
     public static goWelcomeView: RequestHandler = (req, res, next) => {
         return res.render('welcome', {
             //#module i18n
@@ -13,7 +14,7 @@ export class DemoController {
     }
 
     public static goErrorView: RequestHandler = (req, res, next) => {
-        return next({ code: 1001, message: 'Oops!' });
+        return next(Errors.user(1001));
     }
 
     public static doPing: RequestHandler = (req, res, next) => {

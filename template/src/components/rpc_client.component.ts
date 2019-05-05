@@ -1,5 +1,5 @@
 import { BaseComponent } from './base.component';
-import { Clients } from '../rpc';
+import { Clients } from '../plugins/rpc';
 import { provideComponent } from './container';
 
 @provideComponent()

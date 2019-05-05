@@ -7,7 +7,7 @@ import {
     UnaryCall,
     ServerStreamingCall
 } from '../interfaces';
-import { config } from '../../config';
+import { config } from '../../../config';
 
 const CLIENT_META = 'grpc:client';
 

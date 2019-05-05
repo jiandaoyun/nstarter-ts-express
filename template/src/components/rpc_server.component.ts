@@ -1,7 +1,7 @@
 import { Server } from 'grpc';
 
 import { BaseComponent } from './base.component';
-import { server } from '../rpc';
+import { server } from '../plugins/rpc';
 import { provideComponent } from './container';
 
 @provideComponent()
