@@ -1,6 +1,6 @@
 import grpc from 'grpc';
 
-import { config } from '../config';
+import { config } from '../../config';
 
 export const server = new grpc.Server();
 

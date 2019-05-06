@@ -2,7 +2,7 @@ import _ from 'lodash';
 import httpStatus from 'http-status';
 
 import { LogLevel } from '../enums/logger.enum';
-import { errorMessages } from './err_msgs';
+import { ErrorTypes, errorMessages } from './err_msgs';
 
 interface ErrorOptions {
     meta?: any,
@@ -10,16 +10,17 @@ interface ErrorOptions {
     wrapper?: Function
 }
 
-class BaseError extends Error {
-    public readonly isAppError = true;
+class CustomError extends Error {
+    public readonly isCustomError = true;
     public readonly name = this.constructor.name;
-    public code: number;
-    public level: LogLevel;
-    public meta: any;
-    public httpCode: number;
+    public readonly code: number;
+    public readonly level: LogLevel;
+    public readonly meta: any;
+    public readonly httpCode: number;
 
-    constructor (code: number, level?: LogLevel, options?: ErrorOptions) {
+    constructor (name: string, code: number, level?: LogLevel, options?: ErrorOptions) {
         super();
+        this.name = name;
         this.code = code || 1;
         this.message = errorMessages[code] || 'Unknown Error';
         this.level = level || LogLevel.error;
@@ -33,4 +34,12 @@ class BaseError extends Error {
     }
 }
 
-export class UserError extends BaseError {}
+interface ErrorBuilder {
+    (code: number, level?: LogLevel, options?: ErrorOptions): CustomError
+}
+
+export const errors = {} as Record<keyof typeof ErrorTypes, ErrorBuilder>;
+_.forEach(Object.keys(ErrorTypes), (errorType: keyof typeof ErrorTypes) => {
+    errors[errorType] = (code: number, level?: LogLevel, options?: ErrorOptions) =>
+        new CustomError(ErrorTypes[errorType], code, level, options);
+});

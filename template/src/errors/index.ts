@@ -1,5 +1,5 @@
-import { UserError } from './error';
+import { errors } from './error';
 
 export {
-    UserError
+    errors as Errors
 };

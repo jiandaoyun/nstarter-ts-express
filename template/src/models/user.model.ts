@@ -26,15 +26,3 @@ userSchema.index({ email: 1 }, { sparse: true });
 userSchema.index({ phone: 1 }, { sparse: true });
 
 export const userModel = db.model('user', userSchema);
-
-export class UserControl {
-    public static createOne (user: User, callback: Function) {
-        userModel.create([user], (err, newUser) => callback(err, newUser));
-    }
-
-    public static findOneByUsername (username: string, callback: Function) {
-        userModel.findOne({ username })
-            .lean(true)
-            .exec((err, user: any) => callback(err, user));
-    }
-}
