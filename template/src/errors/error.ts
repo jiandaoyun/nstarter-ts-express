@@ -12,7 +12,7 @@ interface ErrorOptions {
 
 class CustomError extends Error {
     public readonly isCustomError = true;
-    public readonly name = this.constructor.name;
+    public readonly name: string;
     public readonly code: number;
     public readonly level: LogLevel;
     public readonly meta: any;
@@ -20,7 +20,7 @@ class CustomError extends Error {
 
     constructor (name: string, code: number, level?: LogLevel, options?: ErrorOptions) {
         super();
-        this.name = name;
+        this.name = name || this.constructor.name;
         this.code = code || 1;
         this.message = errorMessages[code] || 'Unknown Error';
         this.level = level || LogLevel.error;
@@ -40,6 +40,5 @@ interface ErrorBuilder {
 
 export const errors = {} as Record<keyof typeof ErrorTypes, ErrorBuilder>;
 _.forEach(Object.keys(ErrorTypes), (errorType: keyof typeof ErrorTypes) => {
-    errors[errorType] = (code: number, level?: LogLevel, options?: ErrorOptions) =>
-        new CustomError(ErrorTypes[errorType], code, level, options);
+    errors[errorType] = (...args) => new CustomError(ErrorTypes[errorType], ...args);
 });

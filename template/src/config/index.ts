@@ -11,6 +11,8 @@ import { ServerConfig } from './server.config';
 import { ComponentsConfig } from './components.config';
 import { SystemConfig } from './system.config';
 import { pkg } from './pkg';
+import { ConfigType } from './interface';
+import { baseConf } from './base_conf';
 
 enum RunEnv {
     dev = 'develop',
@@ -28,7 +30,7 @@ const configFormat: Record<string, nconf.IFormat> = {
     json: nconf.formats.json
 };
 
-class Config {
+class Config implements ConfigType {
     public readonly hostname = os.hostname();
     public readonly version = pkg.version;
     public readonly env: RunEnv;
@@ -48,7 +50,7 @@ class Config {
         // load config by environment
         this._loadConf(`./conf.d/config.${ this.env }`, this.env);
         // load default config
-        this._loadConf('./conf.d/config.default', 'default');
+        nconf.defaults(baseConf);
 
         // init config
         this.server = nconf.get('server');
