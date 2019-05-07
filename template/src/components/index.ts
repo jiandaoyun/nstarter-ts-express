@@ -2,8 +2,8 @@ import { container } from './container';
 
 import { MongodbComponent } from './mongodb.component';
 import { RedisComponent } from './redis.component';
-import { WsServerComponent } from './ws_server.components';
-import { WsEmitterComponent } from './ws_emitter.components';
+import { WsServerComponent } from './ws_server.component';
+import { WsEmitterComponent } from './ws_emitter.component';
 import { CronComponent } from './cron.component';
 import { I18nComponent } from './i18n.component';
 import { RpcServerComponent } from './rpc_server.component';

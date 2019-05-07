@@ -6,7 +6,10 @@
 #   |- redis
 #   - components
 #   |- web
-#   |- websocket
+#   |- ws_server
+#   |- ws_emitter
+#   |- grpc_server
+#   |- grpc_client
 #   |- cron
 #   |- i18n
 #   - devops
@@ -23,13 +26,12 @@ modules:
     type: storage
     default: true
     files:
-      - src/database/mongodb.connection.ts
-      - src/services/service.mongodb.ts
+      - src/components/mongodb.component.ts
+      - src/components/lib/database/mongodb.connection.ts
       - src/models/**
       - src/controllers/**
     config:
       - database.mongodb
-      - service.mongodb
     packages:
       - mongoose
       - '@types/mongoose'
@@ -39,12 +41,11 @@ modules:
     type: storage
     default: true
     files:
-      - src/database/redis.connection.ts
-      - src/services/service.redis.ts
+      - src/components/redis.component.ts
+      - src/components/lib/database/redis.connection.ts
       - src/types/connect-redis/**
     config:
       - database.redis
-      - service.redis
     packages:
       - connect-redis
       - ioredis
@@ -57,36 +58,40 @@ modules:
     files:
       - views/**
       - src/routes/**
-      - src/middlewares/**
-      - temp/upload/**
+      - temp/**
       - public/**
 
-  - name: websocket
-    label: Websocket Service
+  - name: ws_server
+    label: Websocket Server
     type: components
     files:
-      - src/websocket/**
-      - src/services/service.websocket.ts
-      - src/types/socket.io-emitter/**
-    config:
-      - service.websocket
+      - src/components/ws_server.component.ts
+      - src/components/lib/websocket/**
     dependencies:
       - redis
     packages:
       - socket.io
-      - socket.io-emitter
       - socket.io-redis
       - '@types/socket.io'
       - '@types/socket.io-redis'
+
+  - name: ws_emitter
+    label: Websocket Emitter
+    type: components
+    files:
+      - src/components/ws_emitter.component.ts
+      - src/types/socket.io-emitter/**
+    dependencies:
+      - redis
+    packages:
+      - socket.io-emitter
 
   - name: cron
     label: Cron Job
     type: components
     files:
-      - src/cron_job/**
-      - src/services/service.cron.ts
-    config:
-      - service.cron
+      - src/components/cron.component.ts
+      - src/plugins/cron_jobs/**
     packages:
       - cron
       - '@types/cron'
@@ -95,8 +100,8 @@ modules:
     label: i18n
     type: components
     files:
-      - src/i18n.ts
-      - src/services/service.i18n.ts
+      - src/components/i18n.component.ts
+      - src/components/lib/i18n.ts
       - src/types/i18next-conv/**
       - resources/i18n/**
       - tools/i18n_scan.js
@@ -107,17 +112,36 @@ modules:
     scripts:
       - i18n-scan
 
-  - name: grpc
-    label: gRPC
+  - name: grpc_server
+    label: gRPC Server
     type: components
     files:
-      - src/rpc/**
+      - src/components/rpc_server.component.ts
+      - src/plugins/rpc/services/**
+      - src/plugins/rpc/types/**
+      - src/plugins/rpc/*
+      - src/plugins/rpc/server.ts
     packages:
       - grpc
       - '@grpc/proto-loader'
       - prodobufjs
     config:
-      - components.grpc
+      - components.grpc.server
+
+  - name: grpc_client
+    label: gRPC Client
+    type: components
+    files:
+      - src/components/rpc_client.component.ts
+      - src/plugins/rpc/clients/**
+      - src/plugins/rpc/types/**
+      - src/plugins/rpc/*
+    packages:
+      - grpc
+      - '@grpc/proto-loader'
+      - prodobufjs
+    config:
+      - components.grpc.clients
 
   - name: graylog
     label: Graylog (Logging)
@@ -131,7 +155,7 @@ modules:
     label: Sentry (Error tracking)
     type: devops
     files:
-      - src/logger/transports/transport.sentry.ts
+      - src/components/lib/logger/transports/transport.sentry.ts
     config:
       - system.log.sentry
     packages:
@@ -176,6 +200,7 @@ ignore_files:
   - .git/**
   - .idea/**
   - .vscode/**
+  - .nyc_output/**
   - dist/**
   - log/**
   - coverage/**
