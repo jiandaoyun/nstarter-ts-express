@@ -1,6 +1,5 @@
 import { config } from './config';
-import { httpServer } from './components';
-import { logger } from './components/lib/logger';
+import { httpServer, logger } from './components';
 
 const port = config.server.http.port;
 httpServer.listen(port);
