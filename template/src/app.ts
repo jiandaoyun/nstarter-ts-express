@@ -1,13 +1,12 @@
 import { config } from './config';
-import { server } from './server';
-import { logger } from './components/lib/logger';
+import { httpServer, logger } from './components';
 
 const port = config.server.http.port;
-server.listen(port);
-server.on('error', (err) => {
+httpServer.listen(port);
+httpServer.on('error', (err) => {
     logger.error(err);
     process.exit(1);
 });
-server.on('listening', () => {
+httpServer.on('listening', () => {
     logger.info(`Listening on：${ port }`);
 });

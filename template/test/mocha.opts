@@ -1,0 +1,10 @@
+--require ./test/ts-node
+--require source-map-support/register
+--recursive
+--ui bdd
+--timeout 5000
+--no-warnings
+--exit
+--reporter min
+
+./test/**/*.ts

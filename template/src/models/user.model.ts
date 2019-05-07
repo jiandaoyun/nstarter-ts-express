@@ -6,8 +6,8 @@ const db = mongodb.connection;
 export type User = {
     username: string,
     nickname: string,
-    email: string,
-    phone: string,
+    email?: string,
+    phone?: string,
     password: string,
     salt: string
 };

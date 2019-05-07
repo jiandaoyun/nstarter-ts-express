@@ -268,10 +268,6 @@
               "description": "gRPC server config",
               "$ref": "#/definitions/config_obj",
               "properties": {
-                "enabled": {
-                  "type": "boolean",
-                  "default": true
-                },
                 "port": {
                   "$ref": "#/definitions/port_number",
                   "default": 9050
@@ -296,26 +292,6 @@
               }
             }
           }
-        }
-      }
-    },
-    "service": {
-      "$ref": "#/definitions/config_obj",
-      "properties": {
-        "http": {
-          "$ref": "#/definitions/service_conf"
-        },
-        "mongodb": {
-          "$ref": "#/definitions/service_conf"
-        },
-        "redis": {
-          "$ref": "#/definitions/service_conf"
-        },
-        "websocket": {
-          "$ref": "#/definitions/service_conf"
-        },
-        "cron": {
-          "$ref": "#/definitions/service_conf"
         }
       }
     }

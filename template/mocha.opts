@@ -1,8 +1,0 @@
---recursive
---ui bdd
---timeout 5000
---no-warnings
---exit
---reporter min
-
-./test/server
