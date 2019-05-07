@@ -37,5 +37,12 @@ pipeline {
                 }
             }
         }
+        stage('Test') {
+            steps {
+                nvm('version': env.NODE_VERSION) {
+                    sh "npm test"
+                }
+            }
+        }
     }
 }
