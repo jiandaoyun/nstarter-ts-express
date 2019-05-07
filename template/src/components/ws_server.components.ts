@@ -4,6 +4,7 @@ import { BaseComponent } from './base.component';
 import { WebSocket } from './lib/websocket/socket';
 import { lazyInject, provideComponent } from './container';
 import { RedisComponent } from './redis.component';
+import { HttpServerComponent } from './http_server.component';
 
 @provideComponent()
 export class WsServerComponent extends BaseComponent {
@@ -11,10 +12,15 @@ export class WsServerComponent extends BaseComponent {
 
     @lazyInject(RedisComponent)
     private _redisComponent: RedisComponent;
+
+    @lazyInject(HttpServerComponent)
+    private _httpServerComponent: HttpServerComponent;
+
     constructor() {
         super();
-        const redis = this._redisComponent.redis;
-        this._server = WebSocket.createServer(redis);
+        const redis = this._redisComponent.redis,
+            httpServer = this._httpServerComponent.server;
+        this._server = WebSocket.createServer(redis, httpServer);
         this.log();
     }
 

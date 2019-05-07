@@ -1,4 +1,5 @@
 import _, { Dictionary } from 'lodash';
+import { Server } from 'http';
 import async from 'async';
 import SocketIO from 'socket.io';
 import SocketIORedis from 'socket.io-redis';
@@ -8,7 +9,6 @@ import session from 'express-session';
 import { ServerResponse } from 'http';
 import { Response } from 'express';
 
-import { server } from '../../../server';
 import { config } from '../../../config';
 import { logger } from '../logger';
 
@@ -18,7 +18,7 @@ import { RedisConnector } from '../database/redis.connection';
 const RedisStore = connectRedis(session);
 
 export class WebSocket {
-    public static createServer(redis: RedisConnector): SocketIO.Server {
+    public static createServer(redis: RedisConnector, server: Server): SocketIO.Server {
         const io = SocketIO(server, {
             path: '/socket',
             serveClient: false,

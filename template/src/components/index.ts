@@ -9,6 +9,7 @@ import { I18nComponent } from './i18n.component';
 import { RpcServerComponent } from './rpc_server.component';
 import { RpcClientComponent } from './rpc_client.component';
 import { LoggerComponent } from './logger.component';
+import { HttpServerComponent } from './http_server.component';
 
 export const mongodb = container.get(MongodbComponent).db;
 export const redis = container.get(RedisComponent).redis;
@@ -20,3 +21,4 @@ export const logger = container.get(LoggerComponent).logger;
 export const reqLogger = container.get(LoggerComponent).reqLogger;
 export const rpcServer = container.get(RpcServerComponent).server;
 export const rpcClient = container.get(RpcClientComponent).clients;
+export const httpServer = container.get(HttpServerComponent).server;

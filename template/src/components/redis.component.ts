@@ -10,7 +10,6 @@ export class RedisComponent extends BaseComponent {
     constructor () {
         super();
         this._redis = new RedisConnector(config.database.redis);
-        this._redis.connect(() => {});
         this.log();
     }
 

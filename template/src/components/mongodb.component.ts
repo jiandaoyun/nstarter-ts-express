@@ -10,7 +10,6 @@ export class MongodbComponent extends BaseComponent {
     constructor () {
         super();
         this._db = new MongodbConnector(config.database.mongodb);
-        this._db.connect(() => {});
         this.log();
     }
 
