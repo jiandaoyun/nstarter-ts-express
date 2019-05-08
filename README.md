@@ -50,7 +50,7 @@ This is a backend oriented project template based on MVCS architecture.
 
 ## Templating
 
-For details to create `nstarter` template, please read more about [templating](./doc/templating.md).
+For details to create `nstarter` template, please read more about [templating](../nstarter/doc/templating.md).
 
 
 ## License
