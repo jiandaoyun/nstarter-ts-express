@@ -29,7 +29,9 @@ interface SentryConf extends LogConf {
 //#endmodule sentry
 
 export interface SystemConfig {
+    //#module i18n
     readonly locale: string;
+    //#endmodule i18n
     readonly timezone: string;
     readonly log: {
         readonly console: ConsoleLogConf,

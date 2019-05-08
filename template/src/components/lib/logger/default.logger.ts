@@ -5,8 +5,12 @@ import Transport from 'winston-transport';
 import RotateFileTransport, {
     DailyRotateFileTransportOptions
 } from 'winston-daily-rotate-file';
+//#module graylog
 import Graylog2Transport from 'winston-graylog2';
+//#endmodule graylog
+//#module sentry
 import { SentryTransport } from './transports';
+//#endmodule sentry
 
 import { config } from '../../../config';
 import { Consts } from '../../../constants';

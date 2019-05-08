@@ -1,27 +1,40 @@
 import http from 'http';
 import express from 'express';
+//#module web
 import session = require('express-session');
+//#module redis
 import connectRedis = require('connect-redis');
+//#endmodule redis
 import cookieParser = require('cookie-parser');
+//#endmodule web
 
 import { BaseComponent } from './base.component';
 import { lazyInject, provideComponent } from './container';
+//#module redis
 import { RedisComponent } from './redis.component';
+//#endmodule redis
+//#module i18n
 import { I18nComponent } from './i18n.component';
+//#endmodule i18n
 import { LoggerComponent } from './logger.component';
 
+//#module web
 import { config } from '../config';
 import { router } from '../routes';
+//#endmodule web
 
 @provideComponent()
 export class HttpServerComponent extends BaseComponent {
     private _server: http.Server;
 
+    //#module redis
     @lazyInject(RedisComponent)
     private _redisComponent: RedisComponent;
-
+    //#endmodule redis
+    //#module i18n
     @lazyInject(I18nComponent)
     private _i18nComponent: I18nComponent;
+    //#endmodule i18n
 
     @lazyInject(LoggerComponent)
     private _loggerComponent: LoggerComponent;

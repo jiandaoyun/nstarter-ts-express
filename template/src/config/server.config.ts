@@ -2,6 +2,7 @@ export interface ServerConfig {
     readonly http: {
         readonly port: number
     };
+    //#module web
     readonly static: {
         readonly views: string,
         readonly public: string
@@ -10,6 +11,7 @@ export interface ServerConfig {
         readonly secret: string,
         readonly name: string
     };
+    //#endmodule web
     readonly cookie: {
         readonly secret: string,
         readonly policy: {
