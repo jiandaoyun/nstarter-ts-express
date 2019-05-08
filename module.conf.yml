@@ -121,6 +121,7 @@ modules:
       - src/plugins/rpc/types/**
       - src/plugins/rpc/*
       - src/plugins/rpc/server.ts
+      - resources/grpc/**
     packages:
       - grpc
       - '@grpc/proto-loader'
@@ -136,6 +137,7 @@ modules:
       - src/plugins/rpc/clients/**
       - src/plugins/rpc/types/**
       - src/plugins/rpc/*
+      - resources/grpc/**
     packages:
       - grpc
       - '@grpc/proto-loader'
