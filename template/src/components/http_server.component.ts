@@ -1,10 +1,12 @@
 import http from 'http';
 import express from 'express';
+//#module web
 import session = require('express-session');
 //#module redis
 import connectRedis = require('connect-redis');
 //#endmodule redis
 import cookieParser = require('cookie-parser');
+//#endmodule web
 
 import { BaseComponent } from './base.component';
 import { lazyInject, provideComponent } from './container';
@@ -16,8 +18,10 @@ import { I18nComponent } from './i18n.component';
 //#endmodule i18n
 import { LoggerComponent } from './logger.component';
 
+//#module web
 import { config } from '../config';
 import { router } from '../routes';
+//#endmodule web
 
 @provideComponent()
 export class HttpServerComponent extends BaseComponent {

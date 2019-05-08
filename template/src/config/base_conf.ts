@@ -7,6 +7,7 @@ export const baseConf: ConfigType = {
         http: {
             port: 3000
         },
+        //#module web
         static: {
             views: './views',
             public: './public'
@@ -15,6 +16,7 @@ export const baseConf: ConfigType = {
             secret: '!passw0rd',
             name: 'SID'
         },
+        //#endmodule web
         cookie: {
             secret: '!passw0rd',
             policy: {
@@ -25,6 +27,7 @@ export const baseConf: ConfigType = {
         }
     },
     database: {
+        //#module mongodb
         mongodb: {
             mongod: {
                 host: 'localhost',
@@ -34,15 +37,20 @@ export const baseConf: ConfigType = {
             password: '!passw0rd',
             db: 'data'
         },
+        //#endmodule mongodb
+        //#module redis
         redis: {
             name: 'redis',
             host: 'localhost',
             port: 6379,
             password: '!passw0rd'
         }
+        //#endmodule redis
     },
     system: {
+        //#module i18n
         locale: 'en_us',
+        //#endmodule i18n
         timezone: 'UTC',
         log: {
             console: {
@@ -57,6 +65,7 @@ export const baseConf: ConfigType = {
                 zip: true,
                 rotate_days: 14
             },
+            //#module graylog
             graylog: {
                 enabled: false,
                 level: 'info',
@@ -65,11 +74,14 @@ export const baseConf: ConfigType = {
                     port: 12201
                 }]
             },
+            //#endmodule graylog
+            //#module sentry
             sentry: {
                 enabled: false,
                 level: 'warn',
                 dsn: ''
-            }
+            },
+            //#endmodule sentry
         },
         req_log: {
             enabled: true
@@ -77,13 +89,17 @@ export const baseConf: ConfigType = {
     },
     components: {
         grpc: {
+            //#module grpc_server
             server: {
                 port: 9050
             },
+            //#endmodule grpc_server
+            //#module grpc_client
             clients: [{
                 package: 'worker',
                 address: 'localhost:9050'
             }]
+            //#endmodule grpc_client
         }
     }
 };

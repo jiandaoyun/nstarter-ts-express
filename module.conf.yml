@@ -157,7 +157,7 @@ modules:
     label: Sentry (Error tracking)
     type: devops
     files:
-      - src/components/lib/logger/transports/transport.sentry.ts
+      - src/components/lib/logger/transports/sentry.transport.ts
     config:
       - system.log.sentry
     packages:
