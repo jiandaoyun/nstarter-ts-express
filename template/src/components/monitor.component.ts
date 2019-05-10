@@ -21,7 +21,9 @@ export class MonitorComponent extends BaseComponent {
 
     constructor() {
         super();
+        //#module cron
         this.startPushTask();
+        //#endmodule cron
         this._monitor = Monitor;
     }
 
