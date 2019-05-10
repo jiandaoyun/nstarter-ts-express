@@ -40,6 +40,12 @@ import { RpcClientComponent } from './rpc_client.component';
 export const rpcClient = container.get(RpcClientComponent).clients;
 
 //#endmodule grpc_client
+//#module monitor
+
+import { MonitorComponent } from './monitor.component';
+export const monitor = container.get(MonitorComponent).monitor;
+//#endmodule monitor
+
 import { LoggerComponent } from './logger.component';
 import { HttpServerComponent } from './http_server.component';
 

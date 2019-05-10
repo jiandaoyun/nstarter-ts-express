@@ -85,6 +85,10 @@ export const baseConf: ConfigType = {
         },
         req_log: {
             enabled: true
+        },
+        monitor: {
+            metric_path: '/metrics',
+            gateway: ''
         }
     },
     components: {

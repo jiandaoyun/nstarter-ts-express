@@ -8,4 +8,8 @@ declare global {
         readonly httpCode?: number;
         readonly isCustomError?: boolean;
     }
+
+    interface Constructor {
+        new(...args: any[]): any
+    }
 }

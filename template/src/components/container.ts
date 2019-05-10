@@ -12,11 +12,7 @@ const { lazyInject } = getDecorators(container);
 
 export { container, lazyInject };
 
-interface Ctor {
-    new(...args: any[]): {}
-}
-
-export function provideComponent<T extends Ctor>(name?: string) {
+export function provideComponent<T extends Constructor>(name?: string) {
     return (constructor: T) => {
         const target = constructor.prototype;
         if (!name) {
