@@ -85,7 +85,15 @@ export const baseConf: ConfigType = {
         },
         req_log: {
             enabled: true
+        },
+        //#module monitor
+        monitor: {
+            metric_path: '/metrics',
+            //#module cron
+            gateway: ''
+            //#endmodule cron
         }
+        //#endmodule monitor
     },
     components: {
         grpc: {

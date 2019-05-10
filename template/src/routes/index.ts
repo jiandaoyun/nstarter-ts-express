@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { DemoRouter } from './demo.router';
+import * as DemoRouter from './demo.router';
 import { ErrorHandler } from './middlewares/error.handler';
 
 export const requestRouter = Router();

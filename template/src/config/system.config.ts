@@ -45,5 +45,13 @@ export interface SystemConfig {
     };
     readonly req_log: {
         readonly enabled: boolean;
-    }
+    };
+    //#module monitor
+    readonly monitor: {
+        readonly metric_path: string;
+        //#module cron
+        readonly gateway: string;
+        //#endmodule cron
+    };
+    //#endmodule monitor
 }

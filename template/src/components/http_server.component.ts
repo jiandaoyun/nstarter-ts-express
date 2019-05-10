@@ -16,6 +16,9 @@ import { RedisComponent } from './redis.component';
 //#module i18n
 import { I18nComponent } from './i18n.component';
 //#endmodule i18n
+//#module monitor
+import { MonitorComponent } from './monitor.component';
+//#endmodule monitor
 import { LoggerComponent } from './logger.component';
 
 //#module web
@@ -35,6 +38,10 @@ export class HttpServerComponent extends BaseComponent {
     @lazyInject(I18nComponent)
     private _i18nComponent: I18nComponent;
     //#endmodule i18n
+    //#module monitor
+    @lazyInject(MonitorComponent)
+    private _monitorComponent: MonitorComponent;
+    //#endmodule monitor
 
     @lazyInject(LoggerComponent)
     private _loggerComponent: LoggerComponent;
@@ -86,6 +93,11 @@ export class HttpServerComponent extends BaseComponent {
         if (config.system.req_log.enabled) {
             app.use(this._loggerComponent.reqLogger.middleware);
         }
+        //#module monitor
+
+        app.use(this._monitorComponent.requestMonitorMiddleware);
+        app.use(this._monitorComponent.metricsRouter);
+        //#endmodule monitor
 
         app.use('/', router);
         //#endmodule web

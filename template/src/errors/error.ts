@@ -10,9 +10,10 @@ interface ErrorOptions {
     wrapper?: Function
 }
 
-class CustomError extends Error {
+class CustomError extends Error implements Error {
     public readonly isCustomError = true;
     public readonly name: string;
+    public readonly message: string;
     public readonly code: number;
     public readonly level: LogLevel;
     public readonly meta: any;
@@ -35,10 +36,10 @@ class CustomError extends Error {
 }
 
 interface ErrorBuilder {
-    (code: number, level?: LogLevel, options?: ErrorOptions): CustomError
+    (code: number, level?: LogLevel, options?: ErrorOptions): Error
 }
 
 export const errors = {} as Record<keyof typeof ErrorTypes, ErrorBuilder>;
 _.forEach(Object.keys(ErrorTypes), (errorType: keyof typeof ErrorTypes) => {
-    errors[errorType] = (...args) => new CustomError(ErrorTypes[errorType], ...args);
+    errors[errorType] = (...args) => new CustomError(ErrorTypes[errorType], ...args) as Error;
 });
