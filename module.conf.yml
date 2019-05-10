@@ -163,6 +163,17 @@ modules:
     packages:
       - '@sentry/node'
 
+  - name: monitor
+    label: Performance monitor(Prometheus)
+    type: devops
+    files:
+      - src/components/monitor.component.ts
+      - src/plugins/monitor/**
+    conifg:
+      - system.monitor
+    package:
+      - prom-client
+
   - name: conf_yaml
     label: YAML Config
     type: devops
