@@ -1,11 +1,11 @@
 import http from 'http';
 import express from 'express';
 //#module web
-import session = require('express-session');
+import session from 'express-session';
 //#module redis
-import connectRedis = require('connect-redis');
+import connectRedis from 'connect-redis';
 //#endmodule redis
-import cookieParser = require('cookie-parser');
+import cookieParser from 'cookie-parser';
 //#endmodule web
 
 import { BaseComponent } from './base.component';

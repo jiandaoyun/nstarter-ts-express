@@ -5,7 +5,7 @@ import { provideComponent } from './container';
 
 @provideComponent()
 export class RedisComponent extends BaseComponent {
-    private _redis: RedisConnector;
+    private readonly _redis: RedisConnector;
 
     constructor () {
         super();

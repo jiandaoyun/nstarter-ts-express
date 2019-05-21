@@ -4,7 +4,7 @@ import { provideComponent } from './container';
 
 @provideComponent('i18n')
 export class I18nComponent extends BaseComponent {
-    private _i18n: I18n;
+    private readonly _i18n: I18n;
 
     constructor() {
         super();
