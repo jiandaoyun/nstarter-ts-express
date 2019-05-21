@@ -29,6 +29,7 @@ This is a backend oriented project template based on MVCS architecture.
 │   │   ├── utils/              # Shared project utility methods.
 │   │   ├── plugins/            # Plugin
 │   │   │   ├── cron_job/       # Cron jobs.
+│   │   │   ├── monitor/        # Performance monitor by prometheus.
 │   │   │   └── rpc/            # GRPC server services & client methods.
 │   │   ├── types/              # Typescript type extensions.
 │   │   └── app.ts              # Main app file.
