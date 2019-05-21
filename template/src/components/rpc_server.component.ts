@@ -6,7 +6,7 @@ import { provideComponent } from './container';
 
 @provideComponent()
 export class RpcServerComponent extends BaseComponent {
-    private _server: Server;
+    private readonly _server: Server;
 
     constructor() {
         super();
