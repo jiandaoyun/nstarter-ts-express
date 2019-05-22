@@ -5,7 +5,7 @@ import { provideComponent } from './container';
 
 @provideComponent()
 export class MongodbComponent extends BaseComponent {
-    private _db: MongodbConnector;
+    private readonly _db: MongodbConnector;
 
     constructor () {
         super();

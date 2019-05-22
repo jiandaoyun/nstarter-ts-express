@@ -6,7 +6,7 @@ import { RedisComponent } from './redis.component';
 
 @provideComponent()
 export class WsEmitterComponent extends BaseComponent {
-    private _emitter: Emitter;
+    private readonly _emitter: Emitter;
 
     @lazyInject(RedisComponent)
     private _redisComponent: RedisComponent;
