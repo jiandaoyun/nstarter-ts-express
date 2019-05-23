@@ -4,9 +4,7 @@ import * as Sentry from '@sentry/node';
 import { LEVEL } from 'triple-beam';
 import { config } from '../../../../config';
 
-export interface SentryTransportOptions extends TransportStreamOptions {
-    dsn: string
-}
+interface SentryTransportOptions extends TransportStreamOptions, Sentry.NodeOptions {}
 
 const sentryLevelMap: Record<string, Sentry.Severity> = {
     debug: Sentry.Severity.Debug,
@@ -16,7 +14,7 @@ const sentryLevelMap: Record<string, Sentry.Severity> = {
 };
 
 export class SentryTransport extends Transport {
-    private _dsn: string;
+    private readonly _dsn?: string;
 
     constructor(options: SentryTransportOptions) {
         super(options);
