@@ -15,14 +15,14 @@ export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> 
         });
         this.connection.once('open', () => {
             this.connection.on('error', (err) => {
-                logger.error('Mognodb connection failed', { error: err });
+                logger.error('Mongodb connection failed', { error: err });
             });
             this.connection.on('disconnected', () => {
-                logger.error('Mognodb disconnected');
+                logger.error('Mongodb disconnected');
                 return process.exit(1);
             });
             this.connection.on('reconnected', () => {
-                logger.error('Mognodb reconnected');
+                logger.error('Mongodb reconnected');
             });
         });
     }
