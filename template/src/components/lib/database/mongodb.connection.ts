@@ -1,12 +1,13 @@
 import mongoose, { Connection } from 'mongoose';
-import { BaseConnection } from './base.connection';
 import { MongodbConfig } from '../../../config/database.config';
 import { logger } from '../logger';
 
-export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> {
-    constructor (options: MongodbConfig) {
-        super(options);
+export class MongodbConnector {
+    private readonly _options: MongodbConfig;
+    public readonly connection: Connection;
 
+    constructor (options: MongodbConfig) {
+        this._options = options;
         this.connection = mongoose.createConnection(this.mongoUri, {
             autoReconnect: true,
             connectTimeoutMS: 10000,
@@ -28,7 +29,7 @@ export class MongodbConnector extends BaseConnection<MongodbConfig, Connection> 
     }
 
     private get mongoUri(): string {
-        const o = this._options;
-        return `mongodb://${ o.user }:${ o.password }@${ o.mongod.host }:${ o.mongod.port }/${ o.db }`;
+        const {user, password, mongod, db} = this._options;
+        return `mongodb://${ user }:${ password }@${ mongod.host }:${ mongod.port }/${ db }`;
     }
 }
