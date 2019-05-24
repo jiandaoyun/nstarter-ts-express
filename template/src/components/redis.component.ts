@@ -1,10 +1,10 @@
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { RedisConnector } from './lib/database/redis.connection';
 import { config } from '../config';
 import { provideComponent } from './container';
 
 @provideComponent()
-export class RedisComponent extends BaseComponent {
+export class RedisComponent extends AbstractComponent {
     private readonly _redis: RedisConnector;
 
     constructor () {

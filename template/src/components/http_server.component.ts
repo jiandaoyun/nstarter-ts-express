@@ -8,7 +8,7 @@ import connectRedis from 'connect-redis';
 import cookieParser from 'cookie-parser';
 //#endmodule web
 
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { lazyInject, provideComponent } from './container';
 //#module redis
 import { RedisComponent } from './redis.component';
@@ -27,7 +27,7 @@ import { router } from '../routes';
 //#endmodule web
 
 @provideComponent()
-export class HttpServerComponent extends BaseComponent {
+export class HttpServerComponent extends AbstractComponent {
     private _server: http.Server;
 
     //#module redis

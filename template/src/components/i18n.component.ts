@@ -1,9 +1,9 @@
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { I18n } from './lib/i18n';
 import { provideComponent } from './container';
 
 @provideComponent('i18n')
-export class I18nComponent extends BaseComponent {
+export class I18nComponent extends AbstractComponent {
     private readonly _i18n: I18n;
 
     constructor() {

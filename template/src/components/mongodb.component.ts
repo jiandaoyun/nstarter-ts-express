@@ -1,10 +1,10 @@
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { MongodbConnector } from './lib/database/mongodb.connection';
 import { config } from '../config';
 import { provideComponent } from './container';
 
 @provideComponent()
-export class MongodbComponent extends BaseComponent {
+export class MongodbComponent extends AbstractComponent {
     private readonly _db: MongodbConnector;
 
     constructor () {
