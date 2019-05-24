@@ -5,7 +5,7 @@ import { logger } from '../logger';
 
 export class RedisConnector {
     private readonly _options: RedisConfig;
-    public connection: Redis;
+    public readonly connection: Redis;
 
     constructor (options: RedisConfig) {
         this._options = options;
