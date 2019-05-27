@@ -6,14 +6,14 @@ import { Pushgateway } from 'prom-client';
 import { RequestHandler, Router } from 'express';
 import URL from 'url';
 
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { LoggerComponent } from './logger.component';
 import { lazyInject, provideComponent } from './container';
 import { config } from '../config';
 import { Monitor, registry } from '../plugins/monitor';
 
 @provideComponent()
-export class MonitorComponent extends BaseComponent {
+export class MonitorComponent extends AbstractComponent {
     private readonly _monitor: typeof Monitor;
 
     @lazyInject(LoggerComponent)

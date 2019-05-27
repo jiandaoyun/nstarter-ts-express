@@ -1,16 +1,16 @@
 import _ from 'lodash';
 import Transport, { TransportStreamOptions } from 'winston-transport';
-import * as Sentry from '@sentry/node';
+import {init, Severity, NodeOptions, withScope, captureException, captureMessage} from '@sentry/node';
 import { LEVEL } from 'triple-beam';
 import { config } from '../../../../config';
 
-interface SentryTransportOptions extends TransportStreamOptions, Sentry.NodeOptions {}
+interface SentryTransportOptions extends TransportStreamOptions, NodeOptions {}
 
-const sentryLevelMap: Record<string, Sentry.Severity> = {
-    debug: Sentry.Severity.Debug,
-    info: Sentry.Severity.Info,
-    warn: Sentry.Severity.Warning,
-    error: Sentry.Severity.Error
+const sentryLevelMap: Record<string, Severity> = {
+    debug: Severity.Debug,
+    info: Severity.Info,
+    warn: Severity.Warning,
+    error: Severity.Error
 };
 
 export class SentryTransport extends Transport {
@@ -19,7 +19,7 @@ export class SentryTransport extends Transport {
     constructor(options: SentryTransportOptions) {
         super(options);
         this._dsn = options.dsn;
-        Sentry.init({
+        init({
             dsn: this._dsn,
             release: config.version,
             environment: config.env,
@@ -38,17 +38,17 @@ export class SentryTransport extends Transport {
         setImmediate(() => {
             this.emit('logged', info);
         });
-        const level = _.get(sentryLevelMap, info[LEVEL], Sentry.Severity.Error);
+        const level = _.get(sentryLevelMap, info[LEVEL], Severity.Error);
         // @see https://github.com/winstonjs/winston#streams-objectmode-and-info-objects
         if (info.error) {
             // error info
-            Sentry.withScope((scope) => {
+            withScope((scope) => {
                 scope.setLevel(level);
-                Sentry.captureException(info.error);
+                captureException(info.error);
             });
         } else {
             // string info
-            Sentry.captureMessage(info.message, level);
+            captureMessage(info.message, level);
         }
         return callback();
     }

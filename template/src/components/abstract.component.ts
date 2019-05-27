@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import { logger } from './lib/logger';
 
 @injectable()
-export abstract class BaseComponent {
+export abstract class AbstractComponent {
     protected _name: string;
 
     protected log () {

@@ -1,12 +1,12 @@
 import _ from 'lodash';
 
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import * as jobs from '../plugins/cron_jobs';
 import { BaseCronJob } from '../plugins/cron_jobs/base.job';
 import { provideComponent } from './container';
 
 @provideComponent()
-export class CronComponent extends BaseComponent {
+export class CronComponent extends AbstractComponent {
     private _jobs: Record<string, BaseCronJob> = jobs;
 
     constructor () {

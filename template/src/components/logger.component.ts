@@ -1,9 +1,9 @@
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { logger, reqLogger } from './lib/logger';
 import { provideComponent } from './container';
 
 @provideComponent()
-export class LoggerComponent extends BaseComponent {
+export class LoggerComponent extends AbstractComponent {
     private _logger = logger;
     private _reqLogger = reqLogger;
 

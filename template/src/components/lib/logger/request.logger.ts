@@ -105,7 +105,6 @@ export class RequestLogger {
             http_version: req.httpVersion
         };
         this.log(this._formatRequest(req, res, duration), meta);
-        // TODO log performatce
     }
 
     public get middleware(): RequestHandler {

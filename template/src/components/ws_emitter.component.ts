@@ -1,11 +1,11 @@
 import SocketIOEmitter, { Emitter } from 'socket.io-emitter';
 
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { lazyInject, provideComponent } from './container';
 import { RedisComponent } from './redis.component';
 
 @provideComponent()
-export class WsEmitterComponent extends BaseComponent {
+export class WsEmitterComponent extends AbstractComponent {
     private readonly _emitter: Emitter;
 
     @lazyInject(RedisComponent)

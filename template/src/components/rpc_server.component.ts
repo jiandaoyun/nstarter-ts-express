@@ -1,11 +1,11 @@
 import { Server } from 'grpc';
 
-import { BaseComponent } from './base.component';
+import { AbstractComponent } from './abstract.component';
 import { server } from '../plugins/rpc';
 import { provideComponent } from './container';
 
 @provideComponent()
-export class RpcServerComponent extends BaseComponent {
+export class RpcServerComponent extends AbstractComponent {
     private readonly _server: Server;
 
     constructor() {
