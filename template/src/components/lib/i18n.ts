@@ -108,7 +108,7 @@ export class I18n {
     /**
      * Translator method
      */
-    public t (key: string, locale: string, options: i18next.TOptions): string {
+    public t (key: string, locale?: string, options?: i18next.TOptions): string {
         locale = locale || config.system.locale;
         const translator = this._getTranslator(locale);
         return translator(key, options);
