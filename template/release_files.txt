@@ -1,9 +1,0 @@
-public
-resources
-dist
-tools
-views
-*.json
-*.md
-LICENSE
-makefile

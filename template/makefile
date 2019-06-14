@@ -13,10 +13,19 @@ test:
 serve:
 	npm run serve
 
-prepack:
-	tar -czf ./build/release.tar.gz --files-from=./release_files.txt
+zip: build
+	zip -rq ./build/release.zip \
+		public \
+		resources \
+		dist \
+		tools \
+		views \
+		package*.json \
+		*.md \
+		LICENSE \
+		makefile
 
-docker-build:
+docker-build: zip
 	docker build \
 		-t ${DOCKER_IMG}:${VERSION} \
 		-t ${DOCKER_IMG}:latest \

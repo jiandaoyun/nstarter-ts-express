@@ -12,6 +12,11 @@ export class MongodbConnector {
             autoReconnect: true,
             connectTimeoutMS: 10000,
             reconnectTries: Number.MAX_VALUE,
+            reconnectInterval: 1000,
+            keepAlive: true,
+            keepAliveInitialDelay: 300000,
+            socketTimeoutMS: 0,
+            useCreateIndex: true,
             useNewUrlParser: true
         });
         this.connection.once('open', () => {

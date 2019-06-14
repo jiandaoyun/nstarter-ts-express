@@ -4,7 +4,8 @@ USER root:root
 WORKDIR /var/app
 
 ENV TZ=UTC
-ADD [ "./build/release.tar.gz", "/var/app" ]
+ADD [ "./build/release.zip", "/tmp" ]
+RUN unzip -q /tmp/release.zip -d /var/app && ls -lh
 RUN npm install --production
 
 VOLUME [ "/var/app/conf.d", "/var/app/log", "/var/app/temp" ]
