@@ -127,10 +127,7 @@ export class I18n {
                 }
                 req._locale = locale;
                 req.i18n.t = this._getTranslator(req._locale);
-                _.set(res.locals.STATIC, 'locale', locale);
             };
-            // Init static locale param for template engine
-            _.set(res.locals.STATIC, 'locale', req.getLocale());
             return next();
         };
     }
