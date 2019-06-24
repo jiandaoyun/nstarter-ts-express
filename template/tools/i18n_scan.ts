@@ -1,11 +1,10 @@
-'use strict';
-const _ = require('lodash');
-const async = require('async');
-const fs = require('fs');
-const path = require('path');
+import _ from 'lodash';
+import async from 'async';
+import fs, { Stats } from 'fs';
+import path from 'path';
 
-const { Parser } = require('i18next-scanner');
-const { i18nextToPot } = require('i18next-conv');
+import { i18nextToPot } from 'i18next-conv';
+import { Parser } from 'i18next-scanner';
 
 const i18nParser = new Parser({
     keySeparator: false
@@ -36,7 +35,7 @@ class I18nScanner {
      * @param {Function} callback
      * @static
      */
-    static scanContent (content, callback) {
+    public static scanContent (content: string, callback: Callback) {
         i18nParser.parseFuncFromString(content, {
             list: config.functions
         });
@@ -48,8 +47,11 @@ class I18nScanner {
      * @param {Function} callback
      * @static
      */
-    static scanFile (filePath, callback) {
-        async.auto({
+    public static scanFile (filePath: string, callback: Callback) {
+        async.auto<{
+            stat: Stats,
+            scan: void
+        }>({
             stat: (callback) => fs.stat(filePath, callback),
             scan: ['stat', (results, callback) => {
                 const fileStats = results.stat;
@@ -64,7 +66,7 @@ class I18nScanner {
                     if (config.debug) {
                         console.log(`[scan] ${ filePath }`);
                     }
-                    async.auto({
+                    async.auto<any>({
                         content: (callback) =>
                             fs.readFile(filePath, config.encoding, callback),
                         parse: ['content', (results, callback) =>
@@ -82,8 +84,11 @@ class I18nScanner {
      * @param {Function} callback
      * @static
      */
-    static scanDir (basePath, callback) {
-        async.auto({
+    public static scanDir (basePath: string, callback: Callback) {
+        async.auto<{
+            files: string[],
+            parse: void
+        }>({
             files: (callback) => {
                 fs.readdir(basePath, callback);
             },
@@ -98,7 +103,7 @@ class I18nScanner {
     /**
      * @returns {Object} - I18n key map
      */
-    static getI18nKeys () {
+    public static getI18nKeys () {
         return _.get(i18nParser.get(), 'en.translation', {});
     }
 }
@@ -111,12 +116,12 @@ if (module.parent) {
             I18nScanner.scanDir(config.src, callback),
         template: ['scan', (results, callback) => {
             const items = I18nScanner.getI18nKeys();
-            const sorted = {};
+            const sorted: Record<string, string> = {};
             _.forEach(_.keys(items).sort(), (key) =>
                 sorted[key] = items[key]
             );
             i18nextToPot('en', JSON.stringify(sorted))
-                .then((result) => {
+                .then((result: string) => {
                     fs.writeFile(config.output, result, callback);
                 });
         }]
