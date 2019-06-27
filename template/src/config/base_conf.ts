@@ -33,6 +33,8 @@ export const baseConf: ConfigType = {
                 host: 'localhost',
                 port: 27017
             },
+            user: 'admin',
+            password: '!passw0rd',
             db: 'data'
         },
         //#endmodule mongodb

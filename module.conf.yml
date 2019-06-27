@@ -1,7 +1,7 @@
 # Project template module description file
 #
 # modules:
-#   - storagea
+#   - storage
 #   |- rabbitmq
 #   |- mongodb
 #   |- redis
