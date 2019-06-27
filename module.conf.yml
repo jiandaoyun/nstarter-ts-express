@@ -1,7 +1,8 @@
 # Project template module description file
 #
 # modules:
-#   - storage
+#   - storagea
+#   |- rabbitmq
 #   |- mongodb
 #   |- redis
 #   - components
@@ -12,6 +13,7 @@
 #   |- grpc_client
 #   |- cron
 #   |- i18n
+#   |- queue
 #   - devops
 #   |- graylog
 #   |- sentry
@@ -50,6 +52,21 @@ modules:
       - connect-redis
       - ioredis
       - '@types/ioredis'
+
+  - name: rabbitmq
+    label: RabbitMQ
+    type: stroage
+    default: false
+    files:
+      - src/components/rabbitmq.component.ts
+      - src/components/lib/database/rabbitmq.connection.ts
+    config:
+      - database.rabbitmq
+    packages:
+      - amqplib
+      - '@types/amqplib'
+      - qs
+      - '@types/qs'
 
   - name: web
     label: Web HTTP Service
@@ -173,6 +190,13 @@ modules:
       - system.monitor
     package:
       - prom-client
+
+  - name: queue
+    label: Message Queue
+    type: devops
+    file:
+      - src/components/queue.component.ts
+      - src/plugins/queue/**
 
   - name: conf_yaml
     label: YAML Config

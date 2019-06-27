@@ -6,10 +6,13 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 //#endmodule redis
 import cookieParser from 'cookie-parser';
+import { Queue } from '../plugins/queue/interface';
 //#endmodule web
 
 import { AbstractComponent } from './abstract.component';
 import { lazyInject, provideComponent } from './container';
+import { queue } from './index';
+import { QueueComponent } from './queue.component';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -28,7 +31,7 @@ import { router } from '../routes';
 
 @provideComponent()
 export class HttpServerComponent extends AbstractComponent {
-    private _server: http.Server;
+    private readonly _server: http.Server;
 
     //#module redis
     @lazyInject(RedisComponent)
@@ -45,6 +48,11 @@ export class HttpServerComponent extends AbstractComponent {
 
     @lazyInject(LoggerComponent)
     private _loggerComponent: LoggerComponent;
+
+    //#module queue
+    @lazyInject(QueueComponent)
+    private _queueComponent: QueueComponent;
+    //#endmodule queue
 
     constructor() {
         super();
@@ -102,6 +110,12 @@ export class HttpServerComponent extends AbstractComponent {
         app.use('/', router);
         //#endmodule web
         this._server = http.createServer(app);
+
+        //#module queue
+        this._server.on('listening', () => {
+            setTimeout(queue.start, 1000);
+        });
+        //#endmodule queue
     }
 
     public get server () {

@@ -49,6 +49,16 @@ export const monitor = container.get(MonitorComponent).monitor;
 import { LoggerComponent } from './logger.component';
 import { HttpServerComponent } from './http_server.component';
 
+//#module rabbitmq
+import { RabbitMQComponent } from './rabbitmq.component';
+export const rabbitmq = container.get(RabbitMQComponent).rabbitmq;
+//#endmodule mongodb
+
+//#module queue
+import { QueueComponent } from './queue.component';
+export const queue = container.get(QueueComponent);
+//#endmodule queue
+
 export const logger = container.get(LoggerComponent).logger;
 export const reqLogger = container.get(LoggerComponent).reqLogger;
 export const httpServer = container.get(HttpServerComponent).server;
