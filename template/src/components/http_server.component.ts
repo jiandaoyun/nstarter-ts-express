@@ -6,13 +6,10 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 //#endmodule redis
 import cookieParser from 'cookie-parser';
-import { Queue } from '../plugins/queue/interface';
 //#endmodule web
 
 import { AbstractComponent } from './abstract.component';
 import { lazyInject, provideComponent } from './container';
-import { queue } from './index';
-import { QueueComponent } from './queue.component';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -23,6 +20,9 @@ import { I18nComponent } from './i18n.component';
 import { MonitorComponent } from './monitor.component';
 //#endmodule monitor
 import { LoggerComponent } from './logger.component';
+//#module queue
+import { QueueComponent } from './queue.component';
+//#endmodule queue
 
 //#module web
 import { config } from '../config';
@@ -113,7 +113,7 @@ export class HttpServerComponent extends AbstractComponent {
 
         //#module queue
         this._server.on('listening', () => {
-            setTimeout(queue.start, 1000);
+            setTimeout(this._queueComponent.start, 1000);
         });
         //#endmodule queue
     }

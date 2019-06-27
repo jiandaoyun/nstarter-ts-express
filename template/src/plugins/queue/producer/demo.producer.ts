@@ -1,5 +1,5 @@
 import { ChannelMode, Exchange, ExchangeType, Queue, TaskOptions, TaskPayload } from '../interface';
-import { BaseProducer, RabbitMQProducer } from '../queue.base';
+import { BaseProducer, RabbitMQProducer } from '../queue';
 
 interface DemoPayload extends TaskPayload {
     content: string

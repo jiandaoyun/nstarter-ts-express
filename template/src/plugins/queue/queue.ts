@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import async from 'async';
 import { EventEmitter } from 'events';
+import { RabbitMQConnector } from '../../components/lib/database/rabbitmq.connection';
 import { Getter, Setter } from '../../decorators';
 import { Errors } from '../../errors';
 import {
