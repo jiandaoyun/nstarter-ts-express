@@ -1,6 +1,6 @@
-import qs from 'qs';
 import _ from 'lodash';
 import async from 'async';
+import querystring from 'querystring';
 import { EventEmitter } from 'events';
 import amqp, { Connection } from 'amqplib/callback_api';
 
@@ -76,7 +76,7 @@ class AMQPConnection extends EventEmitter {
     public connect(
         callback: Callback = _.noop
     ): void {
-        const paramStr: string = qs.stringify(this._params);
+        const paramStr: string = querystring.stringify(this._params);
         async.eachLimit(this._urls, 5, (url: string, callback: Callback) => {
             const connectUrl = `${ url }?${ paramStr }`;
             if (_.has(this._connectionMap, connectUrl) || this._connectingUrls.has(connectUrl)) {

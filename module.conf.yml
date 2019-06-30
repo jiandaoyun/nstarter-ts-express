@@ -65,8 +65,7 @@ modules:
     packages:
       - amqplib
       - '@types/amqplib'
-      - qs
-      - '@types/qs'
+      - querystring
 
   - name: web
     label: Web HTTP Service

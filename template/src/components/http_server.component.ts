@@ -20,9 +20,6 @@ import { I18nComponent } from './i18n.component';
 import { MonitorComponent } from './monitor.component';
 //#endmodule monitor
 import { LoggerComponent } from './logger.component';
-//#module queue
-import { QueueComponent } from './queue.component';
-//#endmodule queue
 
 //#module web
 import { config } from '../config';
@@ -48,11 +45,6 @@ export class HttpServerComponent extends AbstractComponent {
 
     @lazyInject(LoggerComponent)
     private _loggerComponent: LoggerComponent;
-
-    //#module queue
-    @lazyInject(QueueComponent)
-    private _queueComponent: QueueComponent;
-    //#endmodule queue
 
     constructor() {
         super();
@@ -110,12 +102,6 @@ export class HttpServerComponent extends AbstractComponent {
         app.use('/', router);
         //#endmodule web
         this._server = http.createServer(app);
-
-        //#module queue
-        this._server.on('listening', () => {
-            setTimeout(this._queueComponent.start, 1000);
-        });
-        //#endmodule queue
     }
 
     public get server () {

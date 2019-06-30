@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { ChannelMode, Exchange, ExchangeType, Queue, TaskOptions, TaskPayload } from '../interface';
 import { BaseProducer, RabbitMQProducer } from '../queue';
 
@@ -57,6 +58,15 @@ class DemoProducer extends BaseProducer<DemoPayload, DemoOptions> {
             }
             return callback();
         });
+    }
+
+    public produceDemo(): void {
+        this.produce({
+            content: Math.random().toString(36).substr(2)
+        }, {}, _.noop);
+        setTimeout(() => {
+            this.produceDemo();
+        }, 1000);
     }
 
     public close(

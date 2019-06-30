@@ -52,7 +52,7 @@ import { HttpServerComponent } from './http_server.component';
 //#module rabbitmq
 import { RabbitMQComponent } from './rabbitmq.component';
 export const rabbitmq = container.get(RabbitMQComponent).rabbitmq;
-//#endmodule mongodb
+//#endmodule rabbitmq
 
 //#module queue
 import { QueueComponent } from './queue.component';

@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import async from 'async';
 import { EventEmitter } from 'events';
-import { RabbitMQConnector } from '../../components/lib/database/rabbitmq.connection';
 import { Getter, Setter } from '../../decorators';
 import { Errors } from '../../errors';
 import {
@@ -262,7 +261,7 @@ export class RabbitMQConsumer extends RabbitMQBase implements ConsumeImpl<Queue,
             channel: (callback) => {
                 super._createChannel(callback);
             },
-            queue: ['channel', (results, callback: Function): void => {
+            queue: ['channel', (results, callback: Callback): void => {
                 this._assertQueue(this._queue, (err: Error, queue: Queue): void => {
                     if (err) {
                         return callback(err);
@@ -315,6 +314,23 @@ export class RabbitMQConsumer extends RabbitMQBase implements ConsumeImpl<Queue,
                     this._consumeTag = results.consumerTag;
                 }
             );
+    }
+
+    /**
+     * 取消消息订阅
+     * @param {Callback} callback - 回调函数
+     */
+    public unsubscribe (callback: Callback): void {
+        if (!this._consumeTag) {
+            return callback();
+        }
+        this.channel
+            .cancel(this._consumeTag, (err?: Error) => {
+                if (err) {
+                    return callback(err);
+                }
+                return callback();
+            });
     }
 
     public ack(

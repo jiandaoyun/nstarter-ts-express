@@ -1,9 +1,9 @@
 import async from 'async';
-import { Exchange, ExchangeType, FetchMessage, Queue, RabbitMQMessage } from '../interface';
+import { Exchange, ExchangeType, Queue, RabbitMQMessage, SubscribeMessage } from '../interface';
 import { BaseConsumer, RabbitMQConsumer } from '../queue';
 
-class DemoConsumer extends BaseConsumer {
-    public name = 'consumer:fetch:demo';
+class DemoSubscribe extends BaseConsumer {
+    public name = 'consumer:subscribe:demo';
     private readonly _consumer: RabbitMQConsumer;
     private _hasLock: boolean;
 
@@ -59,18 +59,6 @@ class DemoConsumer extends BaseConsumer {
         return callback();
     }
 
-    private _next(isWait?: boolean): void {
-        if (isWait) {
-            setTimeout(() => {
-                this._next();
-            }, 500);
-        } else {
-            process.nextTick(() => {
-                this.consume();
-            });
-        }
-    }
-
     public init(
         callback: Callback
     ): void {
@@ -98,7 +86,6 @@ class DemoConsumer extends BaseConsumer {
     }
 
     public consume(): void {
-        let isWait = false;
         async.auto<{
             acquire: void,
             consume: void
@@ -109,22 +96,21 @@ class DemoConsumer extends BaseConsumer {
             },
             // 运行
             consume: ['acquire', (results, callback) => {
-                this._consumer.fetch({
-                    exclusive: true,
+                this._consumer.subscribe({
+                    exclusive: false,
                     noAck: false
-                }, (err: Error, message: FetchMessage | false): void => {
+                }, (err: Error, message: SubscribeMessage): void => {
                     if (err) {
-                        return callback(err);
+                        this.emit('error', err);
+                        return;
                     }
                     if (!message) {
-                        // 没有消息等待 500 ms
-                        isWait = true;
-                        return callback();
+                        return;
                     }
-                    console.log(`${ this.name }`, message.content);
+                    console.log(`${ this.name } `, message.content);
                     this._consumer.ack(message as RabbitMQMessage);
-                    return callback();
                 });
+                return callback();
             }]
         }, (err?: Error): void => {
             if (err) {
@@ -132,28 +118,31 @@ class DemoConsumer extends BaseConsumer {
                 this.emit('error', err);
             }
             // 解锁
-            this._release(() => {
-                this._next(isWait);
-            });
+            this._release(() => {});
         });
     }
 
     public close(
         callback: Callback
     ): void {
-        async.auto<{
-            close: void,
-            release: void
-        }>({
+        async.auto<any>({
+            unsubscribe: (callback) =>  {
+                this._consumer.unsubscribe((err: Error) => {
+                    if (err) {
+                        return callback(err);
+                    }
+                    return callback();
+                });
+            },
             // 停止
-            close: (callback) => {
+            close: ['unsubscribe', (results, callback) => {
                 this._consumer.close((err: Error): void => {
                     if (err) {
                         return callback(err);
                     }
                     super.close(callback);
                 });
-            },
+            }],
             // 释放锁(如果持有锁)
             release: ['close', (results, callback: Function): void => {
                 if (!this._hasLock) {
@@ -165,4 +154,4 @@ class DemoConsumer extends BaseConsumer {
     }
 }
 
-export const demoConsumer = new DemoConsumer();
+export const demoSubscribe = new DemoSubscribe();
