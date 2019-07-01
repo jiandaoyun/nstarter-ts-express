@@ -6,7 +6,7 @@ export class MongodbConnector {
     private readonly _options: MongodbConfig;
     public readonly connection: Connection;
 
-    constructor (options: MongodbConfig) {
+    constructor(options: MongodbConfig) {
         this._options = options;
         this.connection = mongoose.createConnection(this.mongoUri, {
             autoReconnect: true,
@@ -34,7 +34,11 @@ export class MongodbConnector {
     }
 
     private get mongoUri(): string {
-        const {user, password, mongod, db} = this._options;
+        const { user, password, mongod, db } = this._options;
+        if (!user || !password) {
+            // 本地开发使用
+            return `mongodb://${ mongod.host }:${ mongod.port }/${ db }`;
+        }
         return `mongodb://${ user }:${ password }@${ mongod.host }:${ mongod.port }/${ db }`;
     }
 }

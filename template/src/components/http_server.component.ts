@@ -28,7 +28,7 @@ import { router } from '../routes';
 
 @provideComponent()
 export class HttpServerComponent extends AbstractComponent {
-    private _server: http.Server;
+    private readonly _server: http.Server;
 
     //#module redis
     @lazyInject(RedisComponent)

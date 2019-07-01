@@ -44,8 +44,23 @@ export const baseConf: ConfigType = {
             host: 'localhost',
             port: 6379,
             password: '!passw0rd'
-        }
+        },
         //#endmodule redis
+        //#module rabbitmq
+        rabbitmq: {
+            brokers: [
+                {
+                    host: 'localhost',
+                    port: 5672
+                }
+            ],
+            protocol: 'amqp',
+            user: 'guest',
+            password: '!passw0rd',
+            vhost: '/',
+            params: {}
+        }
+        //#endmodule rabbitmq
     },
     system: {
         //#module i18n
