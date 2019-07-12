@@ -1,13 +1,17 @@
 //#module mongodb
+interface MongodbServer {
+    readonly host: string,
+    readonly port: number
+}
+
 export interface MongodbConfig {
-    readonly mongod: {
-        readonly host: string,
-        readonly port: number
-    };
+    readonly mongod?: MongodbServer;
+    readonly mongos?: MongodbServer[];
     readonly user?: string;
     readonly password?: string;
     readonly db: string;
 }
+
 //#endmodule mongodb
 
 //#module redis

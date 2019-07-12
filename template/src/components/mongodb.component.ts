@@ -9,7 +9,7 @@ export class MongodbComponent extends AbstractComponent {
 
     constructor () {
         super();
-        this._db = new MongodbConnector(config.database.mongodb);
+        this._db = new MongodbConnector(config.database.mongodb, this._name);
         this.log();
     }
 

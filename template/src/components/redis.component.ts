@@ -9,7 +9,7 @@ export class RedisComponent extends AbstractComponent {
 
     constructor () {
         super();
-        this._redis = new RedisConnector(config.database.redis);
+        this._redis = new RedisConnector(config.database.redis, this._name);
         this.log();
     }
 
