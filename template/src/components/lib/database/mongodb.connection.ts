@@ -8,7 +8,7 @@ export class MongodbConnector {
     private readonly _name: string = '';
     public readonly connection: Connection;
 
-    constructor (options: MongodbConfig, name?: string) {
+    constructor(options: MongodbConfig, name?: string) {
         this._options = options;
         if (name) {
             this._name = name;
@@ -47,6 +47,10 @@ export class MongodbConnector {
             server = `${ mongod.host }:${ mongod.port }`;
         } else {
             return '';
+        }
+        if (!user || !password) {
+            // 本地开发使用
+            return `mongodb://${ server }/${ db }`;
         }
         return `mongodb://${ user }:${ password }@${ server }/${ db }`;
     }
