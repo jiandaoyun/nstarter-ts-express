@@ -194,7 +194,8 @@ modules:
   - name: mq_producer
     label: Message Queue Producer
     type: components
-    file:
+    default: false
+    files:
       - src/components/mq_producer.component.ts
       - src/plugins/queue/producer/**
       - src/plugins/queue/*
@@ -202,7 +203,8 @@ modules:
   - name: mq_consumer
     label: Message Queue Consumer
     type: components
-    file:
+    default: false
+    files:
       - src/components/mq_consumer.component.ts
       - src/plugins/queue/consumer/**
       - src/plugins/queue/*
