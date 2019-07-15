@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { ChannelMode, Exchange, ExchangeType, Queue, TaskOptions, TaskPayload } from '../interface';
-import { BaseProducer, RabbitMQProducer } from '../queue';
+import { BaseProducer, RabbitMQProducer } from './queue.producer';
 
 interface DemoPayload extends TaskPayload {
     content: string

@@ -1,7 +1,7 @@
 import {
     Channel,
     ConfirmChannel,
-    Connection, ConsumeMessage, ConsumeMessageFields, GetMessage,
+    ConsumeMessage, ConsumeMessageFields, GetMessage,
     GetMessageFields,
     MessageProperties,
     Options

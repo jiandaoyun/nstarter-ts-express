@@ -1,5 +1,5 @@
 import { config } from './config';
-import { httpServer, logger, queue } from './components';
+import { httpServer, logger } from './components';
 
 const port = config.server.http.port;
 httpServer.listen(port);
@@ -11,6 +11,12 @@ httpServer.on('listening', () => {
     logger.info(`Listening on：${ port }`);
 });
 
-//#module queue
-queue.start();
-//#endmodule queue
+//#module mq_producer
+import { mqProducer } from './components';
+mqProducer.start();
+//#endmodule mq_producer
+
+//#module mq_consumer
+import { mqConsumer } from './components';
+mqConsumer.start();
+//#endmodule mq_consumer
