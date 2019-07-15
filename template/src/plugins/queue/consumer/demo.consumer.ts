@@ -1,6 +1,6 @@
 import async from 'async';
 import { Exchange, ExchangeType, FetchMessage, Queue, RabbitMQMessage } from '../interface';
-import { BaseConsumer, RabbitMQConsumer } from '../queue';
+import { BaseConsumer, RabbitMQConsumer } from './queue.consumer';
 
 class DemoConsumer extends BaseConsumer {
     public name = 'consumer:fetch:demo';

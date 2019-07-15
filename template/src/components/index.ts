@@ -54,10 +54,15 @@ import { RabbitMQComponent } from './rabbitmq.component';
 export const rabbitmq = container.get(RabbitMQComponent).rabbitmq;
 //#endmodule rabbitmq
 
-//#module queue
-import { QueueComponent } from './queue.component';
-export const queue = container.get(QueueComponent);
-//#endmodule queue
+//#module mq_producer
+import { MQProducerComponent } from './mq_producer.component';
+export const mqProducer = container.get(MQProducerComponent);
+//#endmodule mq_producer
+
+//#module mq_consumer
+import { MQConsumerComponent } from './mq_consumer.component';
+export const mqConsumer = container.get(MQConsumerComponent);
+//#endmodule mq_consumer
 
 export const logger = container.get(LoggerComponent).logger;
 export const reqLogger = container.get(LoggerComponent).reqLogger;

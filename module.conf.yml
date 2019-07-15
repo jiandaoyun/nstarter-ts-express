@@ -13,7 +13,8 @@
 #   |- grpc_client
 #   |- cron
 #   |- i18n
-#   |- queue
+#   |- mq_producer
+#   |- mq_consumer
 #   - devops
 #   |- graylog
 #   |- sentry
@@ -190,12 +191,21 @@ modules:
     package:
       - prom-client
 
-  - name: queue
-    label: Message Queue
-    type: devops
+  - name: mq_producer
+    label: Message Queue Producer
+    type: components
     file:
-      - src/components/queue.component.ts
-      - src/plugins/queue/**
+      - src/components/mq_producer.component.ts
+      - src/plugins/queue/producer/**
+      - src/plugins/queue/*
+
+  - name: mq_consumer
+    label: Message Queue Consumer
+    type: components
+    file:
+      - src/components/mq_consumer.component.ts
+      - src/plugins/queue/consumer/**
+      - src/plugins/queue/*
 
   - name: conf_yaml
     label: YAML Config

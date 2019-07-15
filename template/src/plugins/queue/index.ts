@@ -1,9 +1,8 @@
-import { demoProducer } from './producer/demo.producer';
-import { demoConsumer } from './consumer/demo.consumer';
-import { demoSubscribe } from './consumer/demo.subscribe';
+//#module mq_producer
+export { demoProducer } from './producer/demo.producer';
+//#endmodule mq_producer
 
-export {
-    demoConsumer,
-    demoProducer,
-    demoSubscribe
-};
+//#module mq_consumer
+export { demoConsumer } from './consumer/demo.consumer';
+export { demoSubscribe } from './consumer/demo.subscribe';
+//#endmodule mq_consumer
