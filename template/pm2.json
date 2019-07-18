@@ -1,6 +1,6 @@
 {
     "apps": [{
-        "name": "${APP_NAME}",
+        "name": "{{APP_NAME}}",
         "script": "./dist/app.js",
         "max_memory_restart": "1024M",
         "kill_timeout": 5000,
