@@ -59,9 +59,7 @@ class DemoSubscribe extends BaseConsumer {
         return callback();
     }
 
-    public init(
-        callback: Callback
-    ): void {
+    public init(callback: Callback): void {
         async.auto<{
             init: void
         }>({
@@ -122,11 +120,9 @@ class DemoSubscribe extends BaseConsumer {
         });
     }
 
-    public close(
-        callback: Callback
-    ): void {
+    public close(callback: Callback): void {
         async.auto<any>({
-            unsubscribe: (callback) =>  {
+            unsubscribe: (callback) => {
                 this._consumer.unsubscribe((err: Error) => {
                     if (err) {
                         return callback(err);

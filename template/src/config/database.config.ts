@@ -1,7 +1,7 @@
 //#module mongodb
 interface MongodbServer {
-    readonly host: string,
-    readonly port: number
+    readonly host: string;
+    readonly port: number;
 }
 
 export interface MongodbConfig {
@@ -32,14 +32,14 @@ export interface RabbitMQParams {
 }
 export interface RabbitMQConfig {
     readonly brokers: {
-        readonly host: string;
-        readonly port: number;
+        readonly host: string,
+        readonly port: number
     }[];
     readonly protocol: string;
     readonly user: string;
     readonly password: string;
     readonly vhost: string;
-    readonly params: RabbitMQParams
+    readonly params: RabbitMQParams;
 
 }
 //#endmodule rabbitmq

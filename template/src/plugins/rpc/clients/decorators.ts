@@ -14,10 +14,11 @@ const CLIENT_META = 'grpc:client';
 export function grpcClient<T extends Function>(pkg: string, service?: string) {
     return (constructor: T) => {
         const target = constructor;
-        if (!service) {
-            service = _.upperFirst(_.camelCase(_.replace(constructor.name, /client$/i, '')));
+        let name = service;
+        if (!name) {
+            name = _.upperFirst(_.camelCase(_.replace(constructor.name, /client$/i, '')));
         }
-        const GrpcClient: typeof Client = _.get(proto, [pkg, service]);
+        const GrpcClient: typeof Client = _.get(proto, [pkg, name]);
         const conf = _.find(config.components.grpc.clients, { package: pkg });
         let meta = {};
         if (conf && conf.address) {

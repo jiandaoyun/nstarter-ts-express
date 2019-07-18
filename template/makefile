@@ -4,8 +4,8 @@ DOCKER_IMG = app
 build:
 	npm run build
 
-tslint:
-	npm run tslint
+eslint:
+	npm run eslint
 
 test:
 	npm test
@@ -38,4 +38,4 @@ clean:
 	rm -rf .nyc_output/ coverage/ dist/ tmp/ build/
 	rm -rf public/*
 
-.PHONY: bulid tslint test serve clean
+.PHONY: build lint test serve clean

@@ -3,7 +3,7 @@ import { ChannelMode, Exchange, ExchangeType, Queue, TaskOptions, TaskPayload } 
 import { BaseProducer, RabbitMQProducer } from '../queue';
 
 interface DemoPayload extends TaskPayload {
-    content: string
+    content: string;
 }
 
 interface DemoOptions extends TaskOptions {

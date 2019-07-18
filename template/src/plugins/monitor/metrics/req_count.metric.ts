@@ -5,7 +5,7 @@ import { provideMetric } from '../container';
 
 @provideMetric()
 export class ReqCountMetric extends BaseMetric<Counter> {
-    constructor () {
+    constructor() {
         super();
         this._metric = new Counter({
             name: 'req_count_sum',

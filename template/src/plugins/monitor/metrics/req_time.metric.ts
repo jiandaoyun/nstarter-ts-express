@@ -5,7 +5,7 @@ import { provideMetric } from '../container';
 
 @provideMetric()
 export class ReqTimeMetric extends BaseMetric<Counter> {
-    constructor () {
+    constructor() {
         super();
         this._metric = new Counter({
             name: 'req_time_sum',

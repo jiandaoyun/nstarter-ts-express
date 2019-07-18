@@ -7,7 +7,7 @@ import { RabbitMQConnector } from './lib/database/rabbitmq.connection';
 export class RabbitMQComponent extends AbstractComponent {
     private readonly _rabbitmq: RabbitMQConnector;
 
-    constructor () {
+    constructor() {
         super();
         this._rabbitmq = new RabbitMQConnector(config.database.rabbitmq);
         this.log();

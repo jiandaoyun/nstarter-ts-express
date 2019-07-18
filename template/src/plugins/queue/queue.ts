@@ -28,9 +28,7 @@ export abstract class RabbitMQBase implements QueueBase {
         return RabbitMQBase.rabbitmq.getConnection();
     }
 
-    protected _createChannel(
-        callback: Callback
-    ): void {
+    protected _createChannel(callback: Callback): void {
         if (!this._connection) {
             return callback(Errors.database(100));
         }
@@ -48,7 +46,7 @@ export abstract class RabbitMQBase implements QueueBase {
         exchange: Exchange | null,
         callback: Callback
     ): void {
-        const { name, type, options } = exchange || {} as Exchange;
+        const { name, type, options }: Partial<Exchange> = exchange || {};
         if (!name || !type) {
             return callback();
         }
@@ -104,9 +102,7 @@ export abstract class RabbitMQBase implements QueueBase {
     /**
      * 关闭会话
      */
-    public close(
-        callback: Callback
-    ): void {
+    public close(callback: Callback): void {
         if (!this.channel) {
             return callback();
         }
@@ -122,7 +118,7 @@ export abstract class RabbitMQBase implements QueueBase {
      * 动态加载 logger component
      */
     protected static get logger() {
-        // tslint:disable-next-line:no-require-imports
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('../../components').logger;
     }
 
@@ -130,7 +126,7 @@ export abstract class RabbitMQBase implements QueueBase {
      * 动态加载 rabbitmq compoent
      */
     private static get rabbitmq() {
-        // tslint:disable-next-line:no-require-imports
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('../../components').rabbitmq;
     }
 }
@@ -147,9 +143,7 @@ export class RabbitMQProducer extends RabbitMQBase implements ProduceImpl<Queue,
         this._mode = mode || ChannelMode.normal;
     }
 
-    public init(
-        callback: Callback
-    ): void {
+    public init(callback: Callback): void {
         if (!this._connection) {
             return callback(Errors.database(100));
         }
@@ -251,9 +245,7 @@ export class RabbitMQConsumer extends RabbitMQBase implements ConsumeImpl<Queue,
         this._msgHandler = config.megHandler || RabbitMQConsumer._getDefaultMsgHandler();
     }
 
-    public init(
-        callback: Callback
-    ): void {
+    public init(callback: Callback): void {
         async.auto<{
             channel: void,
             queue: void
@@ -320,7 +312,7 @@ export class RabbitMQConsumer extends RabbitMQBase implements ConsumeImpl<Queue,
      * 取消消息订阅
      * @param {Callback} callback - 回调函数
      */
-    public unsubscribe (callback: Callback): void {
+    public unsubscribe(callback: Callback): void {
         if (!this._consumeTag) {
             return callback();
         }
@@ -348,9 +340,7 @@ export class RabbitMQConsumer extends RabbitMQBase implements ConsumeImpl<Queue,
         return this.channel.nack(message, allUpTo, requeue);
     }
 
-    public cancel(
-        callback: Callback
-    ): void {
+    public cancel(callback: Callback): void {
         if (!this._consumeTag) {
             return callback();
         }
@@ -407,9 +397,7 @@ export class RabbitMQConsumer extends RabbitMQBase implements ConsumeImpl<Queue,
 export abstract class BaseConsumer extends EventEmitter implements ConsumerImpl {
     protected _running: boolean;
 
-    public init(
-        callback: Callback
-    ): void {
+    public init(callback: Callback): void {
         this._running = true;
         this.emit('init', this.name);
 
@@ -418,9 +406,7 @@ export abstract class BaseConsumer extends EventEmitter implements ConsumerImpl 
 
     public abstract consume(): void;
 
-    public close(
-        callback: Callback
-    ): void {
+    public close(callback: Callback): void {
         this._running = false;
         this.emit('close', this.name);
 
@@ -434,9 +420,7 @@ export abstract class BaseProducer<P extends TaskPayload = TaskPayload, O extend
     extends EventEmitter implements ProducerImpl<P, O> {
     protected _running: boolean;
 
-    public init(
-        callback: Callback
-    ): void {
+    public init(callback: Callback): void {
         this._running = true;
         this.emit('init', this.name);
 
@@ -445,9 +429,7 @@ export abstract class BaseProducer<P extends TaskPayload = TaskPayload, O extend
 
     public abstract produce(message: P, options: O | null, callback?: Callback): void;
 
-    public close(
-        callback: Callback
-    ): void {
+    public close(callback: Callback): void {
         this._running = false;
         this.emit('close', this.name);
 

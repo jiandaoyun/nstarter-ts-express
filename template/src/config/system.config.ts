@@ -44,13 +44,13 @@ export interface SystemConfig {
         //#endmodule sentry
     };
     readonly req_log: {
-        readonly enabled: boolean;
+        readonly enabled: boolean
     };
     //#module monitor
     readonly monitor: {
-        readonly metric_path: string;
+        readonly metric_path: string,
         //#module cron
-        readonly gateway: string;
+        readonly gateway: string
         //#endmodule cron
     };
     //#endmodule monitor

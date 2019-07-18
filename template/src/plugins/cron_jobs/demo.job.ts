@@ -9,7 +9,7 @@ class DemoCronJob extends BaseCronJob {
     public readonly cronTime = '0 * * * * *';
     public readonly isAutoStart = true;
 
-    constructor () {
+    constructor() {
         super();
         this._job = new CronJob({
             cronTime: this.cronTime,
@@ -19,7 +19,7 @@ class DemoCronJob extends BaseCronJob {
         });
     }
 
-    public runTask () {
+    public runTask() {
         // Run cron job task here.
         logger.info(`Cron job "${ this.name }" finished.`);
     }
