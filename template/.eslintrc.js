@@ -48,6 +48,7 @@ module.exports = {
             }
         ],
         "template-curly-spacing": ["warn", "always"],
+        "yoda": ["off"],
 
         // typescript-eslint
         "@typescript-eslint/ban-types": ["error", {
@@ -134,6 +135,7 @@ module.exports = {
         "@typescript-eslint/semi": ["error"],
 
         // import
-        "import/no-default-export": ["error"]
+        "import/no-default-export": ["error"],
+        "import/no-unused-modules": ["error"]
     }
 };
