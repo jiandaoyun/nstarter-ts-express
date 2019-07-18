@@ -5,9 +5,9 @@ import * as protoLoader from '@grpc/proto-loader';
 export const proto: Record<string, GrpcObject> = {};
 
 interface LoadPackageOptions {
-    protoPath: string,
-    package: string,
-    loader?: protoLoader.Options
+    protoPath: string;
+    package: string;
+    loader?: protoLoader.Options;
 }
 
 export function loadProtoPackage(options: LoadPackageOptions) {

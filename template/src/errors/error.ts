@@ -5,9 +5,9 @@ import { LogLevel } from '../enums/logger.enum';
 import { ErrorTypes, errorMessages } from './err_msgs';
 
 interface ErrorOptions {
-    meta?: any,
-    httpCode?: number,
-    wrapper?: Function
+    meta?: any;
+    httpCode?: number;
+    wrapper?: Function;
 }
 
 class CustomError extends Error implements Error {
@@ -19,7 +19,7 @@ class CustomError extends Error implements Error {
     public readonly meta: any;
     public readonly httpCode: number;
 
-    constructor (name: string, code: number, level?: LogLevel, options?: ErrorOptions) {
+    constructor(name: string, code: number, level?: LogLevel, options?: ErrorOptions) {
         super();
         this.name = name || this.constructor.name;
         this.code = code || 1;
@@ -36,10 +36,10 @@ class CustomError extends Error implements Error {
 }
 
 interface ErrorBuilder {
-    (code: number, level?: LogLevel, options?: ErrorOptions): Error
+    (code: number, level?: LogLevel, options?: ErrorOptions): Error;
 }
 
-export const errors = {} as Record<keyof typeof ErrorTypes, ErrorBuilder>;
+export const errors = {} as any as Record<keyof typeof ErrorTypes, ErrorBuilder>;
 _.forEach(Object.keys(ErrorTypes), (errorType: keyof typeof ErrorTypes) => {
     errors[errorType] = (...args) => new CustomError(ErrorTypes[errorType], ...args) as Error;
 });

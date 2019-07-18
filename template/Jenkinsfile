@@ -24,7 +24,7 @@ pipeline {
                 stage('Lint') {
                     steps {
                         nvm('version': env.NODE_VERSION) {
-                            sh "npm run tslint"
+                            sh "npm run eslint"
                         }
                     }
                 }

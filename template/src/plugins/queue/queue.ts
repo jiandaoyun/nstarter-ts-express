@@ -11,9 +11,7 @@ export abstract class RabbitMQBase implements QueueBase {
         return RabbitMQBase.rabbitmq.getConnection();
     }
 
-    protected _createChannel(
-        callback: Callback
-    ): void {
+    protected _createChannel(callback: Callback): void {
         if (!this._connection) {
             return callback(Errors.database(100));
         }
@@ -31,7 +29,7 @@ export abstract class RabbitMQBase implements QueueBase {
         exchange: Exchange | null,
         callback: Callback
     ): void {
-        const { name, type, options } = exchange || {} as Exchange;
+        const { name, type, options }: Partial<Exchange> = exchange || {};
         if (!name || !type) {
             return callback();
         }
@@ -87,9 +85,7 @@ export abstract class RabbitMQBase implements QueueBase {
     /**
      * 关闭会话
      */
-    public close(
-        callback: Callback
-    ): void {
+    public close(callback: Callback): void {
         if (!this.channel) {
             return callback();
         }
@@ -105,7 +101,7 @@ export abstract class RabbitMQBase implements QueueBase {
      * 动态加载 logger component
      */
     protected static get logger() {
-        // tslint:disable-next-line:no-require-imports
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('../../components').logger;
     }
 
@@ -113,7 +109,7 @@ export abstract class RabbitMQBase implements QueueBase {
      * 动态加载 rabbitmq compoent
      */
     private static get rabbitmq() {
-        // tslint:disable-next-line:no-require-imports
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('../../components').rabbitmq;
     }
 }

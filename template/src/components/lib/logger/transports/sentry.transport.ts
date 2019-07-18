@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Transport, { TransportStreamOptions } from 'winston-transport';
-import {init, Severity, NodeOptions, withScope, captureException, captureMessage} from '@sentry/node';
+import { init, Severity, NodeOptions, withScope, captureException, captureMessage } from '@sentry/node';
 import { LEVEL } from 'triple-beam';
 import { config } from '../../../../config';
 
@@ -24,13 +24,12 @@ export class SentryTransport extends Transport {
             release: config.version,
             environment: config.env,
             serverName: config.hostname,
-            integrations: (integrations) => {
+            integrations: (integrations) =>
                 // prevent from exit
                 // @see https://github.com/getsentry/sentry-javascript/issues/1661#issuecomment-430666925
-                return integrations.filter((integration) =>
+                integrations.filter((integration) => (
                     integration.name !== 'OnUncaughtException'
-                );
-            }
+                ))
         });
     }
 

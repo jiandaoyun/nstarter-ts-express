@@ -71,9 +71,7 @@ class DemoConsumer extends BaseConsumer {
         }
     }
 
-    public init(
-        callback: Callback
-    ): void {
+    public init(callback: Callback): void {
         async.auto<{
             init: void
         }>({
@@ -138,9 +136,7 @@ class DemoConsumer extends BaseConsumer {
         });
     }
 
-    public close(
-        callback: Callback
-    ): void {
+    public close(callback: Callback): void {
         async.auto<{
             close: void,
             release: void

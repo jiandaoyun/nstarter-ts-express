@@ -8,8 +8,8 @@ import { RabbitMQConfig, RabbitMQParams } from '../../../config/database.config'
 import { logger } from '../logger';
 
 interface ConnectOptions {
-    connectParams?: RabbitMQParams,
-    reconnectInterval?: number
+    connectParams?: RabbitMQParams;
+    reconnectInterval?: number;
 }
 
 class AMQPConnection extends EventEmitter {
@@ -37,7 +37,7 @@ class AMQPConnection extends EventEmitter {
         this.setMaxListeners(0);
     }
 
-    private _connectUrl (
+    private _connectUrl(
         url: string,
         callback: Callback
     ): void {
@@ -51,8 +51,7 @@ class AMQPConnection extends EventEmitter {
                 return callback(err);
             }
             conn.on('blocked', (err) =>
-                this.emit('blocked', { err, url })
-            );
+                this.emit('blocked', { err, url }));
             conn.on('unblocked', () => this.emit('unblocked'));
             conn.on('error', () => {
                 // noop
@@ -73,9 +72,7 @@ class AMQPConnection extends EventEmitter {
         });
     }
 
-    public connect(
-        callback: Callback = _.noop
-    ): void {
+    public connect(callback: Callback = _.noop): void {
         const paramStr: string = querystring.stringify(this._params);
         async.eachLimit(this._urls, 5, (url: string, callback: Callback) => {
             const connectUrl = `${ url }?${ paramStr }`;
@@ -96,9 +93,7 @@ class AMQPConnection extends EventEmitter {
         });
     }
 
-    public close(
-        callback: Callback = _.noop
-    ): void {
+    public close(callback: Callback = _.noop): void {
         if (this._closed) {
             return callback();
         }

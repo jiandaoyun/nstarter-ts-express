@@ -12,8 +12,8 @@ import { Consts } from '../../constants';
 const _translationPath = './resources/i18n/';
 
 interface I18nOptions {
-    namespace: string,
-    defaultLocale: string
+    namespace: string;
+    defaultLocale: string;
 }
 
 export class I18n {
@@ -24,17 +24,17 @@ export class I18n {
         [locale: string]: i18next.ResourceLanguage
     } = {};
     private _translators: {
-        [locale: string]: i18next.TFunction;
+        [locale: string]: i18next.TFunction
     } = {};
 
-    constructor (options?: I18nOptions) {
+    constructor(options?: I18nOptions) {
         this._options = _.defaults(options, {
             namespace: 'translation',
             defaultLocale: config.system.locale
         });
     }
 
-    public init (callback: async.AsyncResultCallback<any>) {
+    public init(callback: async.AsyncResultCallback<any>) {
         const o = this._options;
         async.auto<any>({
             translations: (callback) =>
@@ -63,7 +63,7 @@ export class I18n {
         }, callback);
     }
 
-    private _loadTranslations (callback: async.ErrorCallback) {
+    private _loadTranslations(callback: async.ErrorCallback) {
         const files = fs.readdirSync(_translationPath);
         const translationFiles = _.filter(files, (file) =>
             path.extname(file) === '.po'
@@ -84,37 +84,38 @@ export class I18n {
         }, callback);
     }
 
-    public isLocaleSupported (locale: string): boolean {
+    public isLocaleSupported(locale: string): boolean {
         return _.includes(this._locales, locale);
     }
 
-    private _getTranslator (locale: string): i18next.TFunction {
+    private _getTranslator(locale: string): i18next.TFunction {
         const o = this._options;
-        if (!this.isLocaleSupported(locale)) {
-            locale = o.defaultLocale;
+        let targetLocale = locale;
+        if (!this.isLocaleSupported(targetLocale)) {
+            targetLocale = o.defaultLocale;
         }
-        let translator = this._translators[locale];
+        let translator = this._translators[targetLocale];
         if (translator) {
             return translator;
         }
         if (!this._i18next) {
             return (key: any) => key;
         }
-        translator = this._i18next.getFixedT(locale, o.namespace);
-        this._translators[locale] = translator;
+        translator = this._i18next.getFixedT(targetLocale, o.namespace);
+        this._translators[targetLocale] = translator;
         return translator;
     }
 
     /**
      * Translator method
      */
-    public t (key: string, locale?: string, options?: i18next.TOptions): string {
-        locale = locale || config.system.locale;
-        const translator = this._getTranslator(locale);
+    public t(key: string, locale?: string, options?: i18next.TOptions): string {
+        const targetLocale = locale || config.system.locale;
+        const translator = this._getTranslator(targetLocale);
         return translator(key, options);
     }
 
-    public get middleware (): RequestHandler {
+    public get middleware(): RequestHandler {
         return (req: Request, res, next) => {
             req._locale = _.get(req.cookies, Consts.System.LOCALE_COOKIE_KEY);
             req.i18n = {

@@ -13,7 +13,7 @@ export class I18nComponent extends AbstractComponent {
         this.log();
     }
 
-    get i18n() {
+    public get i18n() {
         return this._i18n;
     }
 }

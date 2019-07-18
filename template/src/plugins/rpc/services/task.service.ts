@@ -36,7 +36,7 @@ export class TaskService {
         async.eachSeries(_.times(11), (idx, callback) => {
             call.write({ message: `${ idx * 10 }% task: #${ id } ${ job }` });
             setTimeout(callback, 200);
-        }, (err) => {
+        }, () => {
             call.end();
         });
     }

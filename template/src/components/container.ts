@@ -15,10 +15,11 @@ export { container, lazyInject };
 export function provideComponent<T extends Constructor>(name?: string) {
     return (constructor: T) => {
         const target = constructor.prototype;
-        if (!name) {
-            name = _.snakeCase(_.replace(constructor.name, /component$/i, ''));
+        let componentName = name;
+        if (!componentName) {
+            componentName = _.snakeCase(_.replace(constructor.name, /component$/i, ''));
         }
-        target._name = name;
+        target._name = componentName;
         container.bind(constructor).to(injectable()(constructor));
     };
 }

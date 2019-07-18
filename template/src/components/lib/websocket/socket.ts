@@ -1,12 +1,11 @@
 import _, { Dictionary } from 'lodash';
-import { Server } from 'http';
+import { Server, ServerResponse } from 'http';
 import async from 'async';
 import SocketIO from 'socket.io';
 import SocketIORedis from 'socket.io-redis';
 import cookieParser from 'cookie-parser';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
-import { ServerResponse } from 'http';
 import { Response } from 'express';
 
 import { config } from '../../../config';

@@ -4,9 +4,9 @@ import { MongodbConfig } from '../../../config/database.config';
 import { logger } from '../logger';
 
 export class MongodbConnector {
+    public readonly connection: Connection;
     private readonly _options: MongodbConfig;
     private readonly _name: string = '';
-    public readonly connection: Connection;
 
     constructor(options: MongodbConfig, name?: string) {
         this._options = options;
@@ -56,6 +56,6 @@ export class MongodbConnector {
     }
 
     private get _tag(): string {
-        return `Mongodb${ this._name ? `:${ this._name }` : ''}`;
+        return `Mongodb${ this._name ? `:${ this._name }` : '' }`;
     }
 }

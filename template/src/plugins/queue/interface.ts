@@ -49,7 +49,7 @@ export interface QueueOptions extends Options.AssertQueue {
 }
 
 export interface Queue {
-    name: string,
+    name: string;
     exchange: Exchange;
     routingKey: string;
     options: QueueOptions;
@@ -58,7 +58,7 @@ export interface Queue {
 
 export interface BaseMessage {
     content?: any;
-    meta?: any
+    meta?: any;
 }
 
 export interface BaseProduceOptions {
@@ -168,7 +168,7 @@ export interface ProducerImpl<P extends TaskPayload, O extends TaskOptions> {
 
     init(callback: Callback): void;
 
-    produce(task: P, options: O | null, ): void;
+    produce(task: P, options: O | null): void;
 
     close(callback: Callback): void;
 }

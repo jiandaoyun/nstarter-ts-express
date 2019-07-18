@@ -15,9 +15,8 @@ import { RequestHandler, Request, Response } from 'express';
 const transports: Transport[] = [];
 
 // custom log formatter
-const formatter = format.printf((info) => {
-    return `${info.timestamp} - [ACCESS] ${info.message}`;
-});
+const formatter = format.printf((info) =>
+    `${ info.timestamp } - [ACCESS] ${ info.message }`);
 
 // console transport
 const { console: consoleLogConf } = config.system.log;
@@ -41,7 +40,7 @@ if (fileLogConf.enabled) {
         zippedArchive: fileLogConf.zip || true,
         maxFiles: `${
             _.toInteger(fileLogConf.rotate_days) || Consts.System.DEFAULT_LOG_ROTATE_DAYS
-            }d`
+        }d`
     };
 
     transports.push(new RotateFileTransport({
@@ -79,14 +78,10 @@ export class RequestLogger {
         transports
     });
 
-    public log(msg: string, meta?: object) {
-        this._logger.log('info', msg, meta);
-    }
-
     private _formatRequest(req: Request, res: Response, duration: string) {
         return `${ req.ip } ${ req.method } ${ req.originalUrl } HTTP/${
             req.httpVersion } ${ res.statusCode || '-' } ${
-            res.getHeader('content-length')|| '-' } - ${ duration } ms`;
+            res.getHeader('content-length') || '-' } - ${ duration } ms`;
     }
 
     private _logRequest(req: Request, res: Response, startAt: [number, number]) {
@@ -105,6 +100,10 @@ export class RequestLogger {
             http_version: req.httpVersion
         };
         this.log(this._formatRequest(req, res, duration), meta);
+    }
+
+    public log(msg: string, meta?: object) {
+        this._logger.log('info', msg, meta);
     }
 
     public get middleware(): RequestHandler {

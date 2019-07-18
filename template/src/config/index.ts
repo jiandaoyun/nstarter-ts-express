@@ -41,7 +41,7 @@ class Config implements ConfigType {
     public readonly system: SystemConfig;
     public readonly components: ComponentsConfig;
 
-    constructor () {
+    constructor() {
         nconf.use('memory');
         nconf.env();
         this.env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.dev;

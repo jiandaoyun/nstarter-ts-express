@@ -5,7 +5,7 @@ import { logger } from './lib/logger';
 export abstract class AbstractComponent {
     protected _name: string;
 
-    protected log () {
+    protected log() {
         logger.info(`${ this._name } service ... ok`);
     }
 }

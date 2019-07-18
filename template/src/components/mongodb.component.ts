@@ -7,7 +7,7 @@ import { provideComponent } from './container';
 export class MongodbComponent extends AbstractComponent {
     private readonly _db: MongodbConnector;
 
-    constructor () {
+    constructor() {
         super();
         this._db = new MongodbConnector(config.database.mongodb, this._name);
         this.log();

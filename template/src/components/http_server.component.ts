@@ -104,7 +104,7 @@ export class HttpServerComponent extends AbstractComponent {
         this._server = http.createServer(app);
     }
 
-    public get server () {
+    public get server() {
         return this._server;
     }
 }

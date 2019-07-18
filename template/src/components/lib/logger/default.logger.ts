@@ -37,9 +37,9 @@ const transports: Transport[] = [];
 
 // custom log formatter
 const formatter = format.printf((info) => {
-    let output = `${info.timestamp} - [${info.level}] ${info.message}`;
+    let output = `${ info.timestamp } - [${ info.level }] ${ info.message }`;
     if (info.error) {
-        output = `${output}${os.EOL}\t${info.error.stack}`;
+        output = `${ output }${ os.EOL }\t${ info.error.stack }`;
     }
     return output;
 });
@@ -51,11 +51,9 @@ const levelFormatter = winston.format((info) => {
 
 // log filter
 const msgFilter = format((info) =>
-    !errLevels.has(info.level) ? info : false
-);
+    (!errLevels.has(info.level) ? info : false));
 const errFilter = format((info) =>
-    errLevels.has(info.level) ? info : false
-);
+    (errLevels.has(info.level) ? info : false));
 
 // console transport
 const { console: consoleLogConf } = config.system.log;
@@ -85,7 +83,7 @@ if (fileLogConf.enabled) {
         zippedArchive: fileLogConf.zip || true,
         maxFiles: `${
             _.toInteger(fileLogConf.rotate_days) || Consts.System.DEFAULT_LOG_ROTATE_DAYS
-            }d`
+        }d`
     };
 
     transports.push(new RotateFileTransport({

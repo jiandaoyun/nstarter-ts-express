@@ -7,7 +7,7 @@ import { provideComponent } from './container';
 export class RedisComponent extends AbstractComponent {
     private readonly _redis: RedisConnector;
 
-    constructor () {
+    constructor() {
         super();
         this._redis = new RedisConnector(config.database.redis, this._name);
         this.log();

@@ -9,7 +9,7 @@ import { provideComponent } from './container';
 export class CronComponent extends AbstractComponent {
     private _jobs: Record<string, BaseCronJob> = jobs;
 
-    constructor () {
+    constructor() {
         super();
         _.forEach(jobs, (cronJob: BaseCronJob) => {
             if (!cronJob.isAutoStart) {

@@ -37,11 +37,12 @@ export function grpcService<T extends Function>(pkg: string, service?: string) {
             const { name, method } = Reflect.getMetadata(key, target);
             serviceMethods[name] = method;
         });
-        if (!service) {
-            service = _.upperFirst(_.camelCase(_.replace(constructor.name, /service$/i, '')));
+        let name = service;
+        if (!name) {
+            name = _.upperFirst(_.camelCase(_.replace(constructor.name, /service$/i, '')));
         }
         // Register gRPC handlers
-        server.addService(_.get(proto, [pkg, service, 'service']), serviceMethods);
+        server.addService(_.get(proto, [pkg, name, 'service']), serviceMethods);
     };
 }
 

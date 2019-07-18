@@ -21,5 +21,5 @@ export interface ServerConfig {
             readonly secure: boolean,
             readonly domain?: string
         }
-    }
+    };
 }
