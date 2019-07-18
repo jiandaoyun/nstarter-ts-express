@@ -35,7 +35,7 @@ class I18nScanner {
      * @param {Function} callback
      * @static
      */
-    public static scanContent (content: string, callback: Callback) {
+    public static scanContent(content: string, callback: Callback) {
         i18nParser.parseFuncFromString(content, {
             list: config.functions
         });
@@ -47,7 +47,7 @@ class I18nScanner {
      * @param {Function} callback
      * @static
      */
-    public static scanFile (filePath: string, callback: Callback) {
+    public static scanFile(filePath: string, callback: Callback) {
         async.auto<{
             stat: Stats,
             scan: void
@@ -84,7 +84,7 @@ class I18nScanner {
      * @param {Function} callback
      * @static
      */
-    public static scanDir (basePath: string, callback: Callback) {
+    public static scanDir(basePath: string, callback: Callback) {
         async.auto<{
             files: string[],
             parse: void
@@ -103,7 +103,7 @@ class I18nScanner {
     /**
      * @returns {Object} - I18n key map
      */
-    public static getI18nKeys () {
+    public static getI18nKeys() {
         return _.get(i18nParser.get(), 'en.translation', {});
     }
 }
@@ -117,9 +117,9 @@ if (module.parent) {
         template: ['scan', (results, callback) => {
             const items = I18nScanner.getI18nKeys();
             const sorted: Record<string, string> = {};
-            _.forEach(_.keys(items).sort(), (key) =>
-                sorted[key] = items[key]
-            );
+            _.forEach(_.keys(items).sort(), (key) => {
+                sorted[key] = items[key];
+            });
             i18nextToPot('en', JSON.stringify(sorted))
                 .then((result: string) => {
                     fs.writeFile(config.output, result, callback);
