@@ -3,15 +3,6 @@ import { mongodb } from '../components';
 
 const db = mongodb.connection;
 
-export interface IUser {
-    username: string;
-    nickname: string;
-    email?: string;
-    phone?: string;
-    password: string;
-    salt: string;
-}
-
 const userSchema = new Schema({
     username: String,
     nickname: String,

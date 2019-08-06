@@ -1,4 +1,4 @@
-import { LogLevel } from '../../enums/logger.enum';
+import { LogLevel } from '../../src/enums/logger.enum';
 
 declare global {
     interface Error {
@@ -10,10 +10,10 @@ declare global {
     }
 
     interface Constructor {
-        new(...args: any[]): any
+        new(...args: any[]): any;
     }
 
     interface Callback<T = any, E = Error> {
-        (err?: E | null, result?: T): void
+        (err?: E | null, result?: T): void;
     }
 }
