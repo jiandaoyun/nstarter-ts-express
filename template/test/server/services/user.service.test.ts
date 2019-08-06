@@ -1,12 +1,13 @@
 import chai from 'chai';
 import mocha from 'mocha';
 import { UserService } from '../../../src/services';
-import { userModel, IUser } from '../../../src/models/user.model';
+import { userModel } from '../../../src/models/user.model';
+import { IUserModel } from '../../../src/types/models/user';
 
 const should = chai.should();
 
 describe('UserService', () => {
-    const testUser: IUser = {
+    const testUser: IUserModel = {
         username: 'test',
         nickname: 'test',
         email: 'test@163.com',
@@ -23,7 +24,7 @@ describe('UserService', () => {
     });
 
     it('findOneByUsername', (done) => {
-        UserService.findOneByUsername(testUser.username, (err: Error, user: IUser) => {
+        UserService.findOneByUsername(testUser.username, (err: Error, user: IUserModel) => {
             should.not.exist(err);
             should.exist(user);
             user.username.should.equal(testUser.username);

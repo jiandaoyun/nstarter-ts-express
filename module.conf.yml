@@ -46,7 +46,7 @@ modules:
     files:
       - src/components/redis.component.ts
       - src/components/lib/database/redis.connection.ts
-      - src/types/connect-redis/**
+      - typings/connect-redis/**
     config:
       - database.redis
     packages:
@@ -77,6 +77,7 @@ modules:
       - src/routes/**
       - temp/**
       - public/**
+      - typings/express/**
 
   - name: ws_server
     label: Websocket Server
@@ -97,7 +98,7 @@ modules:
     type: components
     files:
       - src/components/ws_emitter.component.ts
-      - src/types/socket.io-emitter/**
+      - typings/socket.io-emitter/**
     dependencies:
       - redis
     packages:
@@ -119,7 +120,7 @@ modules:
     files:
       - src/components/i18n.component.ts
       - src/components/lib/i18n.ts
-      - src/types/i18next-conv/**
+      - typings/i18next-conv/**
       - resources/i18n/**
       - tools/i18n_scan.js
     packages:
