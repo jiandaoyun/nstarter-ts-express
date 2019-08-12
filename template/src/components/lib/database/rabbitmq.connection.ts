@@ -4,8 +4,8 @@ import querystring from 'querystring';
 import { EventEmitter } from 'events';
 import amqp, { Connection } from 'amqplib/callback_api';
 
-import { RabbitMQConfig, RabbitMQParams } from '../../../config/database.config';
 import { logger } from '../logger';
+import { RabbitMQConfig, RabbitMQParams } from '../../../types/config/database.config';
 
 interface ConnectOptions {
     connectParams?: RabbitMQParams;

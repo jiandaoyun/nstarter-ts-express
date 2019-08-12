@@ -1,4 +1,6 @@
 //#module mongodb
+import { IBaseConfig } from './base.config';
+
 interface MongodbServer {
     readonly host: string;
     readonly port: number;
@@ -44,7 +46,7 @@ export interface RabbitMQConfig {
 }
 //#endmodule rabbitmq
 
-export interface DatabaseConfig {
+export interface IDatabaseConf extends IBaseConfig {
     //#module mongodb
     readonly mongodb: MongodbConfig;
     //#endmodule mongodb

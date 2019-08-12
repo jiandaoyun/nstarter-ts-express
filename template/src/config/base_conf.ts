@@ -1,8 +1,8 @@
-import { ConfigType } from './interface';
+import { IConfig } from '../entities/config';
 
 // WARNING: THIS IS A DEMO CONFIG FILE. FOR SECURITY REASONS, DO NOT USE THIS
 //          FILE TO CONIFG YOUR APPLICATION.
-export const baseConf: ConfigType = {
+export const baseConf: IConfig = {
     server: {
         http: {
             port: 3000

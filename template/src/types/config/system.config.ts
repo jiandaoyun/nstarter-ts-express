@@ -1,20 +1,22 @@
-interface LogConf {
+import { IBaseConfig } from './base.config';
+
+interface ILogConf {
     readonly enabled: boolean;
     readonly level: string;
 }
 
-interface ConsoleLogConf extends LogConf {
+interface IConsoleLogConf extends ILogConf {
     readonly colorize?: boolean;
 }
 
-interface FileLogConf extends LogConf {
+interface IFileLogConf extends ILogConf {
     readonly dir?: string;
     readonly zip?: boolean;
     readonly rotate_days?: number;
 }
 
 //#module graylog
-interface GraylogConf extends LogConf {
+interface IGraylogConf extends ILogConf {
     readonly servers: {
         readonly host: string,
         readonly port: number
@@ -23,24 +25,24 @@ interface GraylogConf extends LogConf {
 //#endmodule graylog
 
 //#module sentry
-interface SentryConf extends LogConf {
+interface ISentryConf extends ILogConf {
     readonly dsn: string;
 }
 //#endmodule sentry
 
-export interface SystemConfig {
+export interface ISystemConf extends IBaseConfig {
     //#module i18n
     readonly locale: string;
     //#endmodule i18n
     readonly timezone: string;
     readonly log: {
-        readonly console: ConsoleLogConf,
-        readonly file: FileLogConf,
+        readonly console: IConsoleLogConf,
+        readonly file: IFileLogConf,
         //#module graylog
-        readonly graylog: GraylogConf,
+        readonly graylog: IGraylogConf,
         //#endmodule graylog
         //#module sentry
-        readonly sentry: SentryConf
+        readonly sentry: ISentryConf
         //#endmodule sentry
     };
     readonly req_log: {
