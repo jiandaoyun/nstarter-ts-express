@@ -6,18 +6,16 @@ import { IDatabaseConf } from './database.config';
 import { ISystemConf } from './system.config';
 import { IComponentsConf } from './components.config';
 
-export interface IConfigParams extends IEntityConf {
-    server: IServerConf;
-    database: IDatabaseConf;
-    system: ISystemConf;
-    components: IComponentsConf;
-}
-
-export interface IConfig extends IConfigParams {
+export interface IConfig extends IEntityConf {
     env: string;
     hostname: string;
     version: string;
     home_path: string;
+
+    server: IServerConf;
+    database: IDatabaseConf;
+    system: ISystemConf;
+    components: IComponentsConf;
 }
 
 export {

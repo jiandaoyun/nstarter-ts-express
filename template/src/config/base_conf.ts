@@ -1,8 +1,8 @@
-import { IConfigParams } from '../types/config';
+import { IConfig } from '../types/config';
 
 // WARNING: THIS IS A DEMO CONFIG FILE. FOR SECURITY REASONS, DO NOT USE THIS
 //          FILE TO CONFIG YOUR APPLICATION.
-export const baseConf: IConfigParams = {
+export const baseConf: Partial<IConfig> = {
     server: {
         http: {
             port: 3000

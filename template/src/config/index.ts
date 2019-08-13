@@ -28,7 +28,6 @@ export class ConfigLoader {
         nconf.use('memory');
         nconf.env();
         const env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.dev;
-        this._loadConf('./conf.d/config.override', 'override');
         // load config by environment
         this._loadConf(`./conf.d/config.${ env }`, env);
         // load default config
@@ -68,5 +67,3 @@ export class ConfigLoader {
 }
 
 export const config = new ConfigLoader().getConfig();
-
-console.log(JSON.stringify(config, null, 2));
