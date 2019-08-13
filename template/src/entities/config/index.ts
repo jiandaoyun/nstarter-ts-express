@@ -26,16 +26,20 @@ export class ConfigEntity extends BaseEntity<IConfig> {
         home_path: Types.string(),
         // Configurations
         server: Types.object({}, {
-            model: ServerConfig
+            model: ServerConfig,
+            required: true
         }),
         database: Types.object({}, {
-            model: DatabaseConfig
+            model: DatabaseConfig,
+            required: true
         }),
         system: Types.object({}, {
-            model: SystemConfig
+            model: SystemConfig,
+            required: true
         }),
         components: Types.object({}, {
-            model: ComponentsConfig
+            model: ComponentsConfig,
+            required: true
         })
     };
 }
