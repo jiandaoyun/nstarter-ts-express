@@ -3,7 +3,8 @@ import fs from 'fs';
 import Ajv from 'ajv';
 import AjvKeywords from 'ajv-keywords';
 import mongoose from 'mongoose';
-import { IEntity, IEntityConf } from './entity.base';
+import { IEntity } from './entity.base';
+import { IEntityConf } from '../types/entities';
 
 const ObjectId = mongoose.Types.ObjectId;
 

@@ -1,9 +1,7 @@
 import * as _ from 'lodash';
 import { ajv, IOptionTypes, ISchema, Types } from './entity.ajv';
 import { ErrorObject, ValidateFunction } from 'ajv';
-
-export interface IEntityConf {
-}
+import { IEntityConf } from '../types/entities';
 
 interface OptionType {
     [key: string]: any;

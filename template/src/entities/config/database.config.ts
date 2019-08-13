@@ -1,7 +1,7 @@
 import { ValidateFunction } from 'ajv';
 import { IFormat, Types } from '../entity.ajv';
 import { BaseConfig } from './base.config';
-import { IDatabaseConf } from '../../types/config/database.config';
+import { IDatabaseConf } from '../../types/config';
 
 let validator: ValidateFunction = () => true;
 

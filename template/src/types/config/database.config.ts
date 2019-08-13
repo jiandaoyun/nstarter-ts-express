@@ -1,5 +1,5 @@
 //#module mongodb
-import { IBaseConfig } from './base.config';
+import { IBaseConf } from './base.config';
 
 interface MongodbServer {
     readonly host: string;
@@ -46,7 +46,7 @@ export interface RabbitMQConfig {
 }
 //#endmodule rabbitmq
 
-export interface IDatabaseConf extends IBaseConfig {
+export interface IDatabaseConf extends IBaseConf {
     //#module mongodb
     readonly mongodb: MongodbConfig;
     //#endmodule mongodb

@@ -5,6 +5,7 @@ import os from 'os';
 import { safeDump, safeLoad } from 'js-yaml';
 import { baseConf } from './base_conf';
 import { ConfigEntity } from '../entities/config';
+import { RunEnv } from '../enums/config.enum';
 
 export const pkg = JSON.parse(
     fs.readFileSync('./package.json', 'utf8')
@@ -19,12 +20,6 @@ const configFormat: Record<string, nconf.IFormat> = {
     //#endmodule conf_yaml
     json: nconf.formats.json
 };
-
-enum RunEnv {
-    dev = 'develop',
-    test = 'test',
-    production = 'production'
-}
 
 export class ConfigLoader {
     private _conf: ConfigEntity;

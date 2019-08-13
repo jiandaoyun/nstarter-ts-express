@@ -1,3 +1,3 @@
-import { IEntityConf } from '../../entities/entity.base';
+import { IEntityConf } from '../entities';
 
-export interface IBaseConfig extends IEntityConf {}
+export interface IBaseConf extends IEntityConf {}

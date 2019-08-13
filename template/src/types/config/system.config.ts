@@ -1,4 +1,4 @@
-import { IBaseConfig } from './base.config';
+import { IBaseConf } from './base.config';
 
 interface ILogConf {
     readonly enabled: boolean;
@@ -30,7 +30,7 @@ interface ISentryConf extends ILogConf {
 }
 //#endmodule sentry
 
-export interface ISystemConf extends IBaseConfig {
+export interface ISystemConf extends IBaseConf {
     //#module i18n
     readonly locale: string;
     //#endmodule i18n

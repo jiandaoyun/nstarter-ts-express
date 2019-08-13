@@ -1,6 +1,6 @@
-import { IBaseConfig } from './base.config';
+import { IBaseConf } from './base.config';
 
-export interface IComponentsConf extends IBaseConfig {
+export interface IComponentsConf extends IBaseConf {
     grpc: {
         //#module grpc_server
         readonly server: {

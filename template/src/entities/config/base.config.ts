@@ -1,7 +1,7 @@
 import { BaseEntity } from '../entity.base';
-import { IBaseConfig } from '../../types/config/base.config';
+import { IBaseConf } from '../../types/config';
 
-export abstract class BaseConfig <C extends IBaseConfig, O extends C = C>
+export abstract class BaseConfig <C extends IBaseConf, O extends C = C>
     extends BaseEntity<C, O> {
 
     protected _portOptions = {
