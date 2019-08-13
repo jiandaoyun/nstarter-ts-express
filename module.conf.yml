@@ -128,7 +128,7 @@ modules:
       - i18next-conv
       - '@types/i18next'
     scripts:
-      - i18n-scan
+      - tool:i18n-scan
 
   - name: grpc_server
     label: gRPC Server

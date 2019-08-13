@@ -23,16 +23,18 @@ export class DatabaseConfig extends BaseConfig<IDatabaseConf> {
 
     protected _schema = {
         //#module mongodb
-        mongodb: {
+        mongodb: Types.object({
             mongod: Types.object(this._mongodbSchema),
-            mongos: Types.array(Types.object(this._mongodbSchema)),
+            mongos: Types.array(Types.object(this._mongodbSchema), {
+                minItems: 1
+            }),
             user: Types.string(),
             password: Types.string(),
             db: Types.string({ required: true })
-        },
+        }),
         //#endmodule mongodb
         //#module redis
-        redis: {
+        redis: Types.object({
             host: Types.string(),
             port: Types.integer({ ...this._portOptions }),
             name: Types.string({ required: true }),
@@ -47,8 +49,10 @@ export class DatabaseConfig extends BaseConfig<IDatabaseConf> {
                     default: 26379,
                     required: true
                 }),
-            }))
-        },
+            }), {
+                minItems: 1
+            })
+        }),
         //#endmodule redis
         //#module rabbitmq
         rabbitmq: Types.object({
@@ -59,9 +63,12 @@ export class DatabaseConfig extends BaseConfig<IDatabaseConf> {
                 }),
                 port: Types.integer({
                     ...this._portOptions,
+                    default: 5672,
                     required: true
                 })
-            })),
+            }), {
+                minItems: 1
+            }),
             protocol: Types.string({ required: true }),
             user: Types.string({ required: true }),
             password: Types.string({ required: true }),
