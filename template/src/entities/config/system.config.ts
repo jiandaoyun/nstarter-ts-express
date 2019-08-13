@@ -18,42 +18,42 @@ export class SystemConfig extends BaseConfig<ISystemConf> {
         locale: Types.string(),
         //#endmodule i18n
         timezone: Types.string(),
-        log: {
-            console: {
+        log: Types.object({
+            console: Types.object({
                 ...this._logSchema,
                 colorize: Types.boolean()
-            },
-            file: {
+            }),
+            file: Types.object({
                 ...this._logSchema,
                 dir: Types.string(),
                 zip: Types.boolean(),
                 rotate_days: Types.integer()
-            },
+            }),
             //#module graylog
-            graylog: {
+            graylog: Types.object({
                 ...this._logSchema,
                 servers: Types.array(Types.object({
                     host: Types.string({ required: true }),
                     port: Types.integer({ required: true })
                 }), { required: true })
-            },
+            }),
             //#endmodule graylog
             //#module sentry
-            sentry: {
+            sentry: Types.object({
                 dsn: Types.string({ required: true })
-            }
+            })
             //#endmodule sentry
-        },
-        req_log: {
+        }),
+        req_log: Types.object({
             enabled: Types.boolean()
-        },
+        }),
         //#module monitor
-        monitor: {
+        monitor: Types.object({
             metric_path: Types.string(),
             //#module cron
             gateway: Types.string()
             //#endmodule cron
-        }
+        })
         //#endmodule monitor
     };
 }
