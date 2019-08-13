@@ -19,6 +19,7 @@ export interface ITypeSchema {
     items?: ISchema;
     required?: string[];
     format?: string;
+    model?: any;
     _t: IOptionTypes;
     _obj?: ISchema;
     _required?: boolean;
@@ -169,6 +170,9 @@ export class Types {
             };
         }
         // Set if the attribute is required.
+        if (options.default) {
+            options.required = false;
+        }
         if (options.required) {
             _required = options.required;
         }

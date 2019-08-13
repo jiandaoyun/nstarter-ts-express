@@ -17,8 +17,9 @@
     "serve": "pm2 startOrReload ./pm2.json --update-env",
     "test": "nyc mocha --opts ./test/mocha.opts",
     "eslint": "eslint --output-file ./lint/eslint.html --format html --ext .js,.ts --config .eslintrc.js ./src",
-    "i18n-scan": "ts-node ./tools/i18n_scan.ts",
-    "circular": "nstarter-circular ./src"
+    "circular": "nstarter-circular ./src",
+    "tool:i18n-scan": "ts-node ./tools/i18n_scan.ts",
+    "tool:config-shema": "ts-node ./tools/config_schema.ts"
   },
   "dependencies": {
     "@grpc/proto-loader": "0.5.0",
