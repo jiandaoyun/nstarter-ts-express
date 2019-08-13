@@ -42,8 +42,11 @@ export class ConfigLoader {
             ...nconf.get()
         });
         if (!this._conf.isConfValid) {
-            console.error('Invalid config, please check.');
-            console.error(this._conf.validationErrors);
+            console.error('Invalid config file, please check.');
+            const errMsgs = _.map(this._conf.validationErrors, (err) =>
+                `[config]#/${ err.dataPath }: ${ err.message }`
+            );
+            console.error(_.join(errMsgs, '\n'));
             process.exit(1);
         }
     }

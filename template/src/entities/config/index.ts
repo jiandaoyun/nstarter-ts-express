@@ -17,10 +17,12 @@ export class ConfigEntity extends BaseEntity<IConfig> {
     protected _schema = {
         // Base attributes
         env: Types.string({
-            enum: RunEnv
+            enum: RunEnv,
+            default: RunEnv.dev,
+            required: true
         }),
-        hostname: Types.string(),
-        version: Types.string(),
+        hostname: Types.string({ required: true }),
+        version: Types.string({ required: true }),
         home_path: Types.string(),
         // Configurations
         server: Types.object({}, {
