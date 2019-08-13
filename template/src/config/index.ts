@@ -1,24 +1,15 @@
-import _ from 'lodash';
-import os from 'os';
-import fs from 'fs';
 import nconf from 'nconf';
-//#module conf_yaml
-import { safeLoad, safeDump } from 'js-yaml';
-//#endmodule conf_yaml
-
-import { DatabaseConfig } from './database.config';
-import { ServerConfig } from './server.config';
-import { ComponentsConfig } from './components.config';
-import { SystemConfig } from './system.config';
-import { pkg } from './pkg';
-import { ConfigType } from './interface';
+import _ from 'lodash';
+import fs from 'fs';
+import os from 'os';
+import { safeDump, safeLoad } from 'js-yaml';
 import { baseConf } from './base_conf';
+import { ConfigEntity } from '../entities/config';
+import { RunEnv } from '../enums/config.enum';
 
-enum RunEnv {
-    dev = 'develop',
-    test = 'test',
-    prod = 'production'
-}
+export const pkg = JSON.parse(
+    fs.readFileSync('./package.json', 'utf8')
+);
 
 const configFormat: Record<string, nconf.IFormat> = {
     //#module conf_yaml
@@ -30,33 +21,38 @@ const configFormat: Record<string, nconf.IFormat> = {
     json: nconf.formats.json
 };
 
-class Config implements ConfigType {
-    public readonly hostname = os.hostname();
-    public readonly version = pkg.version;
-    public readonly env: RunEnv;
-    public readonly homePath: string;
-
-    public readonly server: ServerConfig;
-    public readonly database: DatabaseConfig;
-    public readonly system: SystemConfig;
-    public readonly components: ComponentsConfig;
+export class ConfigLoader {
+    private _conf: ConfigEntity;
 
     constructor() {
         nconf.use('memory');
         nconf.env();
-        this.env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.dev;
-        this.homePath = nconf.any(['USERPROFILE', 'HOME']);
-        this._loadConf('./conf.d/config.override', 'override');
+        const env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.dev;
         // load config by environment
-        this._loadConf(`./conf.d/config.${ this.env }`, this.env);
+        this._loadConf(`./conf.d/config.${ env }`, env);
         // load default config
         nconf.defaults(baseConf);
 
-        // init config
-        this.server = nconf.get('server');
-        this.database = nconf.get('database');
-        this.system = nconf.get('system');
-        this.components = nconf.get('components');
+        this._conf = new ConfigEntity();
+        this._conf.setConfig({
+            env,
+            hostname: os.hostname(),
+            version: pkg.version,
+            home_path: nconf.any(['USERPROFILE', 'HOME']),
+            ...nconf.get()
+        });
+        if (!this._conf.isConfValid) {
+            console.error('Invalid config file, please check.');
+            const errMsgs = _.map(this._conf.validationErrors, (err) =>
+                `[config]#/${ err.dataPath }: ${ err.message }`
+            );
+            console.error(_.join(errMsgs, '\n'));
+            process.exit(1);
+        }
+    }
+
+    public getConfig() {
+        return this._conf.getConfig();
     }
 
     private _loadConf(path: string, env: string): void {
@@ -73,4 +69,4 @@ class Config implements ConfigType {
     }
 }
 
-export const config = new Config();
+export const config = new ConfigLoader().getConfig();

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import mongoose, { Connection } from 'mongoose';
-import { MongodbConfig } from '../../../config/database.config';
 import { logger } from '../logger';
+import { MongodbConfig } from '../../../types/config/database.config';
 
 export class MongodbConnector {
     public readonly connection: Connection;

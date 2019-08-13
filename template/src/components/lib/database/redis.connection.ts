@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import IORedis, { Redis, RedisOptions } from 'ioredis';
-import { RedisConfig } from '../../../config/database.config';
 import { logger } from '../logger';
+import { RedisConfig } from '../../../types/config/database.config';
 
 export class RedisConnector {
     public readonly connection: Redis;

@@ -47,7 +47,7 @@ export class MonitorComponent extends AbstractComponent {
                         // pm2 process id
                         pm_id: _.get(process, 'env.pm_id', 0)
                     }
-                }, (err) => {
+                }, (err?: Error) => {
                     if (err) {
                         this._logger.logger.warn(err);
                     }
