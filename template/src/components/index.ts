@@ -67,3 +67,6 @@ export const mqConsumer = container.get(MQConsumerComponent);
 export const logger = container.get(LoggerComponent).logger;
 export const reqLogger = container.get(LoggerComponent).reqLogger;
 export const httpServer = container.get(HttpServerComponent).server;
+//#module monitor
+export const monitorServer = container.get(HttpServerComponent).monitor;
+//#endmodule monitor

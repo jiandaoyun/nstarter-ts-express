@@ -103,7 +103,9 @@ export const baseConf: Partial<IConfig> = {
         },
         //#module monitor
         monitor: {
+            port: 3001,
             metric_path: '/metrics',
+            health_path: '/health_check',
             //#module cron
             gateway: ''
             //#endmodule cron

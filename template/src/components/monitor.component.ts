@@ -5,12 +5,15 @@ import { Pushgateway } from 'prom-client';
 //#endmodule cron
 import { RequestHandler, Router } from 'express';
 import URL from 'url';
+import httpStatus from 'http-status';
 
 import { AbstractComponent } from './abstract.component';
 import { LoggerComponent } from './logger.component';
 import { lazyInject, provideComponent } from './container';
 import { config } from '../config';
 import { Monitor, registry } from '../plugins/monitor';
+import { RedisComponent } from './redis.component';
+import { MongodbComponent } from './mongodb.component';
 
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {
@@ -18,6 +21,16 @@ export class MonitorComponent extends AbstractComponent {
 
     @lazyInject(LoggerComponent)
     private _logger: LoggerComponent;
+
+    //#module redis
+    @lazyInject(RedisComponent)
+    private _redisComponent: RedisComponent;
+    //#endmodule redis
+
+    //#module mongodb
+    @lazyInject(MongodbComponent)
+    private _mongodbComponent: MongodbComponent;
+    //#endmodule mongodb
 
     constructor() {
         super();
@@ -70,6 +83,37 @@ export class MonitorComponent extends AbstractComponent {
         router.get(config.system.monitor.metric_path, (req, res) => {
             res.set('Content-Type', registry.contentType);
             return res.end(registry.metrics());
+        });
+        return router;
+    }
+
+    /**
+     * Check if backend service ready.
+     */
+    private get isReady(): boolean {
+        let isReady = true;
+        //#module mongodb
+        isReady = isReady && (this._mongodbComponent.db.connection.readyState === 1);
+        //#endmodule mongodb
+        //#module redis
+        isReady = isReady && (this._redisComponent.redis.connection.status === 'ready');
+        //#endmodule redis
+        return isReady;
+    }
+
+    /**
+     * Request for health check
+     */
+    public get healthRouter(): Router {
+        const router = Router();
+        router.get(config.system.monitor.health_path, (req, res) => {
+            res.set('Content-Type', 'text/plain');
+            if (this.isReady) {
+                res.status(httpStatus.OK).send('ok');
+            } else {
+                res.status(httpStatus.BAD_REQUEST).send('failed');
+            }
+            return res.end();
         });
         return router;
     }

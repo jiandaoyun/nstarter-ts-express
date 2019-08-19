@@ -1,6 +1,9 @@
 import { config } from './config';
 import {
     httpServer,
+    //#module monitor
+    monitorServer,
+    //#endmodule monitor
     logger,
     //#module mq_producer|mq_consumer
     mqProducer,
@@ -17,6 +20,16 @@ httpServer.on('error', (err) => {
 httpServer.on('listening', () => {
     logger.info(`Listening on：${ port }`);
 });
+//#module monitor
+
+const monitorPort = config.system.monitor.port;
+if (monitorPort) {
+    monitorServer.listen(monitorPort);
+    monitorServer.on('listening', () => {
+        logger.info(`Monitor requests listening on：${ monitorPort }`);
+    });
+}
+//#endmodule monitor
 
 //#module mq_producer
 mqProducer.start();
