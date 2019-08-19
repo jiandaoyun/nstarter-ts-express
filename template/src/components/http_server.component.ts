@@ -29,6 +29,9 @@ import { router } from '../routes';
 @provideComponent()
 export class HttpServerComponent extends AbstractComponent {
     private readonly _server: http.Server;
+    //#module monitor
+    private readonly _monitor: http.Server;
+    //#endmodule monitor
 
     //#module redis
     @lazyInject(RedisComponent)
@@ -94,9 +97,18 @@ export class HttpServerComponent extends AbstractComponent {
             app.use(this._loggerComponent.reqLogger.middleware);
         }
         //#module monitor
-
         app.use(this._monitorComponent.requestMonitorMiddleware);
-        app.use(this._monitorComponent.metricsRouter);
+        if (config.system.monitor.port) {
+            // use monitor port
+            const monitorApp = express();
+            monitorApp.use(this._monitorComponent.metricsRouter);
+            monitorApp.use(this._monitorComponent.healthRouter);
+            this._monitor = http.createServer(monitorApp);
+        } else {
+            // use default app
+            app.use(this._monitorComponent.metricsRouter);
+            app.use(this._monitorComponent.healthRouter);
+        }
         //#endmodule monitor
 
         app.use('/', router);
@@ -107,4 +119,10 @@ export class HttpServerComponent extends AbstractComponent {
     public get server() {
         return this._server;
     }
+    //#module monitor
+
+    public get monitor() {
+        return this._monitor;
+    }
+    //#endmodule monitor
 }
