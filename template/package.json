@@ -16,7 +16,8 @@
     "start": "node ./dist/app.js",
     "serve": "pm2 startOrReload ./pm2.json --update-env",
     "test": "nyc mocha --opts ./test/mocha.opts",
-    "eslint": "eslint --output-file ./lint/eslint.html --format html --ext .js,.ts --config .eslintrc.js ./src",
+    "eslint": "eslint --ext .js,.ts --config .eslintrc.js ./src",
+    "eslint:html": "npm run eslint -- --output-file ./lint/eslint.html --format html",
     "circular": "nstarter-circular ./src",
     "tool:i18n-scan": "ts-node ./tools/i18n_scan.ts",
     "tool:config-shema": "ts-node ./tools/config_schema.ts"
@@ -85,7 +86,7 @@
     "chai": "4.2.0",
     "chai-datetime": "1.5.0",
     "eslint": "5.16.0",
-    "eslint-config-nstarter": "0.1.1",
+    "eslint-config-nstarter": "1.0.3",
     "i18next-scanner": "2.9.1",
     "mocha": "5.2.0",
     "nstarter-circular": "0.1.2-beta",
