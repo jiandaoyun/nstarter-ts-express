@@ -11,6 +11,11 @@ import {
     //#endmodule mq_producer|mq_consumer
 } from './components';
 
+process.on('uncaughtException', (err) => {
+    logger.error(err);
+    return false;
+});
+
 const port = config.server.http.port;
 httpServer.listen(port);
 httpServer.on('error', (err) => {
