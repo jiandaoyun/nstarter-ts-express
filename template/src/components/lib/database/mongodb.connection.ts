@@ -30,7 +30,7 @@ export class MongodbConnector {
     }
 
     private get mongoUri(): string {
-        const { mongod, mongos } = this._options;
+        const { db, mongod, mongos } = this._options;
         let server;
         if (mongos) {
             server = _.join(_.map(mongos, (server) => `${ server.host }:${ server.port }`), ',');
@@ -39,7 +39,7 @@ export class MongodbConnector {
         } else {
             return '';
         }
-        return `mongodb://${ server }`;
+        return `mongodb://${ server }/${ db }`;
     }
 
     /**
@@ -49,7 +49,6 @@ export class MongodbConnector {
         const { user, password, db, x509 } = this._options;
         const baseConf = {
             user,
-            db,
             autoReconnect: true,
             connectTimeoutMS: 10000,
             reconnectTries: Number.MAX_VALUE,
