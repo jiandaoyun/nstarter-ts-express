@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import mongoose, { Connection } from 'mongoose';
+import fs from 'fs';
+import mongoose, { Connection, ConnectionOptions } from 'mongoose';
 import { logger } from '../logger';
 import { MongodbConfig } from '../../../types/config/database.config';
 
@@ -13,17 +14,7 @@ export class MongodbConnector {
         if (name) {
             this._name = name;
         }
-        this.connection = mongoose.createConnection(this.mongoUri, {
-            autoReconnect: true,
-            connectTimeoutMS: 10000,
-            reconnectTries: Number.MAX_VALUE,
-            reconnectInterval: 1000,
-            keepAlive: true,
-            keepAliveInitialDelay: 300000,
-            socketTimeoutMS: 0,
-            useCreateIndex: true,
-            useNewUrlParser: true
-        });
+        this.connection = mongoose.createConnection(this.mongoUri, this.connectionConf);
         this.connection.on('error', (err) => {
             logger.error(`${ this._tag } connection failed`, { error: err });
         });
@@ -39,7 +30,7 @@ export class MongodbConnector {
     }
 
     private get mongoUri(): string {
-        const { user, password, mongod, mongos, db } = this._options;
+        const { mongod, mongos } = this._options;
         let server;
         if (mongos) {
             server = _.join(_.map(mongos, (server) => `${ server.host }:${ server.port }`), ',');
@@ -48,11 +39,50 @@ export class MongodbConnector {
         } else {
             return '';
         }
-        if (!user || !password) {
-            // 本地开发使用
-            return `mongodb://${ server }/${ db }`;
+        return `mongodb://${ server }`;
+    }
+
+    /**
+     * 获取数据库连接配置
+     */
+    private get connectionConf(): ConnectionOptions {
+        const { user, password, db, x509 } = this._options;
+        const baseConf = {
+            user,
+            db,
+            autoReconnect: true,
+            connectTimeoutMS: 10000,
+            reconnectTries: Number.MAX_VALUE,
+            reconnectInterval: 1000,
+            keepAlive: true,
+            keepAliveInitialDelay: 300000,
+            socketTimeoutMS: 0,
+            useCreateIndex: true,
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        };
+        if (x509 && !_.isEmpty(x509)) {
+            // x509 认证方式
+            return {
+                ...baseConf,
+                authMechanism: 'MONGODB-X509',
+                authSource: '$external',
+                ssl: true,
+                sslValidate: true,
+                // 加载证书，如出现异常，直接中断退出
+                sslCA: [fs.readFileSync(x509.ca)],
+                sslCert: fs.readFileSync(x509.cert),
+                sslKey: fs.readFileSync(x509.key),
+                checkServerIdentity: false
+            };
+        } else {
+            // 用户名密码认证
+            return {
+                ...baseConf,
+                authSource: db,
+                pass: password
+            };
         }
-        return `mongodb://${ user }:${ password }@${ server }/${ db }`;
     }
 
     private get _tag(): string {

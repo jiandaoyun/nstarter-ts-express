@@ -6,11 +6,18 @@ interface MongodbServer {
     readonly port: number;
 }
 
+interface IX509Config {
+    readonly ca: string;
+    readonly cert: string;
+    readonly key: string;
+}
+
 export interface MongodbConfig {
     readonly mongod?: MongodbServer;
     readonly mongos?: MongodbServer[];
     readonly user?: string;
     readonly password?: string;
+    readonly x509?: IX509Config;
     readonly db: string;
 }
 
