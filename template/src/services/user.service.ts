@@ -1,14 +1,19 @@
 import { userModel } from '../models/user.model';
 import { IUserModel } from '../types/models/user';
+import { BaseService, serviceProvider } from './base.service';
 
-export class UserService {
-    public static createOne(user: IUserModel, callback: Callback) {
-        userModel.create([user], (err, newUser) => callback(err, newUser));
+class UserService extends BaseService {
+    public createOne(user: IUserModel) {
+        return userModel.create([user], {
+            session: this._session
+        });
     }
 
-    public static findOneByUsername(username: string, callback: Callback) {
-        userModel.findOne({ username })
-            .lean(true)
-            .exec((err, user: any) => callback(err, user));
+    public findOneByUsername(username: string) {
+        return userModel.findOne({ username }).setOptions({
+            session: this._session
+        }).lean(true);
     }
 }
+
+export const userService = serviceProvider(UserService);
