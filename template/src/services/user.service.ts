@@ -1,6 +1,7 @@
 import { userModel } from '../models/user.model';
 import { IUserModel } from '../types/models/user';
 import { BaseService, serviceProvider } from './base.service';
+import { profiler } from '../decorators/monitor';
 
 class UserService extends BaseService {
     public createOne(user: IUserModel) {
@@ -9,6 +10,7 @@ class UserService extends BaseService {
         });
     }
 
+    @profiler()
     public findOneByUsername(username: string) {
         return userModel.findOne({ username }).setOptions({
             session: this._session
