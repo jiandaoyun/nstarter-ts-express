@@ -33,6 +33,7 @@ modules:
       - src/components/lib/database/mongodb.connection.ts
       - src/models/**
       - src/controllers/**
+      - src/decorators/mongodb.ts
     config:
       - database.mongodb
     packages:

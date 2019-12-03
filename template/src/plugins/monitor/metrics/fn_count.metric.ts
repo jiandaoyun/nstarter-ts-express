@@ -1,20 +1,20 @@
 import { BaseMetric } from './base.metric';
 import { Counter } from 'prom-client';
-import { IReqLabels } from '../types';
+import { IFnLabels } from '../types';
 import { provideMetric } from '../container';
 
 @provideMetric()
-export class ReqCountMetric extends BaseMetric<Counter> {
+export class FnCountMetric extends BaseMetric<Counter> {
     constructor() {
         super();
         this._metric = new Counter({
-            name: 'req_count_sum',
-            help: 'Total Request Count',
-            labelNames: ['method', 'status', 'path']
+            name: 'fn_count_sum',
+            help: 'Total Function Call Count',
+            labelNames: ['method', 'class']
         });
     }
 
-    public inc(labels: IReqLabels) {
+    public inc(labels: IFnLabels) {
         this._metric.inc(labels);
     }
 }

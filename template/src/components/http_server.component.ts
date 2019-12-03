@@ -59,6 +59,7 @@ export class HttpServerComponent extends AbstractComponent {
         // view engine setup
         app.set('views', config.server.static.views);
         app.set('view engine', 'pug');
+        app.enable('view cache');
         // static file path
         app.use(express.static(config.server.static.public));
 

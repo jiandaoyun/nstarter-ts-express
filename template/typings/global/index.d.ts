@@ -9,8 +9,8 @@ declare global {
         readonly isCustomError?: boolean;
     }
 
-    interface Constructor {
-        new(...args: any[]): any;
+    interface Constructor<T = any> {
+        new(...args: any[]): T;
     }
 
     interface Callback<T = any, E = Error> {

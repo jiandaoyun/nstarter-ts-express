@@ -1,6 +1,6 @@
 import chai from 'chai';
 import mocha from 'mocha';
-import { UserService } from '../../../src/services';
+import { userService } from '../../../src/services';
 import { userModel } from '../../../src/models/user.model';
 import { IUserModel } from '../../../src/types/models/user';
 
@@ -15,29 +15,32 @@ describe('UserService', () => {
         salt: 'sa1t'
     };
 
-    it('createOne', (done) => {
-        UserService.createOne(testUser, (err: Error, userDoc: any) => {
+    it('createOne', async () => {
+        try {
+            const newUser = await userService().createOne(testUser);
+            should.exist(newUser);
+        } catch (err) {
             should.not.exist(err);
-            should.exist(userDoc);
-            return done();
-        });
+        }
     });
 
-    it('findOneByUsername', (done) => {
-        UserService.findOneByUsername(testUser.username, (err: Error, user: IUserModel) => {
-            should.not.exist(err);
+    it('findOneByUsername', async () => {
+        try {
+            const user = await userService().findOneByUsername(testUser.username);
             should.exist(user);
             user.username.should.equal(testUser.username);
-            return done();
-        });
+        } catch (err) {
+            should.not.exist(err);
+        }
     });
 
-    after((done) => {
-        userModel.deleteMany({
-            username: testUser.username
-        }, (err) => {
+    after(async () => {
+        try {
+            await userModel.deleteMany({
+                username: testUser.username
+            });
+        } catch (err) {
             should.not.exist(err);
-            return done();
-        });
+        }
     });
 });
