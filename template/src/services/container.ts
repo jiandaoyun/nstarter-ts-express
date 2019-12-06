@@ -11,7 +11,7 @@ const { lazyInject } = getDecorators(container);
 
 export { container, lazyInject };
 
-export function provideController<T extends Constructor>() {
+export function provideService<T extends Constructor>() {
     return (constructor: T) => {
         container.bind(constructor).to(injectable()(constructor));
     };

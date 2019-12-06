@@ -1,6 +1,6 @@
 import { ClientSession } from "mongoose";
 
-export abstract class BaseService {
+export abstract class BaseRepo {
     protected readonly _session?: ClientSession;
 
     constructor (session?: ClientSession) {
@@ -9,10 +9,10 @@ export abstract class BaseService {
 }
 
 const _defaultServices: {
-    [name: string]: BaseService
+    [name: string]: BaseRepo
 } = {};
 
-export const serviceProvider = <T extends BaseService>(Service: Constructor<T>) =>
+export const repoProvider = <T extends BaseRepo>(Service: Constructor<T>) =>
     (sess?: ClientSession): T => {
         if (!sess) {
             const serviceKey = Service.name;
