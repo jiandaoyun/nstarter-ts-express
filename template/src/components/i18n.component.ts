@@ -9,7 +9,7 @@ export class I18nComponent extends AbstractComponent {
     constructor() {
         super();
         this._i18n = new I18n();
-        this._i18n.init(() => {});
+        this._i18n.init();
         this.log();
     }
 

@@ -2,7 +2,7 @@ import SocketIO from 'socket.io';
 
 import { AbstractComponent } from './abstract.component';
 import { WebSocket } from './lib/websocket/socket';
-import { lazyInject, provideComponent } from './container';
+import { injectComponent, provideComponent } from './container';
 import { RedisComponent } from './redis.component';
 import { HttpServerComponent } from './http_server.component';
 
@@ -10,10 +10,10 @@ import { HttpServerComponent } from './http_server.component';
 export class WsServerComponent extends AbstractComponent {
     private _server: SocketIO.Server;
 
-    @lazyInject(RedisComponent)
+    @injectComponent()
     private _redisComponent: RedisComponent;
 
-    @lazyInject(HttpServerComponent)
+    @injectComponent()
     private _httpServerComponent: HttpServerComponent;
 
     constructor() {

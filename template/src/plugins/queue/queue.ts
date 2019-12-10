@@ -1,11 +1,10 @@
 import async from 'async';
-import { Getter, Setter } from '../../decorators';
 import { Errors } from '../../errors';
 import { Connection, Replies } from 'amqplib/callback_api';
 import { Exchange, Queue, QueueBase, RabbitMQChannel } from './interface';
 
 export abstract class RabbitMQBase implements QueueBase {
-    @Getter() @Setter() public channel: RabbitMQChannel;
+    public channel: RabbitMQChannel;
 
     protected get _connection(): Connection | undefined {
         return RabbitMQBase.rabbitmq.getConnection();

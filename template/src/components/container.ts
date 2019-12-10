@@ -8,18 +8,55 @@ const container = new Container({
     autoBindInjectable: false
 });
 
+const componentMetaKey = 'ioc:component';
+
 const { lazyInject } = getDecorators(container);
 
-export { container, lazyInject };
-
-export function provideComponent<T extends Constructor>(name?: string) {
+/**
+ * 服务定义装饰器
+ * @param identifier
+ */
+export function provideComponent<T extends Constructor>(identifier?: string | symbol) {
     return (constructor: T) => {
-        const target = constructor.prototype;
-        let componentName = name;
-        if (!componentName) {
-            componentName = _.snakeCase(_.replace(constructor.name, /component$/i, ''));
+        let id = identifier;
+        if (!id) {
+            id = _.camelCase(constructor.name);
         }
-        target._name = componentName;
-        container.bind(constructor).to(injectable()(constructor));
+        Reflect.defineMetadata(componentMetaKey, {
+            id,
+            originName: constructor.name,
+        }, constructor);
     };
+}
+
+/**
+ * 服务对象引用注入装饰器
+ * @param identifier
+ */
+export function injectComponent(identifier?: string | symbol) {
+    return function (target: any, key: string) {
+        let id = identifier;
+        if (!id) {
+            id = _.camelCase(key);
+        }
+        return lazyInject(id)(target, key);
+    };
+}
+
+/**
+ * 服务对象注册工具方法
+ * @param target - 被注册服务的构造函数
+ */
+export function registerComponent(target: Constructor) {
+    const identifier = Reflect.getMetadata(componentMetaKey, target);
+    container.bind(identifier.id).to(injectable()(target));
+}
+
+/**
+ * 服务对象实例的获取方法
+ * @param target
+ */
+export function getComponent<T>(target: Constructor<T>): T {
+    const identifier = Reflect.getMetadata(componentMetaKey, target);
+    return container.get<T>(identifier.id);
 }

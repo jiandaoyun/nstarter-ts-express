@@ -5,15 +5,15 @@ import { RabbitMQConnector } from './lib/database/rabbitmq.connection';
 
 @provideComponent()
 export class RabbitMQComponent extends AbstractComponent {
-    private readonly _rabbitmq: RabbitMQConnector;
+    private readonly _rabbitMq: RabbitMQConnector;
 
     constructor() {
         super();
-        this._rabbitmq = new RabbitMQConnector(config.database.rabbitmq);
+        this._rabbitMq = new RabbitMQConnector(config.database.rabbitmq);
         this.log();
     }
 
     public get rabbitmq() {
-        return this._rabbitmq;
+        return this._rabbitMq;
     }
 }

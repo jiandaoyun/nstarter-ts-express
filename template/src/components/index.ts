@@ -1,49 +1,58 @@
-import { container } from './container';
+import { registerComponent, getComponent } from './container';
 
 //#module mongodb
 import { MongodbComponent } from './mongodb.component';
-export const mongodb = container.get(MongodbComponent).db;
+registerComponent(MongodbComponent);
+export const mongodb = getComponent<MongodbComponent>(MongodbComponent).db;
 
 //#endmodule mongodb
 //#module redis
 import { RedisComponent } from './redis.component';
-export const redis = container.get(RedisComponent).redis;
+registerComponent(RedisComponent);
+export const redis = getComponent<RedisComponent>(RedisComponent);
 
 //#endmodule redis
 //#module ws_server
 import { WsServerComponent } from './ws_server.component';
-export const wsServer = container.get(WsServerComponent).server;
+registerComponent(WsServerComponent);
+export const wsServer = getComponent<WsServerComponent>(WsServerComponent);
 
 //#endmodule ws_server
 //#module ws_emitter
 import { WsEmitterComponent } from './ws_emitter.component';
-export const wsEmitter = container.get(WsEmitterComponent).emitter;
+registerComponent(WsEmitterComponent);
+export const wsEmitter = getComponent<WsEmitterComponent>(WsEmitterComponent);
 
 //#endmodule ws_emitter
 //#module cron
 import { CronComponent } from './cron.component';
-export const cron = container.get(CronComponent);
+registerComponent(CronComponent);
+export const cron = getComponent<CronComponent>(CronComponent);
 
 //#endmodule cron
 //#module i18n
 import { I18nComponent } from './i18n.component';
-export const i18n = container.get(I18nComponent).i18n;
+registerComponent(I18nComponent);
+export const i18n = getComponent<I18nComponent>(I18nComponent).i18n;
 
 //#endmodule i18n
 //#module grpc_server
 import { RpcServerComponent } from './rpc_server.component';
-export const rpcServer = container.get(RpcServerComponent).server;
+registerComponent(RpcServerComponent);
+export const rpcServer = getComponent<RpcServerComponent>(RpcServerComponent).server;
 
 //#endmodule grpc_server
 //#module grpc_client
 import { RpcClientComponent } from './rpc_client.component';
-export const rpcClient = container.get(RpcClientComponent).clients;
+registerComponent(RpcClientComponent);
+export const rpcClient = getComponent<RpcClientComponent>(RpcClientComponent).clients;
 
 //#endmodule grpc_client
 //#module monitor
 
 import { MonitorComponent } from './monitor.component';
-export const monitor = container.get(MonitorComponent).monitor;
+registerComponent(MonitorComponent);
+export const monitor = getComponent<MonitorComponent>(MonitorComponent).monitor;
 //#endmodule monitor
 
 import { LoggerComponent } from './logger.component';
@@ -51,22 +60,28 @@ import { HttpServerComponent } from './http_server.component';
 
 //#module rabbitmq
 import { RabbitMQComponent } from './rabbitmq.component';
-export const rabbitmq = container.get(RabbitMQComponent).rabbitmq;
+registerComponent(RabbitMQComponent);
+export const rabbitmq = getComponent<RabbitMQComponent>(RabbitMQComponent);
 //#endmodule rabbitmq
 
 //#module mq_producer
 import { MQProducerComponent } from './mq_producer.component';
-export const mqProducer = container.get(MQProducerComponent);
+registerComponent(MQProducerComponent);
+export const mqProducer = getComponent<MQProducerComponent>(MQProducerComponent);
 //#endmodule mq_producer
 
 //#module mq_consumer
 import { MQConsumerComponent } from './mq_consumer.component';
-export const mqConsumer = container.get(MQConsumerComponent);
+registerComponent(MQConsumerComponent);
+export const mqConsumer = getComponent<MQConsumerComponent>(MQConsumerComponent);
 //#endmodule mq_consumer
 
-export const logger = container.get(LoggerComponent).logger;
-export const reqLogger = container.get(LoggerComponent).reqLogger;
-export const httpServer = container.get(HttpServerComponent).server;
+registerComponent(LoggerComponent);
+export const logger = getComponent<LoggerComponent>(LoggerComponent).logger;
+export const reqLogger = getComponent<LoggerComponent>(LoggerComponent).reqLogger;
+
+registerComponent(HttpServerComponent);
+export const httpServer = getComponent<HttpServerComponent>(HttpServerComponent).server;
 //#module monitor
-export const monitorServer = container.get(HttpServerComponent).monitor;
+export const monitorServer = getComponent<HttpServerComponent>(HttpServerComponent).monitor;
 //#endmodule monitor
