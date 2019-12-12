@@ -1,7 +1,7 @@
 import { AbstractComponent } from './abstract.component';
 import { RedisConnector } from './lib/database/redis.connection';
 import { config } from '../config';
-import { provideComponent } from './container';
+import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class RedisComponent extends AbstractComponent {

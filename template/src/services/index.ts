@@ -1,4 +1,4 @@
-import { registerSvc, getSvc } from './container';
+import { registerSvc, getSvc } from '../core';
 
 import { PingService } from './ping.service';
 import { PongService } from './pong.service';

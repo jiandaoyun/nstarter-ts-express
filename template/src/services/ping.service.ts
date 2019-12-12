@@ -1,5 +1,5 @@
-import { injectSvc, provideSvc } from './container';
 import { PongService } from './pong.service';
+import { injectSvc, provideSvc } from '../decorators';
 
 @provideSvc()
 export class PingService {

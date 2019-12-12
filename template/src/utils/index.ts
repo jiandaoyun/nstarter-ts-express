@@ -1,5 +1,1 @@
-import * as Common from './utils.common';
-
-export {
-    Common
-};
+export { CommonUtils } from './utils.common';

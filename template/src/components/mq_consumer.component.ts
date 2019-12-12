@@ -1,9 +1,9 @@
 import async from 'async';
 import { AbstractComponent } from './abstract.component';
 import { RabbitMQComponent } from './rabbitmq.component';
-import { injectComponent, provideComponent } from './container';
 import { demoConsumer, demoSubscribe } from '../plugins/queue';
-import { logger } from './index';
+import { logger } from './lib/logger';
+import { injectComponent, provideComponent } from '../decorators';
 
 @provideComponent()
 export class MQConsumerComponent extends AbstractComponent {

@@ -2,13 +2,13 @@ import SocketIO from 'socket.io';
 
 import { AbstractComponent } from './abstract.component';
 import { WebSocket } from './lib/websocket/socket';
-import { injectComponent, provideComponent } from './container';
 import { RedisComponent } from './redis.component';
 import { HttpServerComponent } from './http_server.component';
+import { injectComponent, provideComponent } from '../decorators';
 
 @provideComponent()
 export class WsServerComponent extends AbstractComponent {
-    private _server: SocketIO.Server;
+    private readonly _server: SocketIO.Server;
 
     @injectComponent()
     private _redisComponent: RedisComponent;

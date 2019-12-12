@@ -1,8 +1,8 @@
 import SocketIOEmitter, { Emitter } from 'socket.io-emitter';
 
 import { AbstractComponent } from './abstract.component';
-import { injectComponent, provideComponent } from './container';
 import { RedisComponent } from './redis.component';
+import { injectComponent, provideComponent } from '../decorators';
 
 @provideComponent()
 export class WsEmitterComponent extends AbstractComponent {

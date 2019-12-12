@@ -9,11 +9,11 @@ import httpStatus from 'http-status';
 
 import { AbstractComponent } from './abstract.component';
 import { LoggerComponent } from './logger.component';
-import { injectComponent, provideComponent } from './container';
 import { config } from '../config';
 import { Monitor, registry } from '../plugins/monitor';
 import { RedisComponent } from './redis.component';
 import { MongodbComponent } from './mongodb.component';
+import { injectComponent, provideComponent } from '../decorators';
 
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {

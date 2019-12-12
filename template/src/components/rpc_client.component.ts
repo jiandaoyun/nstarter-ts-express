@@ -1,6 +1,6 @@
 import { AbstractComponent } from './abstract.component';
 import { Clients } from '../plugins/rpc';
-import { provideComponent } from './container';
+import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class RpcClientComponent extends AbstractComponent {

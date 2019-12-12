@@ -1,7 +1,7 @@
 import { config } from '../config';
 import { AbstractComponent } from './abstract.component';
-import { provideComponent } from './container';
 import { RabbitMQConnector } from './lib/database/rabbitmq.connection';
+import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class RabbitMQComponent extends AbstractComponent {
