@@ -1,5 +1,5 @@
-import { mongodb } from '../components';
 import { TransactionOptions } from 'mongodb';
+import { mongodb } from '../components';
 
 const SESSION_IDX = 'mongodb:sess_idx';
 
@@ -32,6 +32,6 @@ export function transaction(options?: TransactionOptions, connection = mongodb.c
     };
 }
 
-export function session(target: any, propertyKey: string, parameterIndex: number) {
+export function repoSession(target: any, propertyKey: string, parameterIndex: number) {
     Reflect.defineMetadata(SESSION_IDX, parameterIndex, target);
 }

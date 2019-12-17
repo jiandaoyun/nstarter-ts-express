@@ -1,12 +1,12 @@
 import chai from 'chai';
 import mocha from 'mocha';
-import { userService } from '../../../src/services';
+import { userRepo } from '../../../src/repositories';
 import { userModel } from '../../../src/models/user.model';
 import { IUserModel } from '../../../src/types/models/user';
 
 const should = chai.should();
 
-describe('UserService', () => {
+describe('UserRepo', () => {
     const testUser: IUserModel = {
         username: 'test',
         nickname: 'test',
@@ -17,7 +17,7 @@ describe('UserService', () => {
 
     it('createOne', async () => {
         try {
-            const newUser = await userService().createOne(testUser);
+            const newUser = await userRepo().createOne(testUser);
             should.exist(newUser);
         } catch (err) {
             should.not.exist(err);
@@ -26,7 +26,7 @@ describe('UserService', () => {
 
     it('findOneByUsername', async () => {
         try {
-            const user = await userService().findOneByUsername(testUser.username);
+            const user = await userRepo().findOneByUsername(testUser.username);
             should.exist(user);
             user.username.should.equal(testUser.username);
         } catch (err) {

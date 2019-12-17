@@ -1,14 +1,14 @@
 import async from 'async';
 import { AbstractComponent } from './abstract.component';
 import { RabbitMQComponent } from './rabbitmq.component';
-import { lazyInject, provideComponent } from './container';
 import { demoProducer } from '../plugins/queue';
-import { logger } from './index';
+import { injectComponent, provideComponent } from '../decorators';
+import { logger } from './lib/logger';
 
 @provideComponent()
 export class MQProducerComponent extends AbstractComponent {
-    @lazyInject(RabbitMQComponent)
-    private _rabbitmqComponent: RabbitMQComponent;
+    @injectComponent()
+    private _rabbitMqComponent: RabbitMQComponent;
 
     constructor() {
         super();
@@ -19,7 +19,7 @@ export class MQProducerComponent extends AbstractComponent {
         async.auto<any>({
             // 连接 RabbitMQ Server
             prepare: (callback) => {
-                this._rabbitmqComponent
+                this._rabbitMqComponent
                     .rabbitmq
                     .connect(callback);
             },

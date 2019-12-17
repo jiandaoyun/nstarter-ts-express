@@ -1,21 +1,14 @@
-import { userModel } from '../models/user.model';
+import { userRepo } from '../repositories';
 import { IUserModel } from '../types/models/user';
-import { BaseService, serviceProvider } from './base.service';
-import { profiler } from '../decorators/monitor';
+import { provideSvc, repoSession, transaction } from '../decorators';
 
-class UserService extends BaseService {
-    public createOne(user: IUserModel) {
-        return userModel.create([user], {
-            session: this._session
-        });
-    }
-
-    @profiler()
-    public findOneByUsername(username: string) {
-        return userModel.findOne({ username }).setOptions({
-            session: this._session
-        }).lean(true);
+@provideSvc()
+export class UserService {
+    @transaction()
+    public async userCreateTransaction(
+        admin: IUserModel, member: IUserModel, @repoSession sess?: never
+    ) {
+        await userRepo(sess).createOne(admin);
+        await userRepo(sess).createOne(member);
     }
 }
-
-export const userService = serviceProvider(UserService);

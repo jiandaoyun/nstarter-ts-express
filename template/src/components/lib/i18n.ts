@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import async from 'async';
 import i18next from 'i18next';
 import fs from 'fs';
 import path from 'path';
@@ -34,54 +33,41 @@ export class I18n {
         });
     }
 
-    public init(callback: async.AsyncResultCallback<any>) {
+    public async init() {
         const o = this._options;
-        async.auto<any>({
-            translations: (callback) =>
-                this._loadTranslations(callback),
-            i18next: ['translations', (results, callback: async.ErrorCallback) => {
-                const resources: {
-                    [locale: string]: i18next.ResourceLanguage
-                } = {};
-                _.forEach(this._translations, (translation, locale: string) => {
-                    this._locales.push(locale);
-                    _.set(resources, [locale, o.namespace], translation);
-                });
-                this._i18next = i18next.createInstance();
-                this._i18next.init({
-                    resources,
-                    ns: o.namespace,
-                    whitelist: this._locales,
-                    fallbackLng: o.defaultLocale,
-                    lowerCaseLng: true,
-                    keySeparator: false,
-                    interpolation: {
-                        escapeValue: false
-                    }
-                }, callback);
-            }]
-        }, callback);
+        this._loadTranslations();
+        const resources: {
+            [locale: string]: i18next.ResourceLanguage
+        } = {};
+        _.forEach(this._translations, (translation, locale: string) => {
+            this._locales.push(locale);
+            _.set(resources, [locale, o.namespace], translation);
+        });
+        this._i18next = i18next.createInstance();
+        await this._i18next.init({
+            resources,
+            ns: o.namespace,
+            whitelist: this._locales,
+            fallbackLng: o.defaultLocale,
+            lowerCaseLng: true,
+            keySeparator: false,
+            interpolation: {
+                escapeValue: false
+            }
+        });
     }
 
-    private _loadTranslations(callback: async.ErrorCallback) {
+    private _loadTranslations() {
         const files = fs.readdirSync(_translationPath);
         const translationFiles = _.filter(files, (file) =>
             path.extname(file) === '.po'
         );
-        async.each(translationFiles, (file, callback) => {
+        _.forEach<string>(translationFiles, async (file) => {
             const filePath = path.resolve(_translationPath, file);
             const locale = path.basename(file, path.extname(file));
-            fs.readFile(filePath, 'utf-8', (err, content) => {
-                if (err) {
-                    return callback(err);
-                }
-                gettextToI18next(locale, content)
-                    .then((translation: string) => {
-                        this._translations[locale] = JSON.parse(translation);
-                    })
-                    .then(callback);
-            });
-        }, callback);
+            const content = fs.readFileSync(filePath, 'utf-8');
+            this._translations[locale] = await gettextToI18next(locale, content);
+        });
     }
 
     public isLocaleSupported(locale: string): boolean {

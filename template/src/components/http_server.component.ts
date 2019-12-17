@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 //#endmodule web
 
 import { AbstractComponent } from './abstract.component';
-import { lazyInject, provideComponent } from './container';
+import { injectComponent, provideComponent } from '../decorators';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -34,19 +34,19 @@ export class HttpServerComponent extends AbstractComponent {
     //#endmodule monitor
 
     //#module redis
-    @lazyInject(RedisComponent)
+    @injectComponent()
     private _redisComponent: RedisComponent;
     //#endmodule redis
     //#module i18n
-    @lazyInject(I18nComponent)
+    @injectComponent()
     private _i18nComponent: I18nComponent;
     //#endmodule i18n
     //#module monitor
-    @lazyInject(MonitorComponent)
+    @injectComponent()
     private _monitorComponent: MonitorComponent;
     //#endmodule monitor
 
-    @lazyInject(LoggerComponent)
+    @injectComponent()
     private _loggerComponent: LoggerComponent;
 
     constructor() {

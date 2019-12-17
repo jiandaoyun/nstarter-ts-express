@@ -1,4 +1,5 @@
-export * from './common';
-//#module mongodb
-export * from './mongodb';
-//#endmodule mongodb
+export * from './components';
+export * from './services';
+export * from './repositories';
+
+export * from './plugins';

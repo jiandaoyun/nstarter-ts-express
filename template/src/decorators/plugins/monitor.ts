@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Monitor } from '../plugins/monitor';
+import { Monitor } from '../../plugins/monitor';
 
 export function profiler(minTimeMS = 0) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {

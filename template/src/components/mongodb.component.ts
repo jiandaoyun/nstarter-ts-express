@@ -1,7 +1,7 @@
 import { AbstractComponent } from './abstract.component';
 import { MongodbConnector } from './lib/database/mongodb.connection';
 import { config } from '../config';
-import { provideComponent } from './container';
+import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class MongodbComponent extends AbstractComponent {

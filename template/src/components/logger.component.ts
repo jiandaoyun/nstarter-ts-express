@@ -1,6 +1,6 @@
 import { AbstractComponent } from './abstract.component';
 import { logger, reqLogger } from './lib/logger';
-import { provideComponent } from './container';
+import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class LoggerComponent extends AbstractComponent {

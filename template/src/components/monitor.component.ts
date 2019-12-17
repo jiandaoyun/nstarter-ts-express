@@ -9,26 +9,26 @@ import httpStatus from 'http-status';
 
 import { AbstractComponent } from './abstract.component';
 import { LoggerComponent } from './logger.component';
-import { lazyInject, provideComponent } from './container';
 import { config } from '../config';
 import { Monitor, registry } from '../plugins/monitor';
 import { RedisComponent } from './redis.component';
 import { MongodbComponent } from './mongodb.component';
+import { injectComponent, provideComponent } from '../decorators';
 
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {
     private readonly _monitor: typeof Monitor;
 
-    @lazyInject(LoggerComponent)
-    private _logger: LoggerComponent;
+    @injectComponent()
+    private _loggerComponent: LoggerComponent;
 
     //#module redis
-    @lazyInject(RedisComponent)
+    @injectComponent()
     private _redisComponent: RedisComponent;
     //#endmodule redis
 
     //#module mongodb
-    @lazyInject(MongodbComponent)
+    @injectComponent()
     private _mongodbComponent: MongodbComponent;
     //#endmodule mongodb
 
@@ -62,7 +62,7 @@ export class MonitorComponent extends AbstractComponent {
                     }
                 }, (err?: Error) => {
                     if (err) {
-                        this._logger.logger.warn(err);
+                        this._loggerComponent.logger.warn(err);
                     }
                 });
             },
