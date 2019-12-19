@@ -94,7 +94,7 @@ export const rpcClient = getComponent<RpcClientComponent>(RpcClientComponent).cl
 export const monitor = getComponent<MonitorComponent>(MonitorComponent).monitor;
 //#endmodule monitor
 //#module rabbitmq
-export const rabbitmq = getComponent<RabbitMQComponent>(RabbitMQComponent);
+export const rabbitmq = getComponent<RabbitMQComponent>(RabbitMQComponent).amqp;
 //#endmodule rabbitmq
 //#module mq_producer
 export const mqProducer = getComponent<MQProducerComponent>(MQProducerComponent);

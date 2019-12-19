@@ -1,7 +1,5 @@
-import async from 'async';
 import { AbstractComponent } from './abstract.component';
 import { RabbitMQComponent } from './rabbitmq.component';
-import { demoProducer } from '../plugins/queue';
 import { injectComponent, provideComponent } from '../decorators';
 import { logger } from './lib/logger';
 
@@ -15,42 +13,24 @@ export class MQProducerComponent extends AbstractComponent {
         this.log();
     }
 
-    public start(): void {
-        async.auto<any>({
-            // 连接 RabbitMQ Server
-            prepare: (callback) => {
-                this._rabbitMqComponent
-                    .rabbitmq
-                    .connect(callback);
-            },
-            // 创建 Demo 生产者
-            initProducer: ['prepare', (results, callback) =>
-                demoProducer.init(callback)
-            ],
-            // 发送消息
-            produce: ['initProducer', (results, callback) => {
-                demoProducer.produceDemo();
-                return callback();
-            }]
-        }, (err?: Error) => {
-            if (err) {
-                logger.error(err);
-            } else {
-                logger.info('mq producer start ... ok');
-            }
-        });
+    public async start(): Promise<void> {
+        try {
+            await this._rabbitMqComponent.waitForConnect();
+            const { QueueProducer } = require('../plugins/queue/producer');
+            await QueueProducer.start();
+            logger.info('mq producer start ... ok');
+        } catch (err) {
+            logger.error(err);
+        }
     }
 
-    public stop(): void {
-        async.auto<any>({
-            stopProducer: (callback) =>
-                demoProducer.close(callback)
-        }, (err?: Error) => {
-            if (err) {
-                logger.error(err);
-            } else {
-                logger.info('mq producer stop ... ok');
-            }
-        });
+    public async stop(): Promise<void> {
+        try {
+            const { QueueProducer } = require('../plugins/queue/producer');
+            await QueueProducer.stop();
+            logger.info('mq producer stop ... ok');
+        } catch (err) {
+            logger.error(err);
+        }
     }
 }
