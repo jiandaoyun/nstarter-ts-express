@@ -16,14 +16,4 @@ export class RabbitMQComponent extends AbstractComponent {
     public get amqp(): AmqpConnector {
         return this._amqp;
     }
-
-    public async waitForConnect(): Promise<void> {
-        const { connection } = this._amqp;
-        if (connection.isConnected()) {
-            return;
-        }
-        return new Promise((resolve) => {
-            connection.once('connect', () => resolve());
-        });
-    }
 }

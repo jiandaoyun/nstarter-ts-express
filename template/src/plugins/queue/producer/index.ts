@@ -23,11 +23,6 @@ export class QueueProducer {
         return;
     }
 
-    public static async stop(): Promise<void> {
-        await Promise.all(_.map(producerList, (producer) => producer.close()));
-        return;
-    }
-
     public static async pushNormal(
         content: any
     ): Promise<void> {

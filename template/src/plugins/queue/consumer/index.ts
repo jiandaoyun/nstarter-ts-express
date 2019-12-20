@@ -13,9 +13,4 @@ export class QueueConsumer {
         ));
         return;
     }
-
-    public static async stop(): Promise<void> {
-        await Promise.all(_.map(consumerList, (consumer) => consumer.stopConsumer()));
-        return;
-    }
 }
