@@ -6,7 +6,7 @@ import {
     MessagePropertyHeaders,
     Options
 } from 'amqplib';
-import { ExchangeType, Priority } from './constants';
+import { DelayLevel, ExchangeType, Priority } from './constants';
 
 type Extend<Source, Target> = Omit<Source, keyof Target> & Target;
 
@@ -79,11 +79,9 @@ export interface IQueueMessage extends IEmptyMessage {
 
 export type IQueuePayload<T = IQueueMessage> = T extends IQueueMessage ? T : number | string;
 
-export type IQueueContent<T> = T | number | string;
-
 export interface IProduceHeaders extends MessagePropertyHeaders {
     'x-retry-times'?: number;
-    'x-retry-delay'?: number;
+    'x-retry-delay'?: DelayLevel;
     'x-p-timestamp'?: number;
 }
 
@@ -101,12 +99,12 @@ export interface IProduceOptions extends Options.Publish {
     priority?: Priority;
     expiration?: string | number;
     pushRetryTimes?: number;
-    pushDelay?: number; // 延时添加到队列
+    pushDelay?: DelayLevel; // 延时添加到队列
     /**
      * 消费者配置
      */
     retryTimes?: number;
-    retryDelay?: number;
+    retryDelay?: DelayLevel;
 }
 
 /**

@@ -1,5 +1,5 @@
 import { rabbitmq } from '../../../components';
-import { DefaultConfig, ExchangeType, RabbitProps } from '../lib/constants';
+import { DefaultConfig, DelayLevel, ExchangeType, RabbitProps } from '../lib/constants';
 import { RabbitMQProducer } from '../lib/rabbitmq.producer';
 
 export const demoProducer = new RabbitMQProducer({
@@ -47,5 +47,5 @@ export const delayProducer = new RabbitMQProducer({
             autoDelete: true
         }
     },
-    pushDelay: 1000
+    pushDelay: DelayLevel.level1
 });

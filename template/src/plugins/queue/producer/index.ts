@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { DelayLevel } from '../lib/constants';
 import { RabbitMQProducer } from '../lib/rabbitmq.producer';
 import { IProduceOptions } from '../lib/types';
 import { delayProducer, demoProducer } from './demo.producer';
@@ -16,7 +17,7 @@ export class QueueProducer {
         for (let i = 0; i < 10; i++) {
             await QueueProducer.pushNormal('demo:normal' + i);
             await QueueProducer.pushDelay('demo:delay' + i, {
-                pushDelay: i * 1000
+                pushDelay: _.get(DelayLevel, `level${ i }`)
             });
         }
         return;

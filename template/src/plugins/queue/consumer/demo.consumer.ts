@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { logger, rabbitmq } from '../../../components';
 import { RabbitMQConsumer } from '../lib/rabbitmq.consumer';
 import { DefaultConfig, ExchangeType, RabbitProps } from '../lib/constants';
@@ -40,7 +41,8 @@ class DelayConsumer implements IQueueConsumer {
     public async startConsumer(): Promise<void> {
         return this.consumer
             .subscribe((message: ISubscribeMessage<string>) => {
-                logger.info(message.content as string);
+                const pushStamp = _.get(message, 'properties.headers.x-p-timestamp');
+                logger.info(`${ message.content }, delay: ${ Date.now() - pushStamp }(ms)`);
                 this.consumer
                     .ackOrRetry(null, message, demoProducer)
                     .then();

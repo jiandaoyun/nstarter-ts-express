@@ -2,10 +2,11 @@ import _ from 'lodash';
 import async from 'async';
 import { AmqpConnectionManager } from 'amqp-connection-manager';
 import { Options } from 'amqplib';
-import { promisify } from "util";
+import moment from 'moment-timezone';
+import { promisify } from 'util';
 import { AbstractQueue } from './rabbitmq.base';
 import {
-    CustomProps, DefaultConfig,
+    CustomProps, DefaultConfig, DelayLevel,
     Priority,
     RabbitProps
 } from './constants';
@@ -18,10 +19,10 @@ export interface IProducerConfig {
     amqp: AmqpConnectionManager;
     queueConfig: IQueueConfig;
     pushRetryTimes?: number;        // 生产端生效：消息 publish 失败后重试次数
-    pushDelay?: number;              // 生产端生效：延时 publish 时间，单位：MS
+    pushDelay?: DelayLevel;              // 生产端生效：延时 publish 时间，单位：MS
     deliverTimeout?: number;        // 消费端生效：消息投递超时时长，超过时间未被消费，会被删除
     retryTimes?: number;            // 消费端生效：消费失败重试次数
-    retryDelay?: number;            // 消费端生效：消费重试前的延时时间等级
+    retryDelay?: DelayLevel;            // 消费端生效：消费重试前的延时时间等级
 }
 
 /**
@@ -30,9 +31,9 @@ export interface IProducerConfig {
 export class RabbitMQProducer<T> extends AbstractQueue {
     // 队列配置
     private readonly retryTimes: number;
-    private readonly retryDelay: number;
+    private readonly retryDelay: DelayLevel;
     private readonly pushRetryTimes: number;
-    private readonly pushDelay: number;
+    private readonly pushDelay: DelayLevel;
     private readonly expiration: number;
 
     protected readonly queueConfig: IQueueConfig;
@@ -40,12 +41,22 @@ export class RabbitMQProducer<T> extends AbstractQueue {
     constructor(config: IProducerConfig) {
         super(config.amqp);
         this.queueConfig = config.queueConfig;
-        this.retryTimes = config.retryTimes || 3;
+        this.retryTimes = config.retryTimes || DefaultConfig.RetryTimes;
         this.retryDelay = config.retryDelay || DefaultConfig.RetryDelay;
         this.pushRetryTimes = config.pushRetryTimes || 0;
         // 默认不延时发送
-        this.pushDelay = config.pushDelay || 0;
+        this.pushDelay = config.pushDelay || DelayLevel.level0;
         this.expiration = config.deliverTimeout || DefaultConfig.DeliverTTL;
+    }
+
+    private _parseDelay(
+        delay: DelayLevel
+    ): { val: number, unit: 's' | 'm' | 'h' } {
+        const matches = `${ delay || this.pushDelay }`.match(/^(\d+)([smh])$/);
+        return {
+            val: _.parseInt(_.get(matches, '[1]')),
+            unit: _.get(matches, '[2]')
+        };
     }
 
     /**
@@ -70,7 +81,7 @@ export class RabbitMQProducer<T> extends AbstractQueue {
         const headers: IProduceHeaders = options.headers || {},
             priority = options.priority || Priority.Normal;
         const retryTimes = options.retryTimes || this.retryTimes,
-            retryDelay: number = options.retryDelay || this.retryDelay;
+            retryDelay: DelayLevel = options.retryDelay || this.retryDelay;
         if (retryTimes && retryDelay) {
             // 消费重试机制
             _.set(headers, CustomProps.consumeRetryTimes, retryTimes);
@@ -81,9 +92,11 @@ export class RabbitMQProducer<T> extends AbstractQueue {
             opts.expiration = this.expiration;
         }
         const pushDelay = options.pushDelay || this.pushDelay;
-        if (pushDelay && _.isNumber(pushDelay)) {
+        const { val, unit } = this._parseDelay(pushDelay),
+            messageTtl = moment.duration(val, unit).asMilliseconds();
+        if (messageTtl && _.isNumber(messageTtl)) {
             // 消费重试机制
-            _.set(headers, RabbitProps.messageDelay, pushDelay);
+            _.set(headers, RabbitProps.messageDelay, messageTtl);
         }
         // 记录发起时间
         _.set(headers, CustomProps.produceTimestamp, Date.now());

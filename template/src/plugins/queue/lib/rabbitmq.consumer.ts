@@ -4,7 +4,7 @@ import { ConfirmChannel, ConsumeMessage, GetMessage, Options } from 'amqplib';
 import { logger } from '../../../components';
 import { RabbitMQProducer } from './rabbitmq.producer';
 import { AbstractQueue } from './rabbitmq.base';
-import { CustomProps, DefaultConfig } from './constants';
+import { CustomProps, DefaultConfig, DelayLevel } from './constants';
 import {
     IQueuePayload,
     IQueueConfig,
@@ -17,21 +17,21 @@ export interface IConsumerConfig {
     queueConfig: IQueueConfig;
     prefetch: number;
     retryTimes?: number;
-    retryDelay?: number;
+    retryDelay?: DelayLevel;
 }
 
 export class RabbitMQConsumer<T> extends AbstractQueue {
     private consumeTag: string;
-    private retryDelay: number;
+    private retryDelay: DelayLevel;
     private readonly retryTimes: number;
     protected readonly queueConfig: IQueueConfig;
 
     constructor(config: IConsumerConfig) {
         super(config.amqp);
         this.queueConfig = config.queueConfig;
-        this.retryTimes = config.retryTimes || 3;
+        this.retryTimes = config.retryTimes || DefaultConfig.RetryTimes;
         this.retryDelay = config.retryDelay || DefaultConfig.RetryDelay;
-        this.prefetch = config.prefetch || 10;
+        this.prefetch = config.prefetch || DefaultConfig.Prefetch;
     }
 
     /**
