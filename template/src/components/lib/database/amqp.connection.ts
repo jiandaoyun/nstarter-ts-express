@@ -21,7 +21,6 @@ export class AmqpConnector {
         this.connection.once('connect', () => {
             this.connection.on('disconnect', (err?: Error) => {
                 if (err) {
-                    console.log(err);
                     logger.error(`${ this._tag } disconnected`);
                 }
             });
