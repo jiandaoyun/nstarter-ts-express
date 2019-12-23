@@ -61,12 +61,14 @@ modules:
     default: false
     files:
       - src/components/rabbitmq.component.ts
-      - src/components/lib/database/rabbitmq.connection.ts
+      - src/components/lib/database/amqp.connection.ts
     config:
       - database.rabbitmq
     packages:
       - amqplib
+      - amqp-connection-manager
       - '@types/amqplib'
+      - '@types/amqp-connection-manager'
       - querystring
 
   - name: web
@@ -200,7 +202,7 @@ modules:
     files:
       - src/components/mq_producer.component.ts
       - src/plugins/queue/producer/**
-      - src/plugins/queue/*
+      - src/plugins/queue/lib/**
 
   - name: mq_consumer
     label: Message Queue Consumer
@@ -209,7 +211,7 @@ modules:
     files:
       - src/components/mq_consumer.component.ts
       - src/plugins/queue/consumer/**
-      - src/plugins/queue/*
+      - src/plugins/queue/lib/**
 
   - name: conf_yaml
     label: YAML Config
