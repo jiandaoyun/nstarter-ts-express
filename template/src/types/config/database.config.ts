@@ -41,15 +41,16 @@ export interface RabbitMQParams {
 }
 export interface RabbitMQConfig {
     readonly brokers: {
-        readonly host: string,
-        readonly port: number
+        readonly host: string;
+        readonly port: number;
     }[];
     readonly protocol: string;
     readonly user: string;
     readonly password: string;
     readonly vhost: string;
-    readonly params: RabbitMQParams;
-
+    // 链接配置
+    readonly heartbeatInterval?: number;
+    readonly reconnectInterval?: number;
 }
 //#endmodule rabbitmq
 
