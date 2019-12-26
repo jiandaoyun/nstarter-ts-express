@@ -3,6 +3,11 @@ import { mongodb } from '../components';
 
 const SESSION_IDX = 'mongodb:sess_idx';
 
+/**
+ *
+ * @param options
+ * @param connection
+ */
 export function transaction(options?: TransactionOptions, connection = mongodb.connection) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const func = descriptor.value;
@@ -32,6 +37,12 @@ export function transaction(options?: TransactionOptions, connection = mongodb.c
     };
 }
 
+/**
+ *
+ * @param target
+ * @param propertyKey
+ * @param parameterIndex
+ */
 export function repoSession(target: any, propertyKey: string, parameterIndex: number) {
     Reflect.defineMetadata(SESSION_IDX, parameterIndex, target);
 }

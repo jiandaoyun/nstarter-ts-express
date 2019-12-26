@@ -100,6 +100,9 @@ interface ArrayOption<V, E> extends ITypeOption<V[], E> {
     contains?: ISchema;
 }
 
+/**
+ *
+ */
 export function ajv() {
     const ajv = new Ajv({
         useDefaults: true,

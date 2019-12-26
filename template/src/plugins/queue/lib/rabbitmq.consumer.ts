@@ -46,10 +46,10 @@ export class RabbitMQConsumer<T> extends AbstractQueue {
             RabbitMQConsumer._getFetchOptions(options)
         );
         if (!message) {
-            return {} as IQueuePayload<T>;
+            return {} as any;
         }
         // 有效消息，反序列化
-        return await super.deserializePayload<T>(message.content);
+        return super.deserializePayload<T>(message.content);
     }
 
     /**
@@ -60,7 +60,7 @@ export class RabbitMQConsumer<T> extends AbstractQueue {
         options: IConsumeOptions
     ): Promise<void> {
         await this.waitForSetup();
-        return await this.channelWrapper
+        return this.channelWrapper
             .addSetup(async(channel: ConfirmChannel) => {
                 const result = await channel.consume(
                     this.assertQ.queue,
@@ -87,8 +87,7 @@ export class RabbitMQConsumer<T> extends AbstractQueue {
             return;
         }
         const channel: ConfirmChannel = await this.channel;
-        return await channel
-            .cancel(this.consumeTag);
+        return channel.cancel(this.consumeTag);
     }
 
     public ack(

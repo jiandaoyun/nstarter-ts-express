@@ -1,7 +1,7 @@
 import { Counter } from 'prom-client';
 import { BaseMetric } from './base.metric';
 import { IReqLabels } from '../types';
-import { provideMetric } from '../container';
+import { provideMetric } from '../../../core/monitor.container';
 
 @provideMetric()
 export class ReqTimeMetric extends BaseMetric<Counter> {

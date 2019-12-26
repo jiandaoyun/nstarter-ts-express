@@ -13,6 +13,10 @@ import { GrpcHandler } from '../interfaces';
 
 const METHOD_PREFIX = 'grpc:method:';
 
+/**
+ *
+ * @param run
+ */
 function messageHandler<T, R>(run: handleCall<T, R>) {
     return (
         target: any,

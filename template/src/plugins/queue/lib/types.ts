@@ -60,7 +60,7 @@ export interface IExchangeConfig {
 }
 
 export interface IQueueConfig {
-    name: string,
+    name: string;
     exchange: IExchangeConfig;
     routingKey: string;
     options: IQueueOptions;
@@ -112,17 +112,17 @@ export interface IProduceOptions extends Options.Publish {
  */
 
 export type IMessageProperties = Extend<MessageProperties, {
-    headers: IProduceHeaders;
+    headers: IProduceHeaders
 }>;
 
 export type IFetchMessage<T> = Extend<GetMessage, {
-    content: IQueuePayload<T>;
-    properties: IMessageProperties;
+    content: IQueuePayload<T>,
+    properties: IMessageProperties
 }>;
 
 export type ISubscribeMessage<T> = Extend<ConsumeMessage, {
-    content: IQueuePayload<T>;
-    properties: IMessageProperties;
+    content: IQueuePayload<T>,
+    properties: IMessageProperties
 }>;
 
 // 接收消息参数配置

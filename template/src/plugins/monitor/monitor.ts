@@ -1,15 +1,15 @@
-import { container } from './container';
+import { monitorContainer } from '../../core/monitor.container';
 import { IFnLabels, IReqLabels } from './types';
 import { FnCountMetric, FnTimeMetric, ReqCountMetric, ReqTimeMetric } from './metrics';
 
 export class Monitor {
     public static recordRequest(labels: IReqLabels, time: number) {
-        container.get(ReqCountMetric).inc(labels);
-        container.get(ReqTimeMetric).inc(labels, time);
+        monitorContainer.get(ReqCountMetric).inc(labels);
+        monitorContainer.get(ReqTimeMetric).inc(labels, time);
     }
 
     public static recordFunction(labels: IFnLabels, time: number) {
-        container.get(FnCountMetric).inc(labels);
-        container.get(FnTimeMetric).inc(labels, time);
+        monitorContainer.get(FnCountMetric).inc(labels);
+        monitorContainer.get(FnTimeMetric).inc(labels, time);
     }
 }

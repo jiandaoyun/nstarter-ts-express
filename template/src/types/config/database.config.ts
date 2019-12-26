@@ -41,8 +41,8 @@ export interface RabbitMQParams {
 }
 export interface RabbitMQConfig {
     readonly brokers: {
-        readonly host: string;
-        readonly port: number;
+        readonly host: string,
+        readonly port: number
     }[];
     readonly protocol: string;
     readonly user: string;

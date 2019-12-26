@@ -85,7 +85,7 @@ export abstract class AbstractQueue extends EventEmitter implements IAbstractQue
         try {
             result = JSON.parse(_.toString(Buffer.from(content)));
         } catch (e) {
-            result = {} as IQueuePayload<T>;
+            result = {} as any;
         }
         return result;
     }
