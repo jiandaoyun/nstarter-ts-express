@@ -13,7 +13,7 @@ export interface IConsumerConfig<T> {
     retryMethod?: RetryMethod;
     run(message: IQueueMessage<T>): Promise<void>;
     retry?(err: Error, message: IQueueMessage<T>, count: number): Promise<void>;
-    republish(content: IQueuePayload<T>,options?: Partial<IProduceOptions>): Promise<void>;
+    republish?(content: IQueuePayload<T>,options?: Partial<IProduceOptions>): Promise<void>;
 }
 
 export interface IQueueConsumer<T> {
