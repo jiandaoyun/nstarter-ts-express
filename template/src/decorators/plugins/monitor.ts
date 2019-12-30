@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { monitorContainer, registry } from '../../core/monitor.container';
+import { container, registry } from '../../core/plugins/monitor/container';
 import { Monitor } from '../../plugins/monitor';
 import { injectable } from 'inversify';
 
@@ -8,7 +8,7 @@ import { injectable } from 'inversify';
  */
 export function provideMetric<T extends Constructor>() {
     return (constructor: T) => {
-        monitorContainer.bind(constructor).to(injectable()(class extends constructor {
+        container.bind(constructor).to(injectable()(class extends constructor {
             constructor(...args: any[]) {
                 super(...args);
                 registry.registerMetric(this.metric);

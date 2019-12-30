@@ -2,7 +2,7 @@ import { Container } from 'inversify';
 import 'reflect-metadata';
 import { Registry } from 'prom-client';
 
-export const monitorContainer = new Container({
+export const container = new Container({
     defaultScope: 'Singleton',
     autoBindInjectable: false
 });

@@ -1,7 +1,7 @@
 import { Counter } from 'prom-client';
 import { BaseMetric } from './base.metric';
 import { IFnLabels } from '../types';
-import { provideMetric } from '../../../core/monitor.container';
+import { provideMetric } from '../../../decorators';
 
 @provideMetric()
 export class FnTimeMetric extends BaseMetric<Counter> {
