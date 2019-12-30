@@ -43,6 +43,16 @@ export enum DelayLevel {
 }
 
 /**
+ * 消费者重试策略
+ */
+export enum RetryMethod {
+    // 本地重试
+    retry = 'retry',
+    // 重新发布到队列
+    republish = 'republish'
+}
+
+/**
  * RabbitMQ 内置参数、headers
  */
 export enum RabbitProps {
@@ -72,18 +82,24 @@ export const DefaultConfig = {
     // 默认重试次数
     RetryTimes: 3,
     // 默认延时，单位：ms
-    RetryDelay: DelayLevel.level3,
-    // Exchange 申明参数
-    ExchangeOptions: {
-        durable: true,
-        autoDelete: false,
-        internal: false,
-        alternateExchange: 'jdy.rabbitmq.default_aex'
-    },
-    // Queue 申明参数
-    QueueOptions: {
-        exclusive: false,
-        durable: true,
-        autoDelete: false
-    }
+    RetryDelay: DelayLevel.level3
+};
+
+/**
+ * 队列默认配置
+ */
+export const DefaultQueueOptions = {
+    exclusive: false,
+    durable: true,
+    autoDelete: false
+};
+
+/**
+ * Exchange 默认配置
+ */
+export const DefaultExchangeOptions = {
+    durable: true,
+    autoDelete: false,
+    internal: false,
+    alternateExchange: 'jdy.rabbitmq.default_aex'
 };

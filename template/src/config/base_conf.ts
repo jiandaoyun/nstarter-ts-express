@@ -57,8 +57,7 @@ export const baseConf: Partial<IConfig> = {
             protocol: 'amqp',
             user: 'guest',
             password: '!passw0rd',
-            vhost: '/',
-            params: {}
+            vhost: '/'
         }
         //#endmodule rabbitmq
     },

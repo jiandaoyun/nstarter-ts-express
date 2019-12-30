@@ -4,12 +4,10 @@ import {
     //#module monitor
     monitorServer,
     //#endmodule monitor
-    logger,
-    //#module mq_producer|mq_consumer
-    mqProducer,
-    mqConsumer
-    //#endmodule mq_producer|mq_consumer
+    logger
 } from './components';
+import { startQueueProducer } from './plugins/rabbitmq/producer';
+import { startQueueConsumer } from './plugins/rabbitmq/consumer';
 
 process.on('uncaughtException', (err) => {
     logger.error(err);
@@ -37,9 +35,8 @@ if (monitorPort) {
 //#endmodule monitor
 
 //#module mq_producer
-mqProducer.start();
+startQueueProducer();
 //#endmodule mq_producer
 //#module mq_consumer
-mqConsumer.start();
+startQueueConsumer();
 //#endmodule mq_consumer
-

@@ -14,12 +14,12 @@ export function provideComponent<T extends Constructor>(identifier?: string | sy
             name = _.toString(identifier);
         if (!id) {
             id = _.camelCase(constructor.name);
-            name = _.chain(_.toString(id))
+            name = _.chain(id)
                 .replace(/component/i, '')
                 .snakeCase()
                 .valueOf();
         }
-        _.set(constructor.prototype, '_name', name);
+        constructor.prototype._name = name;
         Reflect.defineMetadata(componentMetaKey, {
             id,
             originName: constructor.name,

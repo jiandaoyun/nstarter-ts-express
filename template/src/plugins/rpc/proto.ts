@@ -10,6 +10,10 @@ interface LoadPackageOptions {
     loader?: protoLoader.Options;
 }
 
+/**
+ *
+ * @param options
+ */
 export function loadProtoPackage(options: LoadPackageOptions) {
     const o = _.defaultsDeep(options, {
         protoPath: '',

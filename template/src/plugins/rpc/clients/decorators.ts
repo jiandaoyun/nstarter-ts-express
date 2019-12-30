@@ -11,6 +11,11 @@ import { config } from '../../../config';
 
 const CLIENT_META = 'grpc:client';
 
+/**
+ *
+ * @param pkg
+ * @param service
+ */
 export function grpcClient<T extends Function>(pkg: string, service?: string) {
     return (constructor: T) => {
         const target = constructor;
@@ -29,6 +34,9 @@ export function grpcClient<T extends Function>(pkg: string, service?: string) {
     };
 }
 
+/**
+ *
+ */
 export function grpcUnaryCall<T, R>() {
     return (
         target: any,
@@ -44,6 +52,9 @@ export function grpcUnaryCall<T, R>() {
     };
 }
 
+/**
+ *
+ */
 export function grpcServerStreamingCall<T, R>() {
     return (
         target: any,

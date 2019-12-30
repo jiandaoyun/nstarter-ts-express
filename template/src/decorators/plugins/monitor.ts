@@ -1,6 +1,26 @@
 import _ from 'lodash';
+import { container, registry } from '../../core/plugins/monitor/container';
 import { Monitor } from '../../plugins/monitor';
+import { injectable } from 'inversify';
 
+/**
+ * 监控指标注册方法
+ */
+export function provideMetric<T extends Constructor>() {
+    return (constructor: T) => {
+        container.bind(constructor).to(injectable()(class extends constructor {
+            constructor(...args: any[]) {
+                super(...args);
+                registry.registerMetric(this.metric);
+            }
+        }));
+    };
+}
+
+/**
+ * 性能统计
+ * @param minTimeMS 触发记录的最短时间
+ */
 export function profiler(minTimeMS = 0) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const method = descriptor.value;

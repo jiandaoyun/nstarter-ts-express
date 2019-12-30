@@ -8,9 +8,9 @@ const sysAttrs = [
     'env', 'hostname', 'version', 'home_path'
 ];
 
-const getValidationSchema = (entitySchema: ISchema, level: number = 0) => {
+const getValidationSchema = (entitySchema: ISchema, level = 0) => {
     const schema: Partial<ISchema> = _.omitBy(entitySchema, (v, k) =>
-        _.startsWith(k, '_')
+        _.startsWith(k, '_') || _.includes(['required'], k)
     );
     switch (entitySchema._t) {
         case IOptionTypes.object:

@@ -56,16 +56,6 @@ import { RabbitMQComponent } from './rabbitmq.component';
 registerComponent(RabbitMQComponent);
 //#endmodule rabbitmq
 
-//#module mq_producer
-import { MQProducerComponent } from './mq_producer.component';
-registerComponent(MQProducerComponent);
-//#endmodule mq_producer
-
-//#module mq_consumer
-import { MQConsumerComponent } from './mq_consumer.component';
-registerComponent(MQConsumerComponent);
-//#endmodule mq_consumer
-
 //#module mongodb
 export const mongodb = getComponent<MongodbComponent>(MongodbComponent).db;
 //#endmodule mongodb
@@ -96,12 +86,7 @@ export const monitor = getComponent<MonitorComponent>(MonitorComponent).monitor;
 //#module rabbitmq
 export const rabbitmq = getComponent<RabbitMQComponent>(RabbitMQComponent).amqp;
 //#endmodule rabbitmq
-//#module mq_producer
-export const mqProducer = getComponent<MQProducerComponent>(MQProducerComponent);
-//#endmodule mq_producer
-//#module mq_consumer
-export const mqConsumer = getComponent<MQConsumerComponent>(MQConsumerComponent);
-//#endmodule mq_consumer
+
 export const logger = getComponent<LoggerComponent>(LoggerComponent).logger;
 export const reqLogger = getComponent<LoggerComponent>(LoggerComponent).reqLogger;
 export const httpServer = getComponent<HttpServerComponent>(HttpServerComponent).server;

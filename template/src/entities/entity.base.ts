@@ -78,6 +78,50 @@ export abstract class BaseEntity<C extends IEntityConf, O extends C = C> impleme
     }
 
     /**
+     *
+     * @param option
+     * @param property
+     * @param mode
+     * @private
+     */
+    private _processArrayOption(option: any[], property: ISchema, mode: ProcessMode) {
+        if (!property.items) {
+            return [];
+        }
+        return _.map(option, (itemOptions) => {
+            if (!property.items) {
+                return {};
+            }
+            if (property.items._t === IOptionTypes.object) {
+                return this._processOptionsBySchema(itemOptions, property.items, mode);
+            } else {
+                return itemOptions;
+            }
+        });
+    }
+
+    /**
+     *
+     * @param option
+     * @param property
+     * @param mode
+     * @private
+     */
+    private _processMapOption(option: any, property: ISchema, mode: ProcessMode) {
+        const results: { [key: string]: any } = {};
+        _.forEach(option, (itemOptions, name) => {
+            if (!property._obj || _.isNil(itemOptions)) {
+                return;
+            }
+            const result = this._processOptionsBySchema(itemOptions, property._obj, mode);
+            if (name && !_.isNil(result)) {
+                results[name] = result;
+            }
+        });
+        return results;
+    }
+
+    /**
      * Process entity config by schema.
      * @param options
      * @param schema
@@ -93,7 +137,6 @@ export abstract class BaseEntity<C extends IEntityConf, O extends C = C> impleme
         }
         _.forEach(schema.properties, (property, key) => {
             let option = _.get(options, key);
-            const results: { [key: string]: any } = {};
             switch (property._t) {
                 case IOptionTypes.object:
                     // object
@@ -101,33 +144,11 @@ export abstract class BaseEntity<C extends IEntityConf, O extends C = C> impleme
                     break;
                 case IOptionTypes.array:
                     // array options
-                    if (!property.items) {
-                        option = [];
-                        break;
-                    }
-                    option = _.map(option, (itemOptions) => {
-                        if (!property.items) {
-                            return {};
-                        }
-                        if (property.items._t === IOptionTypes.object) {
-                            return this._processOptionsBySchema(itemOptions, property.items, mode);
-                        } else {
-                            return itemOptions;
-                        }
-                    });
+                    option = this._processArrayOption(option, property, mode);
                     break;
                 case IOptionTypes.map:
                     // k-v map
-                    _.forEach(option, (itemOptions, name) => {
-                        if (!property._obj || _.isNil(itemOptions)) {
-                            return;
-                        }
-                        const result = this._processOptionsBySchema(itemOptions, property._obj, mode);
-                        if (name && !_.isNil(result)) {
-                            results[name] = result;
-                        }
-                    });
-                    option = results;
+                    option = this._processMapOption(option, property, mode);
                     break;
                 default:
                     processor = mode === ProcessMode.get ?

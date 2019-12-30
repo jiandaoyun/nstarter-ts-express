@@ -1,4 +1,4 @@
-import { container } from './container';
+import { container } from '../../core/plugins/monitor/container';
 import { IFnLabels, IReqLabels } from './types';
 import { FnCountMetric, FnTimeMetric, ReqCountMetric, ReqTimeMetric } from './metrics';
 

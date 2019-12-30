@@ -88,7 +88,7 @@
     "chai": "4.2.0",
     "chai-datetime": "1.5.0",
     "eslint": "5.16.0",
-    "eslint-config-nstarter": "1.0.3",
+    "eslint-config-nstarter": "1.0.5",
     "i18next-scanner": "2.9.1",
     "mocha": "5.2.0",
     "nstarter-circular": "0.1.2-beta",
