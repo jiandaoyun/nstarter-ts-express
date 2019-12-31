@@ -5,41 +5,50 @@ import AssertExchange = Options.AssertExchange;
 import AssertQueue = Options.AssertQueue;
 import Publish = Options.Publish;
 import Consume = Options.Consume;
-import { DefaultConfig, ExchangeType } from './constants';
+import { DefaultConfig, DefaultExchangeOptions, DefaultQueueOptions, ExchangeType } from './constants';
 import { IMessageHandler, IQueuePayload, IQueueMessage } from './types';
 
-/**
- * RabbitMQ 队列基类
- * @class
- */
-export abstract class BaseQueue<T> {
-    /**
-     * 队列配置
-     */
-    protected abstract queueConfig: {
+export interface IQueueConfig {
+    // 队列配置
+    queue: {
         name: string,
         routingKey: string,
-        options: AssertQueue
+        options?: AssertQueue
     };
-
-    /**
-     * 交换器配置
-     */
-    protected abstract exchangeConfig: {
+    // 交换器配置
+    exchange: {
         name: string,
         type: ExchangeType,
-        options: AssertExchange
+        options?: AssertExchange
     };
+    prefetch?: number;
+}
 
+/**
+ * RabbitMQ 队列
+ * @class
+ */
+export class RabbitMqQueue<T> {
+    protected _options: IQueueConfig;
     protected prefetch = DefaultConfig.Prefetch;
 
     protected queue: string;
     protected exchange: string;
-    protected abstract rabbitMq: AmqpConnectionManager;
+    protected _rabbitMq: AmqpConnectionManager;
     protected _channelWrapper: ChannelWrapper;
     protected _consumerTag: string;
 
-    constructor() {
+    constructor(rabbitMq: AmqpConnectionManager, options: IQueueConfig) {
+        this._options = _.defaultsDeep(options, {
+            queue: {
+                options: DefaultQueueOptions
+            },
+            exchange: {
+                options: DefaultExchangeOptions
+            },
+            prefetch: DefaultConfig.Prefetch
+        });
+        this._rabbitMq = rabbitMq;
         this._initChannelWrapper();
     }
 
@@ -47,22 +56,23 @@ export abstract class BaseQueue<T> {
      * 初始化
      * @private
      */
-    private _initChannelWrapper() {
-        this._channelWrapper = this.rabbitMq.createChannel({
+    private _initChannelWrapper(): void {
+        const o = this._options;
+        this._channelWrapper = this._rabbitMq.createChannel({
             json: false,
             // 启动、重连加载逻辑
             // 注册到 rabbitMQ 内部的 setups 队列中，启动或重连时调用
             setup: async (channel: ConfirmChannel): Promise<any> => {
-                const { queue } = await channel.assertQueue(this.queueConfig.name, this.queueConfig.options);
+                const { queue } = await channel.assertQueue(o.queue.name, o.queue.options);
                 this.queue = queue;
                 if (this.prefetch) {
                     await channel.prefetch(this.prefetch);
                 }
                 const { exchange } = await channel.assertExchange(
-                    this.exchangeConfig.name, this.exchangeConfig.type, this.exchangeConfig.options
+                    o.exchange.name, o.exchange.type, o.exchange.options
                 );
                 this.exchange = exchange;
-                await channel.bindQueue(queue, exchange, this.queueConfig.routingKey);
+                await channel.bindQueue(queue, exchange, o.queue.routingKey);
             }
         });
     }
@@ -123,8 +133,9 @@ export abstract class BaseQueue<T> {
      * @param options
      */
     public async publish(content: IQueuePayload<T>, options: Publish) {
+        const o = this._options;
         const payload = await this._serializePayload(content);
-        return this._channelWrapper.publish(this.exchange, this.queueConfig.routingKey, payload, options);
+        return this._channelWrapper.publish(this.exchange, o.queue.routingKey, payload, options);
     }
 
     public ack(
@@ -159,3 +170,9 @@ export abstract class BaseQueue<T> {
         return this._channelWrapper.close();
     }
 }
+
+/**
+ * 队列配置定义的工厂方法
+ */
+export const queueFactory = <T>(rabbitMq: AmqpConnectionManager, options: IQueueConfig) =>
+    new RabbitMqQueue<T>(rabbitMq, options);
