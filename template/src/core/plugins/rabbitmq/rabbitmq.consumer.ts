@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { logger } from '../../../components';
 import { CustomProps, DefaultConfig, DelayLevel, RetryMethod } from './constants';
 import { IProduceHeaders, IProduceOptions, IQueueMessage, IQueuePayload } from './types';
-import { BaseQueue } from './base.queue';
+import { RabbitMqQueue } from './rabbitmq.queue';
 import { promisify } from 'util';
 import async from 'async';
 
@@ -28,9 +28,9 @@ export interface IQueueConsumer<T> {
  */
 class RabbitMqConsumer<T> implements IQueueConsumer<T> {
     protected readonly _options: IConsumerConfig<T>;
-    protected readonly _queue: BaseQueue<T>;
+    protected readonly _queue: RabbitMqQueue<T>;
 
-    constructor(queue: BaseQueue<T>, config: IConsumerConfig<T>) {
+    constructor(queue: RabbitMqQueue<T>, config: IConsumerConfig<T>) {
         this._queue = queue;
         this._options = {
             retryTimes: DefaultConfig.RetryTimes,
@@ -158,5 +158,5 @@ class RabbitMqConsumer<T> implements IQueueConsumer<T> {
  * @param queue
  * @param options
  */
-export const queueConsumerFactory = <T>(queue: BaseQueue<T>, options: IConsumerConfig<T>):
+export const queueConsumerFactory = <T>(queue: RabbitMqQueue<T>, options: IConsumerConfig<T>):
     RabbitMqConsumer<T> => new RabbitMqConsumer<T>(queue, options);

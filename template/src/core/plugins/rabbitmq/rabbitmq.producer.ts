@@ -6,7 +6,7 @@ import { promisify } from 'util';
 
 import { CustomProps, DefaultConfig, DelayLevel, Priority, RabbitProps } from './constants';
 import { IProduceHeaders, IProduceOptions, IQueuePayload } from './types';
-import { BaseQueue } from './base.queue';
+import { RabbitMqQueue } from './rabbitmq.queue';
 
 export interface IQueueProducer<T> {
     publish(content: IQueuePayload<T>,options?: Partial<IProduceOptions>): Promise<void>;
@@ -26,9 +26,9 @@ export interface IQueueProducer<T> {
  */
 class RabbitMqProducer<T> implements IQueueProducer<T> {
     protected readonly _options: Partial<IProduceOptions>;
-    protected readonly _queue: BaseQueue<T>;
+    protected readonly _queue: RabbitMqQueue<T>;
 
-    constructor(queue: BaseQueue<T>, options: Partial<IProduceOptions>) {
+    constructor(queue: RabbitMqQueue<T>, options: Partial<IProduceOptions>) {
         this._queue = queue;
         this._options = {
             retryTimes: DefaultConfig.RetryTimes,
@@ -154,5 +154,5 @@ class RabbitMqProducer<T> implements IQueueProducer<T> {
  * @param queue
  * @param options
  */
-export const queueProducerFactory = <T>(queue: BaseQueue<T>, options: Partial<IProduceOptions> = {}):
+export const queueProducerFactory = <T>(queue: RabbitMqQueue<T>, options: Partial<IProduceOptions> = {}):
     RabbitMqProducer<T> => new RabbitMqProducer<T>(queue, options);

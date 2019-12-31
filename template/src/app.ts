@@ -6,8 +6,7 @@ import {
     //#endmodule monitor
     logger
 } from './components';
-import { startQueueProducer } from './plugins/rabbitmq/producer';
-import { startQueueConsumer } from './plugins/rabbitmq/consumer';
+import { startQueueProducer, startQueueConsumer } from './plugins/rabbitmq';
 
 process.on('uncaughtException', (err) => {
     logger.error(err);
