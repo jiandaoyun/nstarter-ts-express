@@ -10,10 +10,11 @@ import httpStatus from 'http-status';
 import { AbstractComponent } from './abstract.component';
 import { LoggerComponent } from './logger.component';
 import { config } from '../config';
-import { Monitor, monitorRegistry } from '../plugins/monitor';
+import { Monitor } from '../plugins/monitor';
 import { RedisComponent } from './redis.component';
 import { MongodbComponent } from './mongodb.component';
 import { injectComponent, provideComponent } from '../decorators';
+import { monitorRegistry } from '../core/plugins/monitor';
 
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {
