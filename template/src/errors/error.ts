@@ -10,7 +10,7 @@ interface ErrorOptions {
     wrapper?: Function;
 }
 
-class CustomError extends Error implements Error {
+class CustomError extends Error {
     public readonly isCustomError = true;
     public readonly name: string;
     public readonly message: string;
