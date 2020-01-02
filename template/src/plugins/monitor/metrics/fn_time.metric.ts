@@ -1,20 +1,17 @@
 import { Counter } from 'prom-client';
-import { BaseMetric } from './base.metric';
+import { BaseMonitorMetric } from '../../../core/plugins/monitor';
 import { IFnLabels } from '../types';
-import { provideMetric } from '../../../decorators';
 
-@provideMetric()
-export class FnTimeMetric extends BaseMetric<Counter> {
-    constructor() {
-        super();
-        this._metric = new Counter({
-            name: 'fn_time_sum',
-            help: 'Total Function Call Time',
-            labelNames: ['method', 'class']
-        });
-    }
+class FnTimeMetric extends BaseMonitorMetric<Counter> {
+    protected _metric = new Counter({
+        name: 'fn_time_sum',
+        help: 'Total Function Call Time',
+        labelNames: ['method', 'class']
+    });
 
     public inc(labels: IFnLabels, time: number) {
         this._metric.inc(labels, time);
     }
 }
+
+export const fnTimeMetric = new FnTimeMetric().register();

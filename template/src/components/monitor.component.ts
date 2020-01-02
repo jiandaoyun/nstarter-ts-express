@@ -10,10 +10,11 @@ import httpStatus from 'http-status';
 import { AbstractComponent } from './abstract.component';
 import { LoggerComponent } from './logger.component';
 import { config } from '../config';
-import { Monitor, registry } from '../plugins/monitor';
+import { Monitor } from '../plugins/monitor';
 import { RedisComponent } from './redis.component';
 import { MongodbComponent } from './mongodb.component';
 import { injectComponent, provideComponent } from '../decorators';
+import { monitorRegistry } from '../core/plugins/monitor';
 
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {
@@ -47,7 +48,7 @@ export class MonitorComponent extends AbstractComponent {
             return;
         }
         const gateway = new Pushgateway(
-            gatewayUrl, { timeout: 5000 }, registry
+            gatewayUrl, { timeout: 5000 }, monitorRegistry
         );
         return new CronJob({
             // push metric data to prometheus push-gateway every 10s
@@ -81,8 +82,8 @@ export class MonitorComponent extends AbstractComponent {
     public get metricsRouter(): Router {
         const router = Router();
         router.get(config.system.monitor.metric_path, (req, res) => {
-            res.set('Content-Type', registry.contentType);
-            return res.end(registry.metrics());
+            res.set('Content-Type', monitorRegistry.contentType);
+            return res.end(monitorRegistry.metrics());
         });
         return router;
     }

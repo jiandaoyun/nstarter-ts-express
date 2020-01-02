@@ -1,11 +1,4 @@
-import { ReqCountMetric } from './req_count.metric';
-import { ReqTimeMetric } from './req_time.metric';
-import { FnCountMetric } from './fn_count.metric';
-import { FnTimeMetric } from './fn_time.metric';
-
-export {
-    ReqCountMetric,
-    ReqTimeMetric,
-    FnCountMetric,
-    FnTimeMetric
-};
+export { reqCountMetric } from './req_count.metric';
+export { reqTimeMetric } from './req_time.metric';
+export { fnCountMetric } from './fn_count.metric';
+export { fnTimeMetric } from './fn_time.metric';
