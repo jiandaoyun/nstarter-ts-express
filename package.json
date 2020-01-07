@@ -1,6 +1,6 @@
 {
     "name": "nstarter-ts-express",
-    "version": "0.2.0-alpha",
+    "version": "0.3.0-alpha",
     "description": "A node express project template with typescript for nstarter.",
     "repository": {
         "type": "git",
