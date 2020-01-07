@@ -1,9 +1,6 @@
 import { injectable } from 'inversify';
 
 import { Logger } from 'nstarter-core';
-import { beforeLoad } from './before';
-
-beforeLoad();
 
 @injectable()
 export abstract class AbstractComponent {

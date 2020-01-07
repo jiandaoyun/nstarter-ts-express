@@ -1,4 +1,8 @@
 import { registerComponent, getComponent } from 'nstarter-core';
+import { beforeLoad } from './before';
+
+// 组件加载前的前置行为
+beforeLoad();
 
 //#module mongodb
 import { MongodbComponent } from './mongodb.component';
