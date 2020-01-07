@@ -1,9 +1,11 @@
+import { provideComponent } from 'nstarter-core';
 import { AbstractComponent } from './abstract.component';
 import { I18n } from './lib/i18n';
-import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class I18nComponent extends AbstractComponent {
+    protected readonly _name = 'i18n';
+
     private readonly _i18n: I18n;
 
     constructor() {

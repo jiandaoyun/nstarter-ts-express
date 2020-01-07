@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import AmqpConnectManager, { AmqpConnectionManager } from 'amqp-connection-manager';
 import { RabbitMQConfig } from '../../../types/config/database.config';
-import { logger } from '../logger';
+import { Logger } from 'nstarter-core';
 
 export class AmqpConnector {
     public connection: AmqpConnectionManager;
@@ -21,7 +21,7 @@ export class AmqpConnector {
         this.connection.once('connect', () => {
             this.connection.on('disconnect', (err?: Error) => {
                 if (err) {
-                    logger.error(`${ this._tag } disconnected`, { err });
+                    Logger.error(`${ this._tag } disconnected`, { err });
                 }
             });
         });

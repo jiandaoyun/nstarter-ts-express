@@ -2,10 +2,10 @@ import nconf from 'nconf';
 import _ from 'lodash';
 import fs from 'fs';
 import os from 'os';
+import { RunEnv } from 'nstarter-core';
 import { safeDump, safeLoad } from 'js-yaml';
 import { baseConf } from './base_conf';
 import { ConfigEntity } from '../entities/config';
-import { RunEnv } from '../enums/config.enum';
 
 export const pkg = JSON.parse(
     fs.readFileSync('./package.json', 'utf8')

@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 //#endmodule web
 
 import { AbstractComponent } from './abstract.component';
-import { injectComponent, provideComponent } from '../decorators';
+import { provideComponent, injectComponent, RequestLogger } from 'nstarter-core';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -19,7 +19,6 @@ import { I18nComponent } from './i18n.component';
 //#module monitor
 import { MonitorComponent } from './monitor.component';
 //#endmodule monitor
-import { LoggerComponent } from './logger.component';
 
 //#module web
 import { config } from '../config';
@@ -45,9 +44,6 @@ export class HttpServerComponent extends AbstractComponent {
     @injectComponent()
     private _monitorComponent: MonitorComponent;
     //#endmodule monitor
-
-    @injectComponent()
-    private _loggerComponent: LoggerComponent;
 
     constructor() {
         super();
@@ -95,7 +91,7 @@ export class HttpServerComponent extends AbstractComponent {
 
         // request log
         if (config.system.req_log.enabled) {
-            app.use(this._loggerComponent.reqLogger.middleware);
+            app.use(RequestLogger.middleware);
         }
         //#module monitor
         app.use(this._monitorComponent.requestMonitorMiddleware);

@@ -1,9 +1,9 @@
 import _ from 'lodash';
+import { provideComponent } from 'nstarter-core';
 
-import { AbstractComponent } from './abstract.component';
 import * as jobs from '../plugins/cron_jobs';
 import { BaseCronJob } from '../plugins/cron_jobs/base.job';
-import { provideComponent } from '../decorators';
+import { AbstractComponent } from './abstract.component';
 
 @provideComponent()
 export class CronComponent extends AbstractComponent {

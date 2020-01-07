@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import IORedis, { Redis, RedisOptions } from 'ioredis';
-import { logger } from '../logger';
+import { Logger } from 'nstarter-core';
 import { RedisConfig } from '../../../types/config/database.config';
 
 export class RedisConnector {
@@ -19,7 +19,7 @@ export class RedisConnector {
         }, this._options);
         this.connection = new IORedis(o);
         this.connection.on('error', (err) => {
-            logger.error(`${ this._tag } connection error`, { error: err });
+            Logger.error(`${ this._tag } connection error`, { error: err });
         });
     }
 

@@ -1,8 +1,9 @@
 import SocketIOEmitter, { Emitter } from 'socket.io-emitter';
+import { provideComponent, injectComponent } from 'nstarter-core';
 
 import { AbstractComponent } from './abstract.component';
 import { RedisComponent } from './redis.component';
-import { injectComponent, provideComponent } from '../decorators';
+
 
 @provideComponent()
 export class WsEmitterComponent extends AbstractComponent {

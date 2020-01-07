@@ -7,9 +7,9 @@ import cookieParser from 'cookie-parser';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
 import { Response } from 'express';
+import { Logger } from 'nstarter-core';
 
 import { config } from '../../../config';
-import { logger } from '../logger';
 
 import { channels } from './channels';
 import { RedisConnector } from '../database/redis.connection';
@@ -58,7 +58,7 @@ export class WebSocket {
                     return socket.disconnect();
                 }
                 socket.on('error', (err) => {
-                    logger.error(err);
+                    Logger.error(err);
                 });
                 return;
             });

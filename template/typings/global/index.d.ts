@@ -1,4 +1,4 @@
-import { LogLevel } from '../../src/enums/logger.enum';
+import { LogLevel } from '../../../../nstarter-core/src/constants/logger';
 
 declare global {
     interface Error {

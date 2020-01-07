@@ -1,8 +1,7 @@
 import { Server } from 'grpc';
-
+import { provideComponent } from 'nstarter-core';
 import { AbstractComponent } from './abstract.component';
 import { server } from '../plugins/rpc';
-import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class RpcServerComponent extends AbstractComponent {

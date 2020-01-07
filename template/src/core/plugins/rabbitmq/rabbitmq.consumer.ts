@@ -1,11 +1,13 @@
 import _ from 'lodash';
 
-import { logger } from '../../../components';
+import { Logger } from 'nstarter-core';
 import { CustomProps, DefaultConfig, DelayLevel, RetryMethod } from './constants';
 import { IProduceHeaders, IProduceOptions, IQueueMessage, IQueuePayload } from './types';
 import { RabbitMqQueue } from './rabbitmq.queue';
 import { promisify } from 'util';
 import async from 'async';
+
+export const queueConsumerRegistry: IQueueConsumer<any>[] = [];
 
 export interface IConsumerConfig<T> {
     retryTimes?: number;
@@ -38,6 +40,14 @@ class RabbitMqConsumer<T> implements IQueueConsumer<T> {
             retryMethod: RetryMethod.retry,
             ...config
         };
+    }
+
+    /**
+     * 注册方法
+     */
+    public register(): RabbitMqConsumer<T> {
+        queueConsumerRegistry.push(this);
+        return this;
     }
 
     /**
@@ -125,7 +135,7 @@ class RabbitMqConsumer<T> implements IQueueConsumer<T> {
             triedTimes = headers[CustomProps.consumeRetryTimes] || 0;
         if (!o.retryTimes || triedTimes >= o.retryTimes || !o.republish) {
             // 不需要重试、重试机会使用完毕，队列 ACK 删除消息（防止无限重复消费）
-            logger.warn(err);
+            Logger.warn(err);
             return this._queue.ack(message);
         }
         // 配置了 producer，调整重试参数，添加回队列，并删除原消息
