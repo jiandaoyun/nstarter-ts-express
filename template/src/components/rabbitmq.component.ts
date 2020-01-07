@@ -1,7 +1,8 @@
+import { provideComponent } from 'nstarter-core';
+
 import { config } from '../config';
 import { AbstractComponent } from './abstract.component';
 import { AmqpConnector } from './lib/database/amqp.connection';
-import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class RabbitMQComponent extends AbstractComponent {

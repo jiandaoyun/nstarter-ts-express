@@ -1,5 +1,5 @@
 import { PingService } from './ping.service';
-import { injectSvc, provideSvc } from '../decorators';
+import { injectSvc, provideSvc } from 'nstarter-core';
 
 @provideSvc()
 export class PongService {

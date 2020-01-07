@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 //#endmodule web
 
 import { AbstractComponent } from './abstract.component';
-import { injectComponent, provideComponent } from '../decorators';
+import { provideComponent, injectComponent } from 'nstarter-core';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis

@@ -1,6 +1,7 @@
+import { provideComponent } from 'nstarter-core';
+
 import { AbstractComponent } from './abstract.component';
 import { Clients } from '../plugins/rpc';
-import { provideComponent } from '../decorators';
 
 @provideComponent()
 export class RpcClientComponent extends AbstractComponent {

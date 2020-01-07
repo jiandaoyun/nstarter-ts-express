@@ -13,7 +13,7 @@ import { config } from '../config';
 import { Monitor } from '../plugins/monitor';
 import { RedisComponent } from './redis.component';
 import { MongodbComponent } from './mongodb.component';
-import { injectComponent, provideComponent } from '../decorators';
+import { provideComponent, injectComponent } from 'nstarter-core';
 import { monitorRegistry } from '../core/plugins/monitor';
 
 @provideComponent()

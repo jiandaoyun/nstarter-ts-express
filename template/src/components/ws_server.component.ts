@@ -1,10 +1,10 @@
 import SocketIO from 'socket.io';
+import { provideComponent, injectComponent } from 'nstarter-core';
 
 import { AbstractComponent } from './abstract.component';
 import { WebSocket } from './lib/websocket/socket';
 import { RedisComponent } from './redis.component';
 import { HttpServerComponent } from './http_server.component';
-import { injectComponent, provideComponent } from '../decorators';
 
 @provideComponent()
 export class WsServerComponent extends AbstractComponent {

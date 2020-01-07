@@ -1,4 +1,4 @@
-import { registerSvc, getSvc } from '../core';
+import { registerSvc, getSvc } from 'nstarter-core';
 
 import { PingService } from './ping.service';
 import { PongService } from './pong.service';

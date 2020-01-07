@@ -1,6 +1,7 @@
 import { userRepo } from '../repositories';
 import { IUserModel } from '../types/models/user';
-import { provideSvc, repoSession, transaction } from '../decorators';
+import { provideSvc } from 'nstarter-core';
+import { repoSession, transaction } from '../decorators';
 
 @provideSvc()
 export class UserService {

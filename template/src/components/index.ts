@@ -1,4 +1,4 @@
-import { registerComponent, getComponent } from '../core';
+import { registerComponent, getComponent } from 'nstarter-core';
 
 //#module mongodb
 import { MongodbComponent } from './mongodb.component';

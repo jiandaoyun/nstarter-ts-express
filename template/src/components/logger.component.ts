@@ -1,6 +1,7 @@
+import { provideComponent } from 'nstarter-core';
 import { AbstractComponent } from './abstract.component';
 import { logger, reqLogger } from './lib/logger';
-import { provideComponent } from '../decorators';
+
 
 @provideComponent()
 export class LoggerComponent extends AbstractComponent {
