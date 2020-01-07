@@ -1,12 +1,15 @@
 import { injectable } from 'inversify';
 
-import { logger } from './lib/logger';
+import { Logger } from 'nstarter-core';
+import { beforeLoad } from './before';
+
+beforeLoad();
 
 @injectable()
 export abstract class AbstractComponent {
     protected _name: string;
 
     protected log() {
-        logger.info(`init ${ this._name } ... ok`);
+        Logger.info(`init ${ this._name } ... ok`);
     }
 }

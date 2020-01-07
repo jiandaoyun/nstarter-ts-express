@@ -1,10 +1,10 @@
 import { ExchangeType, RabbitProps, queueFactory } from '../../../core/plugins/rabbitmq';
-import { rabbitmq } from '../../../components';
+import { amqp } from '../../../components';
 
 /**
  * 延时队列示例
  */
-export const delayQueue = queueFactory(rabbitmq.connection, {
+export const delayQueue = queueFactory(amqp.connection, {
     queue: {
         name: 'demo:delay',
         routingKey: 'delay',

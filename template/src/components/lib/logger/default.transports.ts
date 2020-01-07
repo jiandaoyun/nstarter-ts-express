@@ -5,6 +5,7 @@ import Transport from 'winston-transport';
 import RotateFileTransport, {
     DailyRotateFileTransportOptions
 } from 'winston-daily-rotate-file';
+import { LogLevel } from 'nstarter-core';
 //#module graylog
 import Graylog2Transport from 'winston-graylog2';
 //#endmodule graylog
@@ -14,26 +15,10 @@ import { SentryTransport } from './transports';
 
 import { config } from '../../../config';
 import { Consts } from '../../../constants';
-import { LogLevel } from '../../../enums/logger.enum';
-
-const levelConf = {
-    levels: {
-        error: 20,
-        warn: 50,
-        info: 80,
-        debug: 90
-    },
-    colors: {
-        debug: 'cyan',
-        info: 'green',
-        warn: 'yellow',
-        error: 'red'
-    }
-};
 
 const errLevels = new Set<string>([LogLevel.error, LogLevel.warn]);
 
-const transports: Transport[] = [];
+export const defaultTransports: Transport[] = [];
 
 // custom log formatter
 const formatter = format.printf((info) => {
@@ -66,7 +51,7 @@ if (consoleLogConf.enabled) {
         formats.unshift(winston.format.colorize());
     }
     formats.unshift(levelFormatter());
-    transports.push(new winston.transports.Console({
+    defaultTransports.push(new winston.transports.Console({
         level: consoleLogConf.level,
         stderrLevels: [LogLevel.error],
         consoleWarnLevels: [LogLevel.warn, LogLevel.debug],
@@ -86,7 +71,7 @@ if (fileLogConf.enabled) {
         }d`
     };
 
-    transports.push(new RotateFileTransport({
+    defaultTransports.push(new RotateFileTransport({
         ...baseFileLogOptions,
         level: fileLogConf.level,
         filename: 'app_%DATE%.log',
@@ -96,7 +81,7 @@ if (fileLogConf.enabled) {
             formatter
         )
     }));
-    transports.push(new RotateFileTransport({
+    defaultTransports.push(new RotateFileTransport({
         ...baseFileLogOptions,
         level: fileLogConf.level,
         filename: 'error_%DATE%.log',
@@ -112,7 +97,7 @@ if (fileLogConf.enabled) {
 // graylog transport
 const { graylog: graylogConf } = config.system.log;
 if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
-    transports.push(new Graylog2Transport({
+    defaultTransports.push(new Graylog2Transport({
         level: graylogConf.level,
         graylog: {
             servers: graylogConf.servers,
@@ -131,47 +116,9 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
 // sentry transport
 const { sentry: sentryConf } = config.system.log;
 if (sentryConf.enabled && sentryConf.dsn) {
-    transports.push(new SentryTransport({
+    defaultTransports.push(new SentryTransport({
         level: sentryConf.level,
         dsn: sentryConf.dsn,
     }));
 }
 //#endmodule sentry
-
-type LogMessage = string | Error;
-
-winston.addColors(levelConf.colors);
-
-export class Logger {
-    private _logger = winston.createLogger({
-        transports,
-        levels: levelConf.levels,
-        exitOnError: false
-    });
-
-    private _log(level: string, msg: LogMessage, meta?: object) {
-        if (typeof msg === 'string') {
-            // log string
-            this._logger.log(level, msg, meta);
-        } else {
-            // log error
-            this._logger.log(level, msg.message, { ...meta, error: msg });
-        }
-    }
-
-    public debug(msg: LogMessage, meta?: object) {
-        this._log('debug', msg, meta);
-    }
-
-    public info(msg: LogMessage, meta?: object) {
-        this._log('info', msg, meta);
-    }
-
-    public warn(msg: LogMessage, meta?: object) {
-        this._log('warn', msg, meta);
-    }
-
-    public error(msg: LogMessage, meta?: object) {
-        this._log('error', msg, meta);
-    }
-}

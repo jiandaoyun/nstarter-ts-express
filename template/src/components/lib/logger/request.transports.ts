@@ -10,9 +10,8 @@ import Graylog2Transport from 'winston-graylog2';
 
 import { config } from '../../../config';
 import { Consts } from '../../../constants';
-import { RequestHandler, Request, Response } from 'express';
 
-const transports: Transport[] = [];
+export const requestTransports: Transport[] = [];
 
 // custom log formatter
 const formatter = format.printf((info) =>
@@ -25,7 +24,7 @@ if (consoleLogConf.enabled) {
         format.timestamp(),
         formatter
     ];
-    transports.push(new winston.transports.Console({
+    requestTransports.push(new winston.transports.Console({
         level: 'info',
         format: format.combine(...formats)
     }));
@@ -43,7 +42,7 @@ if (fileLogConf.enabled) {
         }d`
     };
 
-    transports.push(new RotateFileTransport({
+    requestTransports.push(new RotateFileTransport({
         ...baseFileLogOptions,
         level: fileLogConf.level,
         filename: 'access_%DATE%.log',
@@ -58,7 +57,7 @@ if (fileLogConf.enabled) {
 // graylog transport
 const { graylog: graylogConf } = config.system.log;
 if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
-    transports.push(new Graylog2Transport({
+    requestTransports.push(new Graylog2Transport({
         level: graylogConf.level,
         graylog: {
             servers: graylogConf.servers,
@@ -72,47 +71,3 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
     }) as Transport);
 }
 //#endmodule graylog
-
-export class RequestLogger {
-    private _logger = winston.createLogger({
-        transports
-    });
-
-    private _formatRequest(req: Request, res: Response, duration: string) {
-        return `${ req.ip } ${ req.method } ${ req.originalUrl } HTTP/${
-            req.httpVersion } ${ res.statusCode || '-' } ${
-            res.getHeader('content-length') || '-' } - ${ duration } ms`;
-    }
-
-    private _logRequest(req: Request, res: Response, startAt: [number, number]) {
-        const time = process.hrtime(startAt);
-        const duration = (time[0] * 1e3 + time[1] * 1e-6).toFixed(3);
-        const meta = {
-            path: req.originalUrl,
-            ip: req.ip,
-            body: req.body,
-            query: req.query,
-            duration,
-            status: res.statusCode,
-            method: req.method,
-            user_agent: _.get(req.headers, 'user-agent'),
-            req_id: _.get(req.headers, 'request-id'),
-            http_version: req.httpVersion
-        };
-        this.log(this._formatRequest(req, res, duration), meta);
-    }
-
-    public log(msg: string, meta?: object) {
-        this._logger.log('info', msg, meta);
-    }
-
-    public get middleware(): RequestHandler {
-        return (req, res, next) => {
-            const startAt = process.hrtime();
-            const reqLogger = _.once(() => this._logRequest(req, res, startAt));
-            req.on('close', reqLogger);
-            res.on('finish', reqLogger);
-            return next();
-        };
-    }
-}

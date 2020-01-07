@@ -7,21 +7,17 @@ import { RequestHandler, Router } from 'express';
 import URL from 'url';
 import httpStatus from 'http-status';
 
+import { provideComponent, injectComponent, Logger } from 'nstarter-core';
 import { AbstractComponent } from './abstract.component';
-import { LoggerComponent } from './logger.component';
 import { config } from '../config';
 import { Monitor } from '../plugins/monitor';
 import { RedisComponent } from './redis.component';
 import { MongodbComponent } from './mongodb.component';
-import { provideComponent, injectComponent } from 'nstarter-core';
 import { monitorRegistry } from '../core/plugins/monitor';
 
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {
     private readonly _monitor: typeof Monitor;
-
-    @injectComponent()
-    private _loggerComponent: LoggerComponent;
 
     //#module redis
     @injectComponent()
@@ -63,7 +59,7 @@ export class MonitorComponent extends AbstractComponent {
                     }
                 }, (err?: Error) => {
                     if (err) {
-                        this._loggerComponent.logger.warn(err);
+                        Logger.warn(err);
                     }
                 });
             },

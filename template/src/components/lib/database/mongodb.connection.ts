@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fs from 'fs';
+import { Logger } from 'nstarter-core';
 import mongoose, { Connection, ConnectionOptions } from 'mongoose';
-import { logger } from '../logger';
 import { MongodbConfig } from '../../../types/config/database.config';
 
 export class MongodbConnector {
@@ -16,15 +16,15 @@ export class MongodbConnector {
         }
         this.connection = mongoose.createConnection(this.mongoUri, this.connectionConf);
         this.connection.on('error', (err) => {
-            logger.error(`${ this._tag } connection failed`, { error: err });
+            Logger.error(`${ this._tag } connection failed`, { error: err });
         });
         this.connection.once('open', () => {
             this.connection.on('disconnected', () => {
-                logger.error(`${ this._tag } disconnected`);
+                Logger.error(`${ this._tag } disconnected`);
                 return process.exit(1);
             });
             this.connection.on('reconnected', () => {
-                logger.error(`${ this._tag } reconnected`);
+                Logger.error(`${ this._tag } reconnected`);
             });
         });
     }

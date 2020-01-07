@@ -1,10 +1,10 @@
 import { ExchangeType, queueFactory } from '../../../core/plugins/rabbitmq';
-import { rabbitmq } from '../../../components';
+import { amqp } from '../../../components';
 
 /**
  * 队列任务示例
  */
-export const demoQueue = queueFactory(rabbitmq.connection, {
+export const demoQueue = queueFactory(amqp.connection, {
     queue: {
         name: 'demo:normal',
         routingKey: 'normal',

@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
+import { Logger } from 'nstarter-core';
 import { BaseCronJob } from './base.job';
-import { logger } from '../../components';
 import { config } from '../../config';
 
 class DemoCronJob extends BaseCronJob {
@@ -21,7 +21,7 @@ class DemoCronJob extends BaseCronJob {
 
     public runTask() {
         // Run cron job task here.
-        logger.info(`Cron job "${ this.name }" finished.`);
+        Logger.info(`Cron job "${ this.name }" finished.`);
     }
 }
 

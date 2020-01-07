@@ -1,4 +1,4 @@
-import { logger } from '../../../components';
+import { Logger } from 'nstarter-core';
 import { IQueueMessage } from '../../../core/plugins/rabbitmq/types';
 import { demoQueue } from '../queue';
 import { queueConsumerFactory } from '../../../core/plugins/rabbitmq';
@@ -8,6 +8,6 @@ import { queueConsumerFactory } from '../../../core/plugins/rabbitmq';
  */
 export const demoConsumer = queueConsumerFactory(demoQueue, {
     run: async (message: IQueueMessage<string>): Promise<void> => {
-        logger.info(message.content as string);
+        Logger.info(message.content as string);
     }
 });

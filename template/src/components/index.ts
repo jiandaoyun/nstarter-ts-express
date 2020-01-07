@@ -46,9 +46,7 @@ import { MonitorComponent } from './monitor.component';
 registerComponent(MonitorComponent);
 //#endmodule monitor
 
-import { LoggerComponent } from './logger.component';
 import { HttpServerComponent } from './http_server.component';
-registerComponent(LoggerComponent);
 registerComponent(HttpServerComponent);
 
 //#module rabbitmq
@@ -84,11 +82,10 @@ export const rpcClient = getComponent<RpcClientComponent>(RpcClientComponent).cl
 export const monitor = getComponent<MonitorComponent>(MonitorComponent).monitor;
 //#endmodule monitor
 //#module rabbitmq
-export const rabbitmq = getComponent<RabbitMQComponent>(RabbitMQComponent).amqp;
+export const rabbitmq = getComponent<RabbitMQComponent>(RabbitMQComponent);
+export const amqp = rabbitmq.amqp;
 //#endmodule rabbitmq
 
-export const logger = getComponent<LoggerComponent>(LoggerComponent).logger;
-export const reqLogger = getComponent<LoggerComponent>(LoggerComponent).reqLogger;
 export const httpServer = getComponent<HttpServerComponent>(HttpServerComponent).server;
 //#module monitor
 export const monitorServer = getComponent<HttpServerComponent>(HttpServerComponent).monitor;
