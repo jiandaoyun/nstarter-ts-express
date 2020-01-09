@@ -8,7 +8,7 @@ const SESSION_IDX = 'mongodb:sess_idx';
  * @param options
  * @param connection
  */
-export function transaction(options?: TransactionOptions, connection = mongodb.connection) {
+export function transaction(options?: TransactionOptions, connection = mongodb) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const func = descriptor.value;
         descriptor.value = async (...args: any[]) => {

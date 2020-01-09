@@ -90,10 +90,10 @@ export class MonitorComponent extends AbstractComponent {
     private get isReady(): boolean {
         let isReady = true;
         //#module mongodb
-        isReady = isReady && (this._mongodbComponent.db.connection.readyState === 1);
+        isReady = isReady && (this._mongodbComponent.db.readyState === 1);
         //#endmodule mongodb
         //#module redis
-        isReady = isReady && (this._redisComponent.redis.connection.status === 'ready');
+        isReady = isReady && (this._redisComponent.redis.status === 'ready');
         //#endmodule redis
         return isReady;
     }

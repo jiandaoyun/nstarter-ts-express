@@ -12,12 +12,12 @@ import { Logger } from 'nstarter-core';
 import { config } from '../../../config';
 
 import { channels } from './channels';
-import { RedisConnector } from '../database/redis.connection';
+import { Redis } from 'ioredis';
 
 const RedisStore = connectRedis(session);
 
 export class WebSocket {
-    public static createServer(redis: RedisConnector, server: Server): SocketIO.Server {
+    public static createServer(redis: Redis, server: Server): SocketIO.Server {
         const io = SocketIO(server, {
             path: '/socket',
             serveClient: false,
@@ -36,7 +36,7 @@ export class WebSocket {
                             config.server.session,
                             {
                                 store: new RedisStore({
-                                    client: redis.connection
+                                    client: redis
                                 }),
                                 cookie: config.server.cookie.policy
                             }
@@ -45,8 +45,8 @@ export class WebSocket {
                 }, (err) => callback(0, !err));
             },
             adapter: SocketIORedis({
-                pubClient: redis.connection,
-                subClient: redis.connection
+                pubClient: redis,
+                subClient: redis
             })
         });
 

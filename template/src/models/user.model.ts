@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { mongodb } from '../components';
 
-const db = mongodb.connection;
+const db = mongodb;
 
 const userSchema = new Schema({
     username: String,

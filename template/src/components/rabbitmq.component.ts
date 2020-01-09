@@ -3,7 +3,7 @@ import { provideComponent } from 'nstarter-core';
 
 import { config } from '../config';
 import { AbstractComponent } from './abstract.component';
-import { AmqpConnector } from './lib/database/amqp.connection';
+import { AmqpConnector } from './lib/rabbitmq/amqp.connection';
 import { IQueueConsumer, queueConsumerRegistry } from '../core/plugins/rabbitmq';
 
 @provideComponent()

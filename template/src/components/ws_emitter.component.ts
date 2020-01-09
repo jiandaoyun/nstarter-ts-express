@@ -15,7 +15,7 @@ export class WsEmitterComponent extends AbstractComponent {
     constructor() {
         super();
         const redis = this._redisComponent.redis;
-        this._emitter = SocketIOEmitter(redis.connection);
+        this._emitter = SocketIOEmitter(redis);
         this.log();
     }
 

@@ -1,7 +1,7 @@
 import { userModel } from '../models/user.model';
 import { IUserModel } from '../types/models/user';
 import { BaseRepo, repoProvider } from './base.repo';
-import { profiler } from '../decorators/plugins/monitor';
+import { profiler } from '../decorators/plugins';
 
 class UserRepo extends BaseRepo {
     public createOne(user: IUserModel) {

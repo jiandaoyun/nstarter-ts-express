@@ -15,6 +15,6 @@ export class RedisComponent extends AbstractComponent {
     }
 
     public get redis() {
-        return this._redis;
+        return this._redis.connection;
     }
 }

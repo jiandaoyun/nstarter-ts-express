@@ -15,6 +15,6 @@ export class MongodbComponent extends AbstractComponent {
     }
 
     public get db() {
-        return this._db;
+        return this._db.connection;
     }
 }

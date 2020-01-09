@@ -70,7 +70,7 @@ export class HttpServerComponent extends AbstractComponent {
             saveUninitialized: false,
             //#module redis
             store: new RedisStore({
-                client: this._redisComponent.redis.connection
+                client: this._redisComponent.redis
             }),
             //#endmodule redis
             cookie: config.server.cookie.policy
