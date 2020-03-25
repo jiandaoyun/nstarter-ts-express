@@ -58,4 +58,5 @@ export interface ISystemConf extends IBaseConf {
         //#endmodule cron
     };
     //#endmodule monitor
+    readonly trusted_proxy: string[];
 }

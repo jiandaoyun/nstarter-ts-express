@@ -108,8 +108,9 @@ export const baseConf: Partial<IConfig> = {
             //#module cron
             gateway: ''
             //#endmodule cron
-        }
+        },
         //#endmodule monitor
+        trusted_proxy: []
     },
     components: {
         grpc: {

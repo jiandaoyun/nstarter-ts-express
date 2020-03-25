@@ -49,7 +49,7 @@ export class HttpServerComponent extends AbstractComponent {
         super();
 
         const app = express();
-        app.enable('trust proxy');
+        app.set('trust proxy', this.trustedProxy);
 
         //#module web
         // view engine setup
@@ -111,6 +111,18 @@ export class HttpServerComponent extends AbstractComponent {
         app.use('/', router);
         //#endmodule web
         this._server = http.createServer(app);
+    }
+
+    public get trustedProxy() {
+        let trustedProxy = [
+            'loopback',     // 127.0.0.1/8, ::1/128
+            'linklocal',    // 169.254.0.0/16, fe80::/10
+            'uniquelocal'   // 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, fc00::/7
+        ];
+        if (config.system.trusted_proxy) {
+            trustedProxy = [...trustedProxy, ...config.system.trusted_proxy];
+        }
+        return trustedProxy;
     }
 
     public get server() {

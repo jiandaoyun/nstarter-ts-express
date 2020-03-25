@@ -55,8 +55,9 @@ export class SystemConfig extends BaseConfig<ISystemConf> {
             //#module cron
             gateway: Types.string()
             //#endmodule cron
-        })
+        }),
         //#endmodule monitor
+        trusted_proxy: Types.array(Types.string())
     };
 }
 
