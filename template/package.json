@@ -27,8 +27,6 @@
     "@sentry/node": "4.1.1",
     "ajv": "6.7.0",
     "ajv-keywords": "3.3.0",
-    "amqp-connection-manager": "3.1.0",
-    "amqplib": "0.5.5",
     "async": "3.1.0",
     "connect-redis": "3.4.0",
     "cookie-parser": "1.4.3",
@@ -66,8 +64,6 @@
     "winston-transport": "4.3.0"
   },
   "devDependencies": {
-    "@types/amqp-connection-manager": "2.0.4",
-    "@types/amqplib": "0.5.12",
     "@types/async": "3.0.3",
     "@types/chai": "4.1.7",
     "@types/connect-redis": "0.0.13",
