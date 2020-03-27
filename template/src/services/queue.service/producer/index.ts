@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { demoProducer } from './demo.producer';
 import { delayProducer } from './delay.producer';
-import { DelayLevel, IQueueProducer } from '../../../core/plugins/rabbitmq';
+import { IQueueProducer } from 'nstarter-rabbitmq';
+import { QueueConsts } from '../../../constants';
 
 const producerList: IQueueProducer<any>[] = [
     demoProducer,
@@ -24,7 +25,7 @@ export const startQueueProducer = async () => {
 const produceDemo = async () => {
     await demoProducer.publish('demo:normal');
     await delayProducer.publish('demo:delay', {
-        pushDelay: DelayLevel.level1
+        pushDelay: QueueConsts.DelayLevel.level1
     });
 };
 

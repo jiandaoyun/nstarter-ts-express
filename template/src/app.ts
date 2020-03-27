@@ -9,8 +9,8 @@ import {
     rabbitmq,
     //#endmodule mq_consumer
 } from './components';
-import { startQueueProducer } from './plugins/rabbitmq/producer';
-import { loadQueueConsumers } from './plugins/rabbitmq/consumer';
+import { startQueueProducer } from './services/queue.service/producer';
+import { loadQueueConsumers } from './services/queue.service/consumer';
 
 process.on('uncaughtException', (err) => {
     Logger.error(err);

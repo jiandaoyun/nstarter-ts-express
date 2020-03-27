@@ -1,7 +1,6 @@
 import { Logger } from 'nstarter-core';
-import { IQueueMessage } from '../../../core/plugins/rabbitmq/types';
+import { IQueueMessage, queueConsumerFactory } from 'nstarter-rabbitmq';
 import { demoQueue } from '../queue';
-import { queueConsumerFactory } from '../../../core/plugins/rabbitmq';
 
 /**
  * 队列任务示例

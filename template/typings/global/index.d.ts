@@ -1,4 +1,4 @@
-import { LogLevel } from '../../../../nstarter-core/src/constants/logger';
+import { LogLevel } from 'nstarter-core/src/constants';
 
 declare global {
     interface Error {
