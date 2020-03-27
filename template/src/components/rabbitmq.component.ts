@@ -1,10 +1,8 @@
-import _ from 'lodash';
-import { provideComponent } from 'nstarter-core';
+import { provideComponent, Logger } from 'nstarter-core';
+import { AmqpConnector } from 'nstarter-rabbitmq';
 
 import { config } from '../config';
 import { AbstractComponent } from './abstract.component';
-import { AmqpConnector } from './lib/rabbitmq/amqp.connection';
-import { IQueueConsumer, queueConsumerRegistry } from '../core/plugins/rabbitmq';
 
 @provideComponent()
 export class RabbitMQComponent extends AbstractComponent {
@@ -12,21 +10,13 @@ export class RabbitMQComponent extends AbstractComponent {
 
     constructor() {
         super();
-        this._amqp = new AmqpConnector(config.database.rabbitmq);
+        this._amqp = new AmqpConnector(config.database.rabbitmq, (err) => {
+            Logger.error(`Rabbitmq disconnected`, { err });
+        });
         this.log();
     }
 
     public get amqp(): AmqpConnector {
         return this._amqp;
-    }
-
-    /**
-     * 队列消费者启动方法
-     */
-    public async startConsumer(): Promise<void> {
-        await Promise.all(_.map(queueConsumerRegistry,
-            (consumer: IQueueConsumer<any>) => consumer.start()
-        ));
-        return;
     }
 }

@@ -1,5 +1,11 @@
-import * as System from './system';
+import * as SystemConsts from './system';
+import * as QueueConsts from './queue';
 
 export const Consts = {
-    System
+    System: SystemConsts,
+    Queue: QueueConsts
 };
+
+export {
+    SystemConsts, QueueConsts
+}

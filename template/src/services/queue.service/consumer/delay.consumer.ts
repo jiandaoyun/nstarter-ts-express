@@ -1,9 +1,8 @@
 import _ from 'lodash';
 
 import { Logger } from 'nstarter-core';
+import { IQueueMessage, queueConsumerFactory } from 'nstarter-rabbitmq';
 import { delayQueue } from '../queue';
-import { IQueueMessage } from '../../../core/plugins/rabbitmq/types';
-import { queueConsumerFactory } from '../../../core/plugins/rabbitmq';
 
 /**
  * 延时队列消费示例

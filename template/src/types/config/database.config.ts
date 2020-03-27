@@ -1,6 +1,9 @@
-//#module mongodb
+//#module rabbitmq
+import { RabbitMQConfig } from 'nstarter-rabbitmq';
+//#endmodule rabbitmq
 import { IBaseConf } from './base.config';
 
+//#module mongodb
 interface MongodbServer {
     readonly host: string;
     readonly port: number;
@@ -31,28 +34,6 @@ export interface RedisConfig {
     readonly password: string;
 }
 //#endmodule redis
-
-//#module rabbitmq
-export interface RabbitMQParams {
-    readonly heartbeat?: number;
-    readonly frameMax?: number;
-    readonly channelMax?: number;
-    readonly locale?: string;
-}
-export interface RabbitMQConfig {
-    readonly brokers: {
-        readonly host: string,
-        readonly port: number
-    }[];
-    readonly protocol: string;
-    readonly user: string;
-    readonly password: string;
-    readonly vhost: string;
-    // 链接配置
-    readonly heartbeatInterval?: number;
-    readonly reconnectInterval?: number;
-}
-//#endmodule rabbitmq
 
 export interface IDatabaseConf extends IBaseConf {
     //#module mongodb
