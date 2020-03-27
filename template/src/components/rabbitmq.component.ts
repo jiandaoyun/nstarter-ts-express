@@ -1,6 +1,5 @@
-import _ from 'lodash';
 import { provideComponent, Logger } from 'nstarter-core';
-import { AmqpConnector, IQueueConsumer, queueConsumerRegistry } from 'nstarter-rabbitmq';
+import { AmqpConnector } from 'nstarter-rabbitmq';
 
 import { config } from '../config';
 import { AbstractComponent } from './abstract.component';
@@ -19,15 +18,5 @@ export class RabbitMQComponent extends AbstractComponent {
 
     public get amqp(): AmqpConnector {
         return this._amqp;
-    }
-
-    /**
-     * 队列消费者启动方法
-     */
-    public async startConsumer(): Promise<void> {
-        await Promise.all(_.map(queueConsumerRegistry,
-            (consumer: IQueueConsumer<any>) => consumer.start()
-        ));
-        return;
     }
 }

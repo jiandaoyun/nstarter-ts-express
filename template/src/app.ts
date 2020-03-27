@@ -1,13 +1,11 @@
 import { Logger } from 'nstarter-core';
+import { startQueueConsumers } from 'nstarter-rabbitmq';
 import { config } from './config';
 import {
     httpServer,
     //#module monitor
-    monitorServer,
+    monitorServer
     //#endmodule monitor
-    //#module mq_consumer
-    rabbitmq,
-    //#endmodule mq_consumer
 } from './components';
 import { startQueueProducer } from './services/queue.service/producer';
 import { loadQueueConsumers } from './services/queue.service/consumer';
@@ -39,7 +37,7 @@ if (monitorPort) {
 
 //#module mq_consumer
 loadQueueConsumers();
-rabbitmq.startConsumer();
+startQueueConsumers();
 //#endmodule mq_consumer
 
 //#module mq_producer
