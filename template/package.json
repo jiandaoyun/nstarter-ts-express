@@ -47,7 +47,7 @@
     "mongoose": "5.7.12",
     "nconf": "0.10.0",
     "nstarter-core": "0.3.0-alpha",
-    "nstarter-rabbitmq": "0.1.0-beta",
+    "nstarter-rabbitmq": "0.1.1-beta",
     "prom-client": "11.3.0",
     "protobufjs": "^6.8.8",
     "pug": "2.0.3",
