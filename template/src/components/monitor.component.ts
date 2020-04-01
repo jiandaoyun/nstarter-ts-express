@@ -3,7 +3,8 @@ import URL from 'url';
 import httpStatus from 'http-status';
 
 import { provideComponent, injectComponent } from 'nstarter-core';
-import { MetricsMonitor, metricsView } from 'nstarter-metrics';
+import { metricsView } from 'nstarter-metrics';
+import { metricsMonitor, MetricsMonitor } from './lib/monitor'
 import { AbstractComponent } from './abstract.component';
 import { config } from '../config';
 import { RedisComponent } from './redis.component';
@@ -11,7 +12,7 @@ import { MongodbComponent } from './mongodb.component';
 
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {
-    private readonly _monitor: typeof MetricsMonitor;
+    private readonly _monitor: MetricsMonitor;
 
     //#module redis
     @injectComponent()
@@ -25,7 +26,7 @@ export class MonitorComponent extends AbstractComponent {
 
     constructor() {
         super();
-        this._monitor = MetricsMonitor;
+        this._monitor = metricsMonitor;
     }
 
     public get monitor() {
@@ -90,10 +91,10 @@ export class MonitorComponent extends AbstractComponent {
                     path: ''
                 };
                 // record total request metrics
-                MetricsMonitor.recordRequest(meta, duration);
+                this._monitor.recordRequest(meta, duration);
                 // record request metrics by path
                 if (path) {
-                    MetricsMonitor.recordRequest({ ...meta, path }, duration);
+                    this._monitor.recordRequest({ ...meta, path }, duration);
                 }
             });
             return next();
