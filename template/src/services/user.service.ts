@@ -1,6 +1,6 @@
+import { provideSvc } from 'nstarter-core';
 import { userRepo } from '../repositories';
 import { IUserModel } from '../types/models/user';
-import { provideSvc } from 'nstarter-core';
 import { repoSession, transaction } from '../decorators';
 
 @provideSvc()

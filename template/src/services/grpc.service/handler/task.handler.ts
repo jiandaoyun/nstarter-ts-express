@@ -2,17 +2,16 @@ import _ from 'lodash';
 import async from 'async';
 import { sendUnaryData, ServerWriteableStream } from 'grpc';
 
-import {
-    grpcService,
-    grpcUnaryMethod,
-    grcpServerStreamingMethod
-} from './decorators';
-import { TaskConf, TaskResult, TaskReply } from '../types/task.types';
+import { provideSvc } from 'nstarter-core';
+import { grpcService, grpcUnaryMethod, grcpStreamingMethod } from 'nstarter-grpc';
 
-@grpcService('worker')
-export class TaskService {
+import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
+
+@grpcService()
+@provideSvc()
+export class TaskHandlerService {
     /**
-     * Demo for gRPC unary call handler
+     * gRPC 单参数调用服务端示例
      * @param conf
      * @param callback
      */
@@ -26,11 +25,11 @@ export class TaskService {
     }
 
     /**
-     * Demo for gRPC server streaming call handler
+     * gRPC 流式调用服务端示例
      * @param conf
      * @param call
      */
-    @grcpServerStreamingMethod()
+    @grcpStreamingMethod()
     public runTaskProgress(conf: TaskConf, call: ServerWriteableStream<TaskReply>) {
         const { id, job } = conf;
         async.eachSeries(_.times(11), (idx, callback) => {

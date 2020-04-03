@@ -8,21 +8,21 @@ export abstract class BaseRepo {
     }
 }
 
-const _defaultServices: {
+const _defaultRepositories: {
     [name: string]: BaseRepo
 } = {};
 
-export const repoProvider = <T extends BaseRepo>(Service: Constructor<T>) =>
+export const repoProvider = <T extends BaseRepo>(Repository: Constructor<T>) =>
     (sess?: ClientSession): T => {
         if (!sess) {
-            const serviceKey = Service.name;
-            let service = _defaultServices[serviceKey];
-            if (!service) {
-                service = new Service();
-                _defaultServices[serviceKey] = service;
+            const repoKey = Repository.name;
+            let repo = _defaultRepositories[repoKey];
+            if (!repo) {
+                repo = new Repository();
+                _defaultRepositories[repoKey] = repo;
             }
-            return service as T;
+            return repo as T;
         } else {
-            return new Service(sess);
+            return new Repository(sess);
         }
     };
