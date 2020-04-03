@@ -35,15 +35,10 @@ registerComponent(I18nComponent);
 
 //#endmodule i18n
 //#module grpc_server
-import { RpcServerComponent } from './rpc_server.component';
-registerComponent(RpcServerComponent);
+import { GrpcServerComponent } from './grpc_server.component';
+registerComponent(GrpcServerComponent);
 
 //#endmodule grpc_server
-//#module grpc_client
-import { RpcClientComponent } from './rpc_client.component';
-registerComponent(RpcClientComponent);
-
-//#endmodule grpc_client
 //#module monitor
 
 import { MonitorComponent } from './monitor.component';
@@ -77,11 +72,8 @@ export const cron = getComponent<CronComponent>(CronComponent);
 export const i18n = getComponent<I18nComponent>(I18nComponent).i18n;
 //#endmodule i18n
 //#module grpc_server
-export const rpcServer = getComponent<RpcServerComponent>(RpcServerComponent).server;
+export const grpcServer = getComponent<GrpcServerComponent>(GrpcServerComponent);
 //#endmodule grpc_server
-//#module grpc_client
-export const rpcClient = getComponent<RpcClientComponent>(RpcClientComponent).clients;
-//#endmodule grpc_client
 //#module monitor
 export const monitor = getComponent<MonitorComponent>(MonitorComponent).monitor;
 //#endmodule monitor
