@@ -60,7 +60,7 @@ export const mongodb = getComponent<MongodbComponent>(MongodbComponent).db;
 export const redis = getComponent<RedisComponent>(RedisComponent);
 //#endmodule redis
 //#module ws_server
-export const wsServer = getComponent<WsServerComponent>(WsServerComponent).server;
+export const wsServer = getComponent<WsServerComponent>(WsServerComponent);
 //#endmodule ws_server
 //#module ws_emitter
 export const wsEmitter = getComponent<WsEmitterComponent>(WsEmitterComponent).emitter;

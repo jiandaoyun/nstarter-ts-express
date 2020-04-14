@@ -8,7 +8,7 @@ import { HttpServerComponent } from './http_server.component';
 
 @provideComponent()
 export class WsServerComponent extends AbstractComponent {
-    private readonly _server: SocketIO.Server;
+    private _server: SocketIO.Server;
 
     @injectComponent()
     private _redisComponent: RedisComponent;
@@ -16,12 +16,13 @@ export class WsServerComponent extends AbstractComponent {
     @injectComponent()
     private _httpServerComponent: HttpServerComponent;
 
-    constructor() {
-        super();
-        const redis = this._redisComponent.redis,
-            httpServer = this._httpServerComponent.server;
-        this._server = WebSocket.createServer(redis, httpServer);
-        this.log();
+    public start() {
+        if (!this._server) {
+            const redis = this._redisComponent.redis,
+                httpServer = this._httpServerComponent.server;
+            this._server = WebSocket.createServer(redis, httpServer);
+            this.log();
+        }
     }
 
     public get server() {

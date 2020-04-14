@@ -1,7 +1,9 @@
 import _ from 'lodash';
+import { provideSvc } from 'nstarter-core';
+import { IQueueProducer } from 'nstarter-rabbitmq';
+
 import { demoProducer } from './demo.producer';
 import { delayProducer } from './delay.producer';
-import { IQueueProducer } from 'nstarter-rabbitmq';
 import { QueueConsts } from '../../../constants';
 
 const producerList: IQueueProducer<any>[] = [
@@ -20,13 +22,17 @@ export const startQueueProducer = async () => {
 };
 
 /**
- * 队列任务创建示例
+ * 队列业务调用服务
  */
-const produceDemo = async () => {
-    await demoProducer.publish('demo:normal');
-    await delayProducer.publish('demo:delay', {
-        pushDelay: QueueConsts.DelayLevel.level1
-    });
-};
+@provideSvc()
+export class QueueService {
+    public async sendNormalMessage(): Promise<void> {
+        await demoProducer.publish('demo:normal');
+    }
 
-produceDemo();
+    public async sendDelayMessage(): Promise<void> {
+        await delayProducer.publish('demo:delay', {
+            pushDelay: QueueConsts.DelayLevel.level1
+        });
+    }
+}
