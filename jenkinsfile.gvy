@@ -11,17 +11,6 @@ pipeline {
         NODE_MIRROR = 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
     }
     stages {
-        stage('Build') {
-            steps {
-                nvm(
-                    version: env.NODE_VERSION,
-                    nvmNodeJsOrgMirror: env.NODE_MIRROR
-                ) {
-                    sh(script: "npm install", label: "install")
-                    sh(script: "npm run build", label: "build")
-                }
-            }
-        }
         stage('Publish') {
             steps {
                 nvm(
