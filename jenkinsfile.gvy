@@ -39,15 +39,6 @@ pipeline {
     }
     post {
         always {
-            publishHTML(
-                reportName: '代码质量报告',
-                reportDir: 'lint',
-                reportFiles: 'eslint.html',
-                reportTitles: '代码质量',
-                allowMissing: true,
-                alwaysLinkToLastBuild: true,
-                keepAll: false
-            )
             script {
                 sh(script: "rm .npmrc", label: "clear token")
             }
