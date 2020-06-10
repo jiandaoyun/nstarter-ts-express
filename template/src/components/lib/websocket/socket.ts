@@ -18,6 +18,16 @@ const RedisStore = connectRedis(session);
 
 export class WebSocket {
     public static createServer(redis: Redis, server: Server): SocketIO.Server {
+        const buildCookie = cookieParser(config.server.cookie.secret);
+        const buildSession = session(_.extend(
+            config.server.session,
+            {
+                store: new RedisStore({
+                    client: redis
+                }),
+                cookie: config.server.cookie.policy
+            }
+        ));
         const io = SocketIO(server, {
             path: '/socket',
             serveClient: false,
@@ -28,19 +38,11 @@ export class WebSocket {
                 async.auto<Dictionary<never>, Error>({
                     // load cookies
                     cookie: (callback) => {
-                        cookieParser(config.server.cookie.secret)(req, res, callback);
+                        buildCookie(req, res, callback);
                     },
                     // load session
                     session: ['cookie', (results, callback) => {
-                        session(_.extend(
-                            config.server.session,
-                            {
-                                store: new RedisStore({
-                                    client: redis
-                                }),
-                                cookie: config.server.cookie.policy
-                            }
-                        ))(req, res, callback);
+                        buildSession(req, res, callback);
                     }]
                 }, (err) => callback(0, !err));
             },
