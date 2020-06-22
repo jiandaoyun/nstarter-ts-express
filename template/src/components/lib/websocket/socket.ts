@@ -22,6 +22,8 @@ export class WebSocket {
         const buildSession = session(_.extend(
             config.server.session,
             {
+                resave: true,
+                saveUninitialized: true,
                 store: new RedisStore({
                     client: redis
                 }),
