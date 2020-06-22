@@ -1,28 +1,12 @@
-import { ExchangeType, RabbitProps, queueFactory } from 'nstarter-rabbitmq';
+import { queueFactory } from 'nstarter-rabbitmq';
 import { amqp } from '../../../components';
 
 /**
  * 延时队列示例
  */
 export const delayQueue = queueFactory(amqp.connection, {
-    queue: {
-        name: 'demo:delay',
-        routingKey: 'delay',
-        options: {
-            durable: false,
-            autoDelete: true
-        }
-    },
-    exchange: {
-        name: 'demo.delay',
-        type: ExchangeType.delay,
-        options: {
-            durable: false,
-            autoDelete: false,
-            arguments: {
-                [RabbitProps.delayDeliverType]: 'direct'
-            }
-        }
-    },
+    name: 'demo:delay',
+    isDelay: true,
+    maxLength: 10,
     prefetch: 1
 });

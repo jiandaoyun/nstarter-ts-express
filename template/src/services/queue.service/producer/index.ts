@@ -1,24 +1,34 @@
-import _ from 'lodash';
+import async from 'async';
 import { provideSvc } from 'nstarter-core';
-import { IQueueProducer } from 'nstarter-rabbitmq';
+import { ProducerEvents, RabbitMqProducer } from 'nstarter-rabbitmq';
 
 import { demoProducer } from './demo.producer';
 import { delayProducer } from './delay.producer';
-import { QueueConsts } from '../../../constants';
+import { monitor } from '../../../components';
 
-const producerList: IQueueProducer<any>[] = [
+const producerList: RabbitMqProducer<any>[] = [
     demoProducer,
     delayProducer
 ];
 
 /**
+ * 绑定生产事件监听
+ */
+export const listenProducerEvents = (producer: RabbitMqProducer<any>) => {
+    const queueName = producer.queue.name;
+    producer.on(ProducerEvents.publish, () => {
+        monitor.incQueueJobCount(queueName, 'publish');
+    });
+};
+
+/**
  * 队列生产者启动方法
  */
 export const startQueueProducer = async () => {
-    await Promise.all(_.map(producerList,
-        (producer: IQueueProducer<any>) => producer.setup()
-    ));
-    return;
+    await async.each(producerList, async (producer) => {
+        await producer.setup();
+        listenProducerEvents(producer);
+    });
 };
 
 /**
@@ -31,8 +41,6 @@ export class QueueService {
     }
 
     public async sendDelayMessage(): Promise<void> {
-        await delayProducer.publish('demo:delay', {
-            pushDelay: QueueConsts.DelayLevel.level1
-        });
+        await delayProducer.publish('demo:delay');
     }
 }
