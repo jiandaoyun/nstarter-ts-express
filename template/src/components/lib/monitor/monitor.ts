@@ -1,6 +1,6 @@
 import { IReqLabels, MetricsMonitor as NsMetricsMonitor } from 'nstarter-metrics';
 import { IDemoLabels } from '../../../types/metrics';
-import { demoMetric } from './metrics';
+import { demoMetric, queueJobCountMetric, queueJobTimeHistogramMetric, queueJobTimeMetric } from './metrics';
 
 /**
  * 监控指标扩展注册
@@ -22,6 +22,26 @@ export class MetricsMonitor extends NsMetricsMonitor {
      */
     public recordDemo(labels: IDemoLabels) {
         demoMetric.inc(labels);
+    }
+
+    /**
+     * 记录队列事件计数
+     * @param queue - 队列名称
+     * @param event - 事件类型
+     * @static
+     */
+    public incQueueJobCount(queue: string, event: string): void {
+        queueJobCountMetric.inc(queue, event);
+    }
+
+    /**
+     * 队列任务执行时间记录
+     * @param queue - 队列名称
+     * @param duration - 执行时间
+     */
+    public incQueueJobTime(queue: string, duration: number): void {
+        queueJobTimeMetric.inc(queue, duration);
+        queueJobTimeHistogramMetric.observe(queue, duration);
     }
 }
 
