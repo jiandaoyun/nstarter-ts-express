@@ -17,4 +17,8 @@ export class RedisComponent extends AbstractComponent {
     public get redis() {
         return this._redis.connection;
     }
+
+    public async shutdown() {
+        this._redis.connection.disconnect();
+    }
 }

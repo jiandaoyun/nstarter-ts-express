@@ -48,7 +48,7 @@
     "nstarter-core": "0.3.0-alpha",
     "nstarter-grpc": "0.1.2-beta",
     "nstarter-metrics": "0.1.2-beta",
-    "nstarter-rabbitmq": "0.2.4",
+    "nstarter-rabbitmq": "0.2.6",
     "prom-client": "11.3.0",
     "protobufjs": "^6.8.8",
     "pug": "2.0.3",

@@ -49,18 +49,21 @@ import { HttpServerComponent } from './http_server.component';
 registerComponent(HttpServerComponent);
 
 //#module rabbitmq
-import { RabbitMQComponent } from './rabbitmq.component';
-registerComponent(RabbitMQComponent);
+import { RabbitMqComponent } from './rabbitmq.component';
+registerComponent(RabbitMqComponent);
 //#endmodule rabbitmq
 
 //#module mongodb
-export const mongodb = getComponent<MongodbComponent>(MongodbComponent).db;
+export const mongodbComponent = getComponent<MongodbComponent>(MongodbComponent);
+export const mongodb = mongodbComponent.db;
 //#endmodule mongodb
 //#module redis
-export const redis = getComponent<RedisComponent>(RedisComponent);
+export const redisComponent = getComponent<RedisComponent>(RedisComponent);
+export const redis = redisComponent;
 //#endmodule redis
 //#module ws_server
-export const wsServer = getComponent<WsServerComponent>(WsServerComponent);
+export const wsServerComponent = getComponent<WsServerComponent>(WsServerComponent);
+export const wsServer = wsServerComponent;
 //#endmodule ws_server
 //#module ws_emitter
 export const wsEmitter = getComponent<WsEmitterComponent>(WsEmitterComponent).emitter;
@@ -75,14 +78,16 @@ export const i18n = getComponent<I18nComponent>(I18nComponent).i18n;
 export const grpcServer = getComponent<GrpcServerComponent>(GrpcServerComponent);
 //#endmodule grpc_server
 //#module monitor
-export const monitor = getComponent<MonitorComponent>(MonitorComponent).monitor;
+export const monitorComponent = getComponent<MonitorComponent>(MonitorComponent);
+export const monitor = monitorComponent.monitor;
 //#endmodule monitor
 //#module rabbitmq
-export const rabbitmq = getComponent<RabbitMQComponent>(RabbitMQComponent);
-export const amqp = rabbitmq.amqp;
+export const rabbitMqComponent = getComponent<RabbitMqComponent>(RabbitMqComponent);
+export const amqp = rabbitMqComponent.amqp;
 //#endmodule rabbitmq
 
-export const httpServer = getComponent<HttpServerComponent>(HttpServerComponent).server;
+export const httpServerComponent = getComponent<HttpServerComponent>(HttpServerComponent);
+export const httpServer = httpServerComponent.server;
 //#module monitor
 export const monitorServer = getComponent<HttpServerComponent>(HttpServerComponent).monitor;
 //#endmodule monitor

@@ -28,4 +28,8 @@ export class WsServerComponent extends AbstractComponent {
     public get server() {
         return this._server;
     }
+
+    public async shutdown() {
+        this._server.close();
+    }
 }

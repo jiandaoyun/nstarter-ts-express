@@ -13,6 +13,7 @@ import { MongodbComponent } from './mongodb.component';
 @provideComponent()
 export class MonitorComponent extends AbstractComponent {
     private readonly _monitor: MetricsMonitor;
+    private _isShutDown = false;
 
     //#module redis
     @injectComponent()
@@ -46,6 +47,9 @@ export class MonitorComponent extends AbstractComponent {
      * Check if backend service ready.
      */
     private get isReady(): boolean {
+        if (this._isShutDown) {
+            return false;
+        }
         let isReady = true;
         //#module mongodb
         isReady = isReady && (this._mongodbComponent.db.readyState === 1);
@@ -54,6 +58,17 @@ export class MonitorComponent extends AbstractComponent {
         isReady = isReady && (this._redisComponent.redis.status === 'ready');
         //#endmodule redis
         return isReady;
+    }
+
+    /**
+     * 标记服务进入关闭状态
+     *
+     * 用于告知 readinessProbe 用于 graceful shutdown
+     *
+     * @param status
+     */
+    public setShutdownState(status = true) {
+        this._isShutDown = status;
     }
 
     /**
