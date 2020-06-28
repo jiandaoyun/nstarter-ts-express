@@ -134,4 +134,8 @@ export class HttpServerComponent extends AbstractComponent {
         return this._monitor;
     }
     //#endmodule monitor
+
+    public async shutdown() {
+        this._server.close();
+    }
 }

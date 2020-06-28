@@ -3,14 +3,23 @@ import { startQueueConsumers } from 'nstarter-rabbitmq';
 import { config } from './config';
 import {
     httpServer,
+    httpServerComponent,
     //#module monitor
-    monitorServer, wsServer
+    monitorServer,
+    wsServer,
+    rabbitMqComponent,
+    redisComponent,
+    mongodbComponent,
+    monitorComponent,
+    wsServerComponent
     //#endmodule monitor
 } from './components';
 import {
     startQueueProducer,
     loadQueueConsumers
 } from './services/queue.service';
+import { CommonUtils } from './utils';
+import { Consts } from './constants';
 
 process.on('uncaughtException', (err) => {
     Logger.error(err);
@@ -30,6 +39,13 @@ class AppManager {
         });
         httpServer.on('listening', () => {
             Logger.info(`Listening on：${ port }`);
+        });
+
+        process.on('SIGTERM', () => {
+            setTimeout(() => {
+                Logger.info('calling server close');
+                process.exit(0);
+            }, 5000);
         });
     }
 
@@ -69,6 +85,36 @@ class AppManager {
     public static startWebsocketService() {
         wsServer.start();
     }
+
+    /**
+     * 安全关闭服务
+     */
+    public static async gracefulShutdown() {
+        monitorComponent.setShutdownState();
+        // 等待 readinessProbe 进入 fail 状态
+        await CommonUtils.sleep(Consts.System.SHUTDOWN_WAIT_MS);
+        try {
+            // 按顺序停止服务
+            await httpServerComponent.shutdown();
+            await wsServerComponent.shutdown();
+            await rabbitMqComponent.shutdown();
+            await mongodbComponent.shutdown();
+            await redisComponent.shutdown();
+        } catch (err) {
+            Logger.error(err);
+        } finally {
+            process.exit(0);
+        }
+    }
+
+    /**
+     * 监听关闭事件，安全退出
+     */
+    public static listenShutdownEvent() {
+        process.on('SIGTERM', async () => {
+            await AppManager.gracefulShutdown();
+        });
+    }
 }
 
 if (require.main === module) {
@@ -76,4 +122,5 @@ if (require.main === module) {
     AppManager.startMonitorService();
     AppManager.startWebService();
     AppManager.startWebsocketService();
+    AppManager.listenShutdownEvent();
 }

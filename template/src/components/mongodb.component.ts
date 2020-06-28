@@ -17,4 +17,8 @@ export class MongodbComponent extends AbstractComponent {
     public get db() {
         return this._db.connection;
     }
+
+    public async shutdown() {
+        await this._db.connection.close();
+    }
 }
