@@ -1,6 +1,6 @@
 export class CommonUtils {
     public static getName() {
-        return
+        return;
     }
 
     public static async sleep (timeMs: number) {

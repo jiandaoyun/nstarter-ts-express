@@ -29,10 +29,10 @@ export const baseConf: Partial<IConfig> = {
     database: {
         //#module mongodb
         mongodb: {
-            mongod: {
+            servers: [{
                 host: 'localhost',
                 port: 27017
-            },
+            }],
             user: 'admin',
             password: '!passw0rd',
             db: 'data'

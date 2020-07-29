@@ -1,8 +1,13 @@
 import _ from 'lodash';
 import fs from 'fs';
+import querystring from 'querystring';
 import { Logger } from 'nstarter-core';
 import mongoose, { Connection, ConnectionOptions } from 'mongoose';
 import { MongodbConfig } from '../../../types/config/database.config';
+
+interface IMongodbQueryParams {
+    replicaSet?: string;
+}
 
 export class MongodbConnector {
     public readonly connection: Connection;
@@ -30,16 +35,19 @@ export class MongodbConnector {
     }
 
     private get mongoUri(): string {
-        const { db, mongod, mongos } = this._options;
-        let server;
-        if (mongos) {
-            server = _.join(_.map(mongos, (server) => `${ server.host }:${ server.port }`), ',');
-        } else if (mongod) {
-            server = `${ mongod.host }:${ mongod.port }`;
-        } else {
-            return '';
+        const { db, servers, replicaSet } = this._options;
+        const server = _.join(_.map(servers, (server) => `${ server.host }:${ server.port }`), ',');
+        let uri = `mongodb://${ server }/${ db }`;
+        // 扩展参数配置
+        const queryParams: IMongodbQueryParams = {};
+        if (replicaSet) {
+            // 副本集
+            queryParams.replicaSet = replicaSet;
         }
-        return `mongodb://${ server }/${ db }`;
+        if (!_.isEmpty(queryParams)) {
+            uri += querystring.stringify(queryParams);
+        }
+        return uri;
     }
 
     /**

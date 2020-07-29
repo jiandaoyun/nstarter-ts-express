@@ -16,8 +16,8 @@ interface IX509Config {
 }
 
 export interface MongodbConfig {
-    readonly mongod?: MongodbServer;
-    readonly mongos?: MongodbServer[];
+    readonly servers: MongodbServer[];
+    readonly replicaSet?: string;
     readonly user?: string;
     readonly password?: string;
     readonly x509?: IX509Config;

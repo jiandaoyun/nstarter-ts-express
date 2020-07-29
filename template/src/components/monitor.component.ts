@@ -4,7 +4,7 @@ import httpStatus from 'http-status';
 
 import { provideComponent, injectComponent } from 'nstarter-core';
 import { metricsView } from 'nstarter-metrics';
-import { metricsMonitor, MetricsMonitor } from './lib/monitor'
+import { metricsMonitor, MetricsMonitor } from './lib/monitor';
 import { AbstractComponent } from './abstract.component';
 import { config } from '../config';
 import { RedisComponent } from './redis.component';
