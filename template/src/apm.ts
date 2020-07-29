@@ -1,0 +1,16 @@
+import apmAgent from 'elastic-apm-node';
+
+/**
+ * IMPORTANT 此模块必须作为启动过程首先加载的模块，禁止增加额外模块依赖
+ *
+ * 环境变量
+ * ELASTIC_APM_SERVER_URL - APM 服务器 URL
+ */
+export const apm = apmAgent.start({
+    serviceName: '{{APP_NAME}}',
+    captureBody: 'transactions',
+    captureHeaders: true,
+    transactionMaxSpans: 100,
+    // 根据是否配置服务器连接控制是否启用 APM 监听
+    active: !!process.env['ELASTIC_APM_SERVER_URL']
+});

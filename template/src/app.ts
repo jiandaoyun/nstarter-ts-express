@@ -1,5 +1,6 @@
 import { Logger } from 'nstarter-core';
 import { startQueueConsumers } from 'nstarter-rabbitmq';
+import { apm } from './apm';
 import { config } from './config';
 import {
     httpServer,
@@ -118,6 +119,7 @@ class AppManager {
 }
 
 if (require.main === module) {
+    apm.isStarted();
     AppManager.startQueueJobs();
     AppManager.startMonitorService();
     AppManager.startWebService();

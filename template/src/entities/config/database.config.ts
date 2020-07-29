@@ -24,10 +24,11 @@ export class DatabaseConfig extends BaseConfig<IDatabaseConf> {
     protected _schema = {
         //#module mongodb
         mongodb: Types.object({
-            mongod: Types.object(this._mongodbSchema),
-            mongos: Types.array(Types.object(this._mongodbSchema), {
-                minItems: 1
+            servers: Types.array(Types.object(this._mongodbSchema), {
+                minItems: 1,
+                required: true
             }),
+            replicaSet: Types.string(),
             user: Types.string(),
             password: Types.string(),
             db: Types.string({ required: true })
