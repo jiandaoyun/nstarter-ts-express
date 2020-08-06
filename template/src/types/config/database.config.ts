@@ -4,7 +4,7 @@ import { RabbitMQConfig } from 'nstarter-rabbitmq';
 import { IBaseConf } from './base.config';
 
 //#module mongodb
-interface MongodbServer {
+interface IMongodbServer {
     readonly host: string;
     readonly port: number;
 }
@@ -15,8 +15,8 @@ interface IX509Config {
     readonly key: string;
 }
 
-export interface MongodbConfig {
-    readonly servers: MongodbServer[];
+export interface IMongodbConfig {
+    readonly servers: IMongodbServer[];
     readonly replicaSet?: string;
     readonly user?: string;
     readonly password?: string;
@@ -27,7 +27,7 @@ export interface MongodbConfig {
 //#endmodule mongodb
 
 //#module redis
-export interface RedisConfig {
+export interface IRedisConfig {
     readonly host: string;
     readonly port: number;
     readonly name: string;
@@ -37,10 +37,10 @@ export interface RedisConfig {
 
 export interface IDatabaseConf extends IBaseConf {
     //#module mongodb
-    readonly mongodb: MongodbConfig;
+    readonly mongodb: IMongodbConfig;
     //#endmodule mongodb
     //#module redis
-    readonly redis: RedisConfig;
+    readonly redis: IRedisConfig;
     //#endmodule redis
     //#module rabbitmq
     readonly rabbitmq: RabbitMQConfig;

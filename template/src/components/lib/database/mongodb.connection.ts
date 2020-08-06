@@ -3,7 +3,7 @@ import fs from 'fs';
 import querystring from 'querystring';
 import { Logger } from 'nstarter-core';
 import mongoose, { Connection, ConnectionOptions } from 'mongoose';
-import { MongodbConfig } from '../../../types/config/database.config';
+import { IMongodbConfig } from '../../../types/config/database.config';
 
 interface IMongodbQueryParams {
     replicaSet?: string;
@@ -11,10 +11,10 @@ interface IMongodbQueryParams {
 
 export class MongodbConnector {
     public readonly connection: Connection;
-    private readonly _options: MongodbConfig;
+    private readonly _options: IMongodbConfig;
     private readonly _name: string = '';
 
-    constructor(options: MongodbConfig, name?: string) {
+    constructor(options: IMongodbConfig, name?: string) {
         this._options = options;
         if (name) {
             this._name = name;
@@ -45,7 +45,7 @@ export class MongodbConnector {
             queryParams.replicaSet = replicaSet;
         }
         if (!_.isEmpty(queryParams)) {
-            uri += querystring.stringify(queryParams);
+            uri += '?' + querystring.stringify(queryParams);
         }
         return uri;
     }
