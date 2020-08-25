@@ -1,8 +1,8 @@
-import { provideComponent } from 'nstarter-core';
+import { component } from 'nstarter-core';
 import { AbstractComponent } from './abstract.component';
 import { I18n } from './lib/i18n';
 
-@provideComponent()
+@component()
 export class I18nComponent extends AbstractComponent {
     protected readonly _name = 'i18n';
 
@@ -11,8 +11,9 @@ export class I18nComponent extends AbstractComponent {
     constructor() {
         super();
         this._i18n = new I18n();
-        this._i18n.init();
-        this.log();
+        this._i18n.init().then(() => {
+            this.ready = true;
+        });
     }
 
     public get i18n() {

@@ -1,12 +1,12 @@
 import SocketIO from 'socket.io';
-import { provideComponent, injectComponent } from 'nstarter-core';
+import { component, injectComponent } from 'nstarter-core';
 
 import { AbstractComponent } from './abstract.component';
 import { WebSocket } from './lib/websocket/socket';
 import { RedisComponent } from './redis.component';
 import { HttpServerComponent } from './http_server.component';
 
-@provideComponent()
+@component()
 export class WsServerComponent extends AbstractComponent {
     private _server: SocketIO.Server;
 
@@ -21,7 +21,7 @@ export class WsServerComponent extends AbstractComponent {
             const redis = this._redisComponent.redis,
                 httpServer = this._httpServerComponent.server;
             this._server = WebSocket.createServer(redis, httpServer);
-            this.log();
+            this.ready = true;
         }
     }
 

@@ -1,11 +1,11 @@
 import SocketIOEmitter, { Emitter } from 'socket.io-emitter';
-import { provideComponent, injectComponent } from 'nstarter-core';
+import { component, injectComponent } from 'nstarter-core';
 
 import { AbstractComponent } from './abstract.component';
 import { RedisComponent } from './redis.component';
 
 
-@provideComponent()
+@component()
 export class WsEmitterComponent extends AbstractComponent {
     private readonly _emitter: Emitter;
 
@@ -16,7 +16,7 @@ export class WsEmitterComponent extends AbstractComponent {
         super();
         const redis = this._redisComponent.redis;
         this._emitter = SocketIOEmitter(redis);
-        this.log();
+        this.ready = true;
     }
 
     public get emitter() {

@@ -2,13 +2,13 @@ import _ from 'lodash';
 import async from 'async';
 import { sendUnaryData, ServerWriteableStream } from 'grpc';
 
-import { provideSvc } from 'nstarter-core';
+import { service } from 'nstarter-core';
 import { grpcService, grpcUnaryMethod, grcpStreamingMethod } from 'nstarter-grpc';
 
 import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
 
 @grpcService()
-@provideSvc()
+@service()
 export class TaskHandlerService {
     /**
      * gRPC 单参数调用服务端示例

@@ -1,9 +1,9 @@
 import { PongService } from './pong.service';
-import { injectSvc, provideSvc } from 'nstarter-core';
+import { injectService, service } from 'nstarter-core';
 
-@provideSvc()
+@service()
 export class PingService {
-    @injectSvc()
+    @injectService()
     private pongService: PongService;
 
     public ping() {

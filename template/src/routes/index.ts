@@ -1,16 +1,16 @@
 import { Router } from 'express';
-import * as DemoController from '../controllers/demo.controller';
 import { ErrorHandler } from './middlewares/error.handler';
+import { demoController } from '../controllers';
 
 export const requestRouter = Router();
 
-requestRouter.post('/ping', DemoController.doPing);
+requestRouter.post('/ping', demoController.doPing);
 requestRouter.use(ErrorHandler.requestErrorHandler);
 
 export const viewRouter = Router();
 
-viewRouter.get('/', DemoController.goWelcomeView);
-viewRouter.get('/error', DemoController.goErrorView);
+viewRouter.get('/', demoController.goWelcomeView);
+viewRouter.get('/error', demoController.goErrorView);
 viewRouter.use(ErrorHandler.viewErrorHandler);
 
 // main router

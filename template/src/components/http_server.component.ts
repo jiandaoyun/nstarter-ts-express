@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 //#endmodule web
 
 import { AbstractComponent } from './abstract.component';
-import { provideComponent, injectComponent, RequestLogger } from 'nstarter-core';
+import { component, injectComponent, RequestLogger } from 'nstarter-core';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -25,7 +25,7 @@ import { config } from '../config';
 import { router } from '../routes';
 //#endmodule web
 
-@provideComponent()
+@component()
 export class HttpServerComponent extends AbstractComponent {
     private readonly _server: http.Server;
     //#module monitor
