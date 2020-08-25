@@ -1,10 +1,10 @@
-import { provideComponent, Logger } from 'nstarter-core';
+import { component, Logger } from 'nstarter-core';
 import { AmqpConnector, stopQueueConsumers } from 'nstarter-rabbitmq';
 
 import { config } from '../config';
 import { AbstractComponent } from './abstract.component';
 
-@provideComponent()
+@component()
 export class RabbitMqComponent extends AbstractComponent {
     private readonly _amqp: AmqpConnector;
 
@@ -13,7 +13,13 @@ export class RabbitMqComponent extends AbstractComponent {
         this._amqp = new AmqpConnector(config.database.rabbitmq, (err) => {
             Logger.error(`Rabbitmq disconnected`, { err });
         });
-        this.log();
+        if (this._amqp.connection.isConnected()) {
+            this.ready = true;
+        } else {
+            this._amqp.connection.once('connect', () => {
+                this.ready = true;
+            });
+        }
     }
 
     public get amqp(): AmqpConnector {

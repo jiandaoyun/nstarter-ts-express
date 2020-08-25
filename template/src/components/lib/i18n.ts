@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import i18next from 'i18next';
 import fs from 'fs';
 import path from 'path';
 import { gettextToI18next } from 'i18next-conv';
@@ -7,6 +6,7 @@ import { Request, RequestHandler } from 'express';
 
 import { config } from '../../config';
 import { Consts } from '../../constants';
+import i18next, { i18n, ResourceLanguage, TFunction, TOptions } from 'i18next';
 
 const _translationPath = './resources/i18n/';
 
@@ -18,12 +18,12 @@ interface I18nOptions {
 export class I18n {
     private _options: I18nOptions;
     private _locales: string[] = [];
-    private _i18next: i18next.i18n;
+    private _i18next: i18n;
     private _translations: {
-        [locale: string]: i18next.ResourceLanguage
+        [locale: string]: ResourceLanguage
     } = {};
     private _translators: {
-        [locale: string]: i18next.TFunction
+        [locale: string]: TFunction
     } = {};
 
     constructor(options?: I18nOptions) {
@@ -37,7 +37,7 @@ export class I18n {
         const o = this._options;
         this._loadTranslations();
         const resources: {
-            [locale: string]: i18next.ResourceLanguage
+            [locale: string]: ResourceLanguage
         } = {};
         _.forEach(this._translations, (translation, locale: string) => {
             this._locales.push(locale);
@@ -74,7 +74,7 @@ export class I18n {
         return _.includes(this._locales, locale);
     }
 
-    private _getTranslator(locale: string): i18next.TFunction {
+    private _getTranslator(locale: string): TFunction {
         const o = this._options;
         let targetLocale = locale;
         if (!this.isLocaleSupported(targetLocale)) {
@@ -95,7 +95,7 @@ export class I18n {
     /**
      * Translator method
      */
-    public t(key: string, locale?: string, options?: i18next.TOptions): string {
+    public t(key: string, locale?: string, options?: TOptions): string {
         const targetLocale = locale || config.system.locale;
         const translator = this._getTranslator(targetLocale);
         return translator(key, options);

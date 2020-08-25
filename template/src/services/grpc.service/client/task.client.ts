@@ -1,5 +1,5 @@
 import { sendUnaryData } from 'grpc';
-import { provideSvc } from 'nstarter-core';
+import { service } from 'nstarter-core';
 import {
     grpcClient,
     grpcUnaryCall,
@@ -9,7 +9,7 @@ import {
 import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
 
 @grpcClient()
-@provideSvc()
+@service()
 export class TaskClientService {
     @grpcUnaryCall()
     public runTask(conf: TaskConf, callback: sendUnaryData<TaskResult>): void {}

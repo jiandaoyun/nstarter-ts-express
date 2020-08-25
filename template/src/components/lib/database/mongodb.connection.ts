@@ -2,7 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import querystring from 'querystring';
 import { Logger } from 'nstarter-core';
-import mongoose, { Connection, ConnectionOptions } from 'mongoose';
+import mongoose, { Connection, ConnectionOptions, Promise } from 'mongoose';
 import { IMongodbConfig } from '../../../types/config/database.config';
 
 interface IMongodbQueryParams {
@@ -10,7 +10,10 @@ interface IMongodbQueryParams {
 }
 
 export class MongodbConnector {
-    public readonly connection: Connection;
+    public readonly connection: Connection & {
+        then: Promise<Connection>["then"],
+        catch: Promise<Connection>["catch"]
+    };
     private readonly _options: IMongodbConfig;
     private readonly _name: string = '';
 
@@ -20,10 +23,7 @@ export class MongodbConnector {
             this._name = name;
         }
         this.connection = mongoose.createConnection(this.mongoUri, this.connectionConf);
-        this.connection.on('error', (err) => {
-            Logger.error(`${ this._tag } connection failed`, { error: err });
-        });
-        this.connection.once('open', () => {
+        this.connection.then(() => {
             this.connection.on('disconnected', () => {
                 Logger.error(`${ this._tag } disconnected`);
                 return process.exit(1);
@@ -31,6 +31,8 @@ export class MongodbConnector {
             this.connection.on('reconnected', () => {
                 Logger.error(`${ this._tag } reconnected`);
             });
+        }, (err) => {
+            Logger.error(`${ this._tag } connection failed`, { error: err });
         });
     }
 
@@ -57,10 +59,7 @@ export class MongodbConnector {
         const { user, password, db, x509 } = this._options;
         const baseConf = {
             user,
-            autoReconnect: true,
-            connectTimeoutMS: 10000,
-            reconnectTries: Number.MAX_VALUE,
-            reconnectInterval: 1000,
+            serverSelectionTimeoutMS: 120000,
             keepAlive: true,
             keepAliveInitialDelay: 300000,
             socketTimeoutMS: 0,
@@ -94,5 +93,9 @@ export class MongodbConnector {
 
     private get _tag(): string {
         return `Mongodb${ this._name ? `:${ this._name }` : '' }`;
+    }
+
+    public isReady(): boolean {
+        return this.connection.readyState === 1;
     }
 }

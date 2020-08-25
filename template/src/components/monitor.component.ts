@@ -2,7 +2,7 @@ import { RequestHandler, Router } from 'express';
 import URL from 'url';
 import httpStatus from 'http-status';
 
-import { provideComponent, injectComponent } from 'nstarter-core';
+import { component, injectComponent } from 'nstarter-core';
 import { metricsView } from 'nstarter-metrics';
 import { metricsMonitor, MetricsMonitor } from './lib/monitor';
 import { AbstractComponent } from './abstract.component';
@@ -10,7 +10,7 @@ import { config } from '../config';
 import { RedisComponent } from './redis.component';
 import { MongodbComponent } from './mongodb.component';
 
-@provideComponent()
+@component()
 export class MonitorComponent extends AbstractComponent {
     private readonly _monitor: MetricsMonitor;
     private _isShutDown = false;

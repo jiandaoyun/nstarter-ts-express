@@ -18,7 +18,7 @@ export class ConfigEntity extends BaseEntity<IConfig> {
         // Base attributes
         env: Types.string({
             enum: RunEnv,
-            default: RunEnv.dev,
+            default: RunEnv.develop,
             required: true
         }),
         hostname: Types.string({ required: true }),

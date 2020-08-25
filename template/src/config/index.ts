@@ -27,7 +27,7 @@ export class ConfigLoader {
     constructor() {
         nconf.use('memory');
         nconf.env();
-        const env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.dev;
+        const env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.develop;
         // load config by environment
         this._loadConf(`./conf.d/config.${ env }`, env);
         // load default config

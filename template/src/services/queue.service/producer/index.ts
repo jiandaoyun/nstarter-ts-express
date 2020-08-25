@@ -1,5 +1,5 @@
 import async from 'async';
-import { provideSvc } from 'nstarter-core';
+import { service } from 'nstarter-core';
 import { ProducerEvents, RabbitMqProducer } from 'nstarter-rabbitmq';
 
 import { demoProducer } from './demo.producer';
@@ -34,7 +34,7 @@ export const startQueueProducer = async () => {
 /**
  * 队列业务调用服务
  */
-@provideSvc()
+@service()
 export class QueueService {
     public async sendNormalMessage(): Promise<void> {
         await demoProducer.publish('demo:normal');

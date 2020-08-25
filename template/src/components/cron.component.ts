@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { provideComponent } from 'nstarter-core';
+import { component } from 'nstarter-core';
 
 import * as jobs from '../plugins/cron_jobs';
 import { BaseCronJob } from '../plugins/cron_jobs/base.job';
 import { AbstractComponent } from './abstract.component';
 
-@provideComponent()
+@component()
 export class CronComponent extends AbstractComponent {
     private _jobs: Record<string, BaseCronJob> = jobs;
 
@@ -16,7 +16,7 @@ export class CronComponent extends AbstractComponent {
                 cronJob.job.start();
             }
         });
-        this.log();
+        this.ready = true;
     }
 
     public get jobs() {
