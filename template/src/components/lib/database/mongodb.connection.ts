@@ -59,7 +59,7 @@ export class MongodbConnector {
         const { user, password, db, x509 } = this._options;
         const baseConf = {
             user,
-            serverSelectionTimeoutMS: 120000,
+            serverSelectionTimeoutMS: 10000,
             keepAlive: true,
             keepAliveInitialDelay: 300000,
             socketTimeoutMS: 0,
