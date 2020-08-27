@@ -21,6 +21,7 @@ export interface IMongodbConfig {
     readonly user?: string;
     readonly password?: string;
     readonly x509?: IX509Config;
+    readonly timeoutMs?: number;
     readonly db: string;
 }
 

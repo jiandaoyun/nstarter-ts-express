@@ -8,30 +8,33 @@ let validator: ValidateFunction = () => true;
 export class DatabaseConfig extends BaseConfig<IDatabaseConf> {
     protected _validate = validator;
 
-    //#module mongodb
-    private _mongodbSchema = {
-        host: Types.string({
-            format: IFormat.uri,
-            required: true
-        }),
-        port: Types.integer({
-            ...this._portOptions,
-            default: 27017
-        })
-    };
-    //#endmodule mongodb
-
     protected _schema = {
         //#module mongodb
         mongodb: Types.object({
-            servers: Types.array(Types.object(this._mongodbSchema), {
+            servers: Types.array(Types.object({
+                host: Types.string({
+                    format: IFormat.uri,
+                    required: true
+                }),
+                port: Types.integer({
+                    ...this._portOptions,
+                    default: 27017
+                })
+            }), {
                 minItems: 1,
                 required: true
             }),
             replicaSet: Types.string(),
             user: Types.string(),
             password: Types.string(),
-            db: Types.string({ required: true })
+            db: Types.string({ required: true }),
+            x509: Types.object({
+                ca: Types.string(),
+                cert: Types.string(),
+                key: Types.string()
+            }),
+            name: Types.string(),
+            timeoutMs: Types.integer()
         }),
         //#endmodule mongodb
         //#module redis

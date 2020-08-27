@@ -69,10 +69,10 @@ export class MongodbConnector {
      * 获取数据库连接配置
      */
     private get connectionConf(): ConnectionOptions {
-        const { user, password, db, x509 } = this._options;
+        const { user, password, db, x509, timeoutMs } = this._options;
         const baseConf = {
             user,
-            serverSelectionTimeoutMS: 10000,
+            serverSelectionTimeoutMS: timeoutMs || 10000,
             keepAlive: true,
             keepAliveInitialDelay: 300000,
             socketTimeoutMS: 0,
