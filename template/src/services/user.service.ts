@@ -1,7 +1,7 @@
 import { service } from 'nstarter-core';
+import { repoSession, transaction } from 'nstarter-mongodb';
 import { userRepo } from '../repositories';
 import { IUserModel } from '../types/models/user';
-import { repoSession, transaction } from '../decorators';
 
 @service()
 export class UserService {

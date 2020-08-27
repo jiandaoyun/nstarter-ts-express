@@ -8,6 +8,6 @@ import { config } from '../config';
 export class GrpcServerComponent extends AbstractComponent {
     public start() {
         startGrpcServer(config.components.grpc.server);
-        this.ready = true;
+        this.setReady(true);
     }
 }

@@ -12,7 +12,7 @@ export class I18nComponent extends AbstractComponent {
         super();
         this._i18n = new I18n();
         this._i18n.init().then(() => {
-            this.ready = true;
+            this.setReady(true);
         });
     }
 

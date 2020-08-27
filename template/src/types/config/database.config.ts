@@ -1,31 +1,10 @@
 //#module rabbitmq
 import { RabbitMQConfig } from 'nstarter-rabbitmq';
 //#endmodule rabbitmq
-import { IBaseConf } from './base.config';
-
 //#module mongodb
-interface IMongodbServer {
-    readonly host: string;
-    readonly port: number;
-}
-
-interface IX509Config {
-    readonly ca: string;
-    readonly cert: string;
-    readonly key: string;
-}
-
-export interface IMongodbConfig {
-    readonly servers: IMongodbServer[];
-    readonly replicaSet?: string;
-    readonly user?: string;
-    readonly password?: string;
-    readonly x509?: IX509Config;
-    readonly timeoutMs?: number;
-    readonly db: string;
-}
-
+import { IMongodbConfig } from 'nstarter-mongodb';
 //#endmodule mongodb
+import { IBaseConf } from './base.config';
 
 //#module redis
 export interface IRedisConfig {

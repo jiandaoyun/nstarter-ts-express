@@ -14,10 +14,10 @@ export class RabbitMqComponent extends AbstractComponent {
             Logger.error(`Rabbitmq disconnected`, { err });
         });
         if (this._amqp.connection.isConnected()) {
-            this.ready = true;
+            this.setReady(true);
         } else {
             this._amqp.connection.once('connect', () => {
-                this.ready = true;
+                this.setReady(true);
             });
         }
     }

@@ -1,7 +1,7 @@
 import { component } from 'nstarter-core';
+import { MongodbConnector } from 'nstarter-mongodb';
 
 import { AbstractComponent } from './abstract.component';
-import { MongodbConnector } from './lib/database/mongodb.connection';
 import { config } from '../config';
 
 @component()
@@ -11,6 +11,7 @@ export class MongodbComponent extends AbstractComponent {
     constructor() {
         super();
         this._db = new MongodbConnector(config.database.mongodb, this._name);
+        this._db.setAsDefault();
         this._db.connect().then(() => {
             this.setReady(true);
         });
