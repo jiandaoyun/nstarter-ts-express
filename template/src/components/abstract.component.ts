@@ -12,25 +12,23 @@ export abstract class AbstractComponent {
     protected _name: string;
     protected _state: ComponentState = ComponentState.inactive;
 
-    public async shutdown () {
+    public async shutdown () {}
 
-    }
-
-    public get ready(): boolean {
+    public isReady(): boolean {
         return this._state === ComponentState.active;
     }
 
     /**
-     * 设置主键状态
+     * 设置组件初始化状态
      * @param {boolean} isReady
      */
-    public set ready(isReady: boolean) {
+    public setReady(isReady: boolean) {
         if (isReady) {
             this._state = ComponentState.active;
-            Logger.info(`${ this._name } initialized.`);
+            Logger.info(`init ${ this._name } ... ok`);
         } else {
             this._state = ComponentState.inactive;
-            Logger.info(`${ this._name } shutdown.`);
+            Logger.info(`shutdown ${ this._name } ... ok`);
         }
     }
 }
