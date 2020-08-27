@@ -46,16 +46,16 @@ export class MonitorComponent extends AbstractComponent {
     /**
      * Check if backend service ready.
      */
-    private get isReady(): boolean {
+    public isReady(): boolean {
         if (this._isShutDown) {
             return false;
         }
         let isReady = true;
         //#module mongodb
-        isReady = isReady && (this._mongodbComponent.db.readyState === 1);
+        isReady = isReady && this._mongodbComponent.isReady();
         //#endmodule mongodb
         //#module redis
-        isReady = isReady && (this._redisComponent.redis.status === 'ready');
+        isReady = isReady && this._redisComponent.isReady();
         //#endmodule redis
         return isReady;
     }
@@ -78,7 +78,7 @@ export class MonitorComponent extends AbstractComponent {
         const router = Router();
         router.get(config.system.monitor.health_path, (req, res) => {
             res.set('Content-Type', 'text/plain');
-            if (this.isReady) {
+            if (this.isReady()) {
                 res.status(httpStatus.OK).send('ok');
             } else {
                 res.status(httpStatus.BAD_REQUEST).send('failed');

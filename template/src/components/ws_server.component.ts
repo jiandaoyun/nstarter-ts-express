@@ -21,7 +21,7 @@ export class WsServerComponent extends AbstractComponent {
             const redis = this._redisComponent.redis,
                 httpServer = this._httpServerComponent.server;
             this._server = WebSocket.createServer(redis, httpServer);
-            this.ready = true;
+            this.setReady(true);
         }
     }
 

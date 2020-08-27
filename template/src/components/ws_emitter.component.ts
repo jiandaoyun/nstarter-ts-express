@@ -16,7 +16,7 @@ export class WsEmitterComponent extends AbstractComponent {
         super();
         const redis = this._redisComponent.redis;
         this._emitter = SocketIOEmitter(redis);
-        this.ready = true;
+        this.setReady(true);
     }
 
     public get emitter() {

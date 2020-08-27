@@ -16,7 +16,7 @@ export class CronComponent extends AbstractComponent {
                 cronJob.job.start();
             }
         });
-        this.ready = true;
+        this.setReady(true);
     }
 
     public get jobs() {
