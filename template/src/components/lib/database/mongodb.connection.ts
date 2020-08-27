@@ -10,10 +10,7 @@ interface IMongodbQueryParams {
 }
 
 export class MongodbConnector {
-    public readonly connection: Connection & {
-        then: Promise<Connection>["then"],
-        catch: Promise<Connection>["catch"]
-    };
+    public readonly connection: Connection;
     private readonly _options: IMongodbConfig;
     private readonly _name: string = '';
 
@@ -22,18 +19,34 @@ export class MongodbConnector {
         if (name) {
             this._name = name;
         }
-        this.connection = mongoose.createConnection(this.mongoUri, this.connectionConf);
-        this.connection.then(() => {
+        this.connection = mongoose.createConnection();
+    }
+
+    /**
+     * 数据库连接入口方法
+     */
+    public connect(): Promise<Connection | void> {
+        return this._connectDatabase().then(() => {
             this.connection.on('disconnected', () => {
-                Logger.error(`${ this._tag } disconnected`);
-                return process.exit(1);
+                Logger.error(`${ this._tag } 数据库连接已断开`);
             });
             this.connection.on('reconnected', () => {
-                Logger.error(`${ this._tag } reconnected`);
+                Logger.error(`${ this._tag } 数据库连接已恢复`);
             });
-        }, (err) => {
-            Logger.error(`${ this._tag } connection failed`, { error: err });
         });
+    }
+
+    /**
+     * 建立数据库连接
+     * @private
+     */
+    private async _connectDatabase(): Promise<void> {
+        try {
+            await this.connection.openUri(this.mongoUri, this.connectionConf);
+        } catch (err) {
+            Logger.error(`${ this._tag } 数据库连接建立失败，重试连接`, { error: err });
+            await this._connectDatabase();
+        }
     }
 
     private get mongoUri(): string {

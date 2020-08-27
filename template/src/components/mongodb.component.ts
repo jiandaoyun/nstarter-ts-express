@@ -11,20 +11,21 @@ export class MongodbComponent extends AbstractComponent {
     constructor() {
         super();
         this._db = new MongodbConnector(config.database.mongodb, this._name);
-        if (this._db.isReady()) {
-            this.ready = true;
-        } else {
-            this._db.connection.once('open', () => {
-                this.ready = true;
-            });
-        }
+        this._db.connect().then(() => {
+            this.setReady(true);
+        });
     }
 
     public get db() {
         return this._db.connection;
     }
 
+    public isReady(): boolean {
+        return this._db.isReady();
+    }
+
     public async shutdown() {
         await this._db.connection.close();
+        this.setReady(false);
     }
 }
