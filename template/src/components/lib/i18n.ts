@@ -16,7 +16,7 @@ interface I18nOptions {
 }
 
 export class I18n {
-    private _options: I18nOptions;
+    private readonly _options: I18nOptions;
     private _locales: string[] = [];
     private _i18next: i18n;
     private _translations: {
@@ -35,7 +35,7 @@ export class I18n {
 
     public async init() {
         const o = this._options;
-        this._loadTranslations();
+        await this._loadTranslations();
         const resources: {
             [locale: string]: ResourceLanguage
         } = {};
@@ -57,17 +57,17 @@ export class I18n {
         });
     }
 
-    private _loadTranslations() {
+    private async _loadTranslations() {
         const files = fs.readdirSync(_translationPath);
         const translationFiles = _.filter(files, (file) =>
             path.extname(file) === '.po'
         );
-        _.forEach<string>(translationFiles, async (file) => {
+        for (const file of translationFiles) {
             const filePath = path.resolve(_translationPath, file);
             const locale = path.basename(file, path.extname(file));
             const content = fs.readFileSync(filePath, 'utf-8');
-            this._translations[locale] = await gettextToI18next(locale, content);
-        });
+            this._translations[locale] = JSON.parse(await gettextToI18next(locale, content));
+        }
     }
 
     public isLocaleSupported(locale: string): boolean {
