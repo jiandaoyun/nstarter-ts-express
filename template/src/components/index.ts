@@ -34,11 +34,11 @@ import { I18nComponent } from './i18n.component';
 registerComponent(I18nComponent);
 
 //#endmodule i18n
-//#module grpc_server
+//#module grpc
 import { GrpcServerComponent } from './grpc_server.component';
 registerComponent(GrpcServerComponent);
 
-//#endmodule grpc_server
+//#endmodule grpc
 //#module monitor
 
 import { MonitorComponent } from './monitor.component';
@@ -74,9 +74,9 @@ export const cron = getComponent<CronComponent>(CronComponent);
 //#module i18n
 export const i18n = getComponent<I18nComponent>(I18nComponent).i18n;
 //#endmodule i18n
-//#module grpc_server
+//#module grpc
 export const grpcServer = getComponent<GrpcServerComponent>(GrpcServerComponent);
-//#endmodule grpc_server
+//#endmodule grpc
 //#module monitor
 export const monitorComponent = getComponent<MonitorComponent>(MonitorComponent);
 export const monitor = monitorComponent.monitor;

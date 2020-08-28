@@ -1,7 +1,7 @@
 {
     "name": "nstarter-ts-express",
-    "version": "0.6.0-beta",
-    "description": "A node express project template with typescript for nstarter.",
+    "version": "0.6.1-beta",
+    "description": "基于 express 框架的 nstarter 模板工程",
     "repository": {
         "type": "git",
         "url": "https://github.com/jiandaoyun/nstarter-ts-express"

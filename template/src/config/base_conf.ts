@@ -46,20 +46,6 @@ export const baseConf: Partial<IConfig> = {
             password: '!passw0rd'
         },
         //#endmodule redis
-        //#module rabbitmq
-        rabbitmq: {
-            brokers: [
-                {
-                    host: 'localhost',
-                    port: 5672
-                }
-            ],
-            protocol: 'amqp',
-            user: 'guest',
-            password: '!passw0rd',
-            vhost: '/'
-        }
-        //#endmodule rabbitmq
     },
     system: {
         //#module i18n
@@ -113,18 +99,30 @@ export const baseConf: Partial<IConfig> = {
         trusted_proxy: []
     },
     components: {
+        //#module rabbitmq
+        rabbitmq: {
+            brokers: [
+                {
+                    host: 'localhost',
+                    port: 5672
+                }
+            ],
+            protocol: 'amqp',
+            user: 'guest',
+            password: '!passw0rd',
+            vhost: '/'
+        },
+        //#endmodule rabbitmq
+        //#module grpc
         grpc: {
-            //#module grpc_server
             server: {
                 port: 9050
             },
-            //#endmodule grpc_server
-            //#module grpc_client
             clients: [{
                 package: 'worker',
                 address: 'localhost:9050'
             }]
-            //#endmodule grpc_client
-        }
+        },
+        //#endmodule grpc
     }
 };

@@ -34,33 +34,6 @@ export class DatabaseConfig extends BaseConfig<IDatabaseConf> {
             })
         }),
         //#endmodule redis
-        //#module rabbitmq
-        rabbitmq: Types.object({
-            brokers: Types.array(Types.object({
-                host: Types.string({
-                    format: IFormat.uri,
-                    required: true
-                }),
-                port: Types.integer({
-                    ...this._portOptions,
-                    default: 5672,
-                    required: true
-                })
-            }), {
-                minItems: 1
-            }),
-            protocol: Types.string({ required: true }),
-            user: Types.string({ required: true }),
-            password: Types.string({ required: true }),
-            vhost: Types.string({ required: true }),
-            params: Types.object({
-                heartbeat: Types.integer(),
-                frameMax: Types.integer(),
-                channelMax: Types.integer(),
-                locale: Types.string()
-            })
-        }),
-        //#endmodule rabbitmq
     };
 }
 

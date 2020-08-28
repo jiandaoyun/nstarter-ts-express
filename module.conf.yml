@@ -2,23 +2,20 @@
 #
 # modules:
 #   - storage
-#   |- rabbitmq
 #   |- mongodb
 #   |- redis
 #   - components
 #   |- web
 #   |- ws_server
 #   |- ws_emitter
-#   |- grpc_server
-#   |- grpc_client
+#   |- rabbitmq
 #   |- cron
+#   |- grpc
 #   |- i18n
-#   |- mq_producer
-#   |- mq_consumer
 #   - devops
 #   |- graylog
 #   |- sentry
-#   |- conf_yaml
+#   |- apm
 #   - utils
 #   |- util_request
 #   `- util_moment
@@ -30,13 +27,14 @@ modules:
     default: true
     files:
       - src/components/mongodb.component.ts
-      - src/components/lib/database/mongodb.connection.ts
       - src/models/**
-      - src/controllers/**
-      - src/decorators/mongodb.ts
+      - src/repositories/**
+      - src/services/user.service.ts
+      - test/server/repositories/**
     config:
       - database.mongodb
     packages:
+      - nstarter-mongodb
       - mongoose
       - '@types/mongoose'
 
@@ -47,7 +45,6 @@ modules:
     files:
       - src/components/redis.component.ts
       - src/components/lib/database/redis.connection.ts
-      - typings/connect-redis/**
     config:
       - database.redis
     packages:
@@ -57,19 +54,16 @@ modules:
 
   - name: rabbitmq
     label: RabbitMQ
-    type: stroage
+    type: components
     default: false
     files:
       - src/components/rabbitmq.component.ts
       - src/components/lib/database/amqp.connection.ts
+      - src/constants/queue.ts
     config:
       - database.rabbitmq
     packages:
-      - amqplib
-      - amqp-connection-manager
-      - '@types/amqplib'
-      - '@types/amqp-connection-manager'
-      - querystring
+      - nstarter-rabbitmq
 
   - name: web
     label: Web HTTP Service
@@ -78,18 +72,27 @@ modules:
     files:
       - views/**
       - src/routes/**
+      - src/controllers/**
       - temp/**
       - public/**
       - typings/express/**
+    packages:
+      - pug
+      - express
+      - express-session
+      - '@types/express'
+      - '@types/express-session'
 
   - name: ws_server
     label: Websocket Server
     type: components
+    default: false
     files:
       - src/components/ws_server.component.ts
       - src/components/lib/websocket/**
     dependencies:
       - redis
+      - web
     packages:
       - socket.io
       - socket.io-redis
@@ -99,6 +102,7 @@ modules:
   - name: ws_emitter
     label: Websocket Emitter
     type: components
+    default: false
     files:
       - src/components/ws_emitter.component.ts
       - typings/socket.io-emitter/**
@@ -107,9 +111,23 @@ modules:
     packages:
       - socket.io-emitter
 
+  - name: rabbitmq
+    label: Message Queue (rabbitmq)
+    type: components
+    default: false
+    files:
+      - src/components/mq_producer.component.ts
+      - src/components/mq_consumer.component.ts
+      - src/services/queue.service/**
+    packages:
+      - nstarter-rabbitmq
+    config:
+      - components.rabbitmq
+
   - name: cron
     label: Cron Job
     type: components
+    default: false
     files:
       - src/components/cron.component.ts
       - src/plugins/cron_jobs/**
@@ -120,6 +138,7 @@ modules:
   - name: i18n
     label: i18n
     type: components
+    default: true
     files:
       - src/components/i18n.component.ts
       - src/components/lib/i18n.ts
@@ -130,41 +149,26 @@ modules:
       - i18next
       - i18next-conv
       - '@types/i18next'
+    config:
+      - system.locale
     scripts:
       - tool:i18n-scan
 
-  - name: grpc_server
-    label: gRPC Server
+  - name: grpc
+    label: gRPC
     type: components
     files:
       - src/components/rpc_server.component.ts
-      - src/plugins/rpc/services/**
-      - src/plugins/rpc/types/**
-      - src/plugins/rpc/*
-      - src/plugins/rpc/server.ts
-      - resources/grpc/**
-    packages:
-      - grpc
-      - '@grpc/proto-loader'
-      - prodobufjs
-    config:
-      - components.grpc.server
-
-  - name: grpc_client
-    label: gRPC Client
-    type: components
-    files:
       - src/components/rpc_client.component.ts
-      - src/plugins/rpc/clients/**
-      - src/plugins/rpc/types/**
-      - src/plugins/rpc/*
+      - src/components/lib/grpc/**
+      - src/services/grpc.service/**
       - resources/grpc/**
     packages:
       - grpc
       - '@grpc/proto-loader'
       - prodobufjs
     config:
-      - components.grpc.clients
+      - components.grpc
 
   - name: graylog
     label: Graylog (Logging)
@@ -195,32 +199,13 @@ modules:
     package:
       - prom-client
 
-  - name: mq_producer
-    label: Message Queue Producer
-    type: components
-    default: false
-    files:
-      - src/components/mq_producer.component.ts
-      - src/plugins/queue/producer/**
-      - src/plugins/queue/lib/**
-
-  - name: mq_consumer
-    label: Message Queue Consumer
-    type: components
-    default: false
-    files:
-      - src/components/mq_consumer.component.ts
-      - src/plugins/queue/consumer/**
-      - src/plugins/queue/lib/**
-
-  - name: conf_yaml
-    label: YAML Config
+  - name: apm
+    label: Elastic APM
     type: devops
-    default: true
     files:
-      - conf.d/*.yaml
-    packages:
-      - '@types/js-yaml'
+      - src/apm.ts
+    package:
+      - elastic-apm-node
 
   - name: util_request
     label: 'npm: request'
@@ -255,6 +240,7 @@ ignore_files:
   - .nyc_output/**
   - dist/**
   - log/**
+  - lint/**
   - coverage/**
   - node_modules/**
   - conf.d/config.override.*
