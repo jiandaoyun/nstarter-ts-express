@@ -51,10 +51,7 @@ export class SystemConfig extends BaseConfig<ISystemConf> {
         monitor: Types.object({
             port: Types.integer({ ...this._portOptions }),
             metric_path: Types.string(),
-            health_path: Types.string(),
-            //#module cron
-            gateway: Types.string()
-            //#endmodule cron
+            health_path: Types.string()
         }),
         //#endmodule monitor
         trusted_proxy: Types.array(Types.string())

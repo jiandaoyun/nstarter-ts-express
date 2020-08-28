@@ -90,10 +90,7 @@ export const baseConf: Partial<IConfig> = {
         monitor: {
             port: 3001,
             metric_path: '/metrics',
-            health_path: '/health_check',
-            //#module cron
-            gateway: ''
-            //#endmodule cron
+            health_path: '/health_check'
         },
         //#endmodule monitor
         trusted_proxy: []

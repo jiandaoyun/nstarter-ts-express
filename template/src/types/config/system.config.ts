@@ -52,10 +52,7 @@ export interface ISystemConf extends IBaseConf {
     readonly monitor: {
         readonly port?: number,
         readonly metric_path: string,
-        readonly health_path: string,
-        //#module cron
-        readonly gateway: string
-        //#endmodule cron
+        readonly health_path: string
     };
     //#endmodule monitor
     readonly trusted_proxy: string[];
