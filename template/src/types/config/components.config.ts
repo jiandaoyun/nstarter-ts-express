@@ -1,17 +1,21 @@
 import { IBaseConf } from './base.config';
+//#module rabbitmq
+import { RabbitMQConfig } from 'nstarter-rabbitmq';
+//#endmodule rabbitmq
 
 export interface IComponentsConf extends IBaseConf {
+    //#module rabbitmq
+    readonly rabbitmq: RabbitMQConfig;
+    //#endmodule rabbitmq
+    //#module grpc
     grpc: {
-        //#module grpc_server
         readonly server: {
             readonly port: number
         },
-        //#endmodule grpc_server
-        //#module grpc_client
         readonly clients: {
             readonly package: string,
             readonly address: string
         }[]
-        //#endmodule grpc_client
     };
+    //#endmodule grpc
 }

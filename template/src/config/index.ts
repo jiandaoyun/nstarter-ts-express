@@ -12,12 +12,10 @@ export const pkg = JSON.parse(
 );
 
 const configFormat: Record<string, nconf.IFormat> = {
-    //#module conf_yaml
     yml: {
         parse: (str: string) => safeLoad(str),
         stringify: (obj: object) => safeDump(obj)
     },
-    //#endmodule conf_yaml
     json: nconf.formats.json
 };
 

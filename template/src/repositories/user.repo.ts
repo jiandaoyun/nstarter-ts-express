@@ -1,17 +1,17 @@
 import { profiler } from 'nstarter-metrics';
+import { MongodbRepo, repoProvider } from 'nstarter-mongodb';
 import { userModel } from '../models/user.model';
 import { IUserModel } from '../types/models/user';
-import { BaseRepo, repoProvider } from './base.repo';
 
-class UserRepo extends BaseRepo {
-    public createOne(user: IUserModel) {
+class UserRepo extends MongodbRepo {
+    public async createOne(user: IUserModel) {
         return userModel.create([user], {
             session: this._session
         });
     }
 
     @profiler()
-    public findOneByUsername(username: string) {
+    public async findOneByUsername(username: string) {
         return userModel.findOne({ username }).setOptions({
             session: this._session
         }).lean(true);

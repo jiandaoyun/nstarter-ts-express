@@ -1,24 +1,38 @@
 import { Logger } from 'nstarter-core';
-import { startQueueConsumers } from 'nstarter-rabbitmq';
+//#module apm
 import { apm } from './apm';
+//#endmodule apm
 import { config } from './config';
 import {
+    //#module mongodb
+    mongodbComponent,
+    //#endmodule mongodb
+    //#module web
     httpServer,
     httpServerComponent,
+    //#endmodule web
     //#module monitor
     monitorServer,
+    //#endmodule monitor
+    //#module ws_server
     wsServer,
+    wsServerComponent,
+    //#endmodule ws_server
+    //#module rabbitmq
     rabbitMqComponent,
     redisComponent,
-    mongodbComponent,
-    monitorComponent,
-    wsServerComponent
+    //#endmodule rabbitmq
+    //#module monitor
+    monitorComponent
     //#endmodule monitor
 } from './components';
+//#module rabbitmq
+import { startQueueConsumers } from 'nstarter-rabbitmq';
 import {
     startQueueProducer,
     loadQueueConsumers
 } from './services/queue.service';
+//#endmodule rabbitmq
 import { CommonUtils } from './utils';
 import { Consts } from './constants';
 
@@ -28,6 +42,7 @@ process.on('uncaughtException', (err) => {
 });
 
 class AppManager {
+    //#module web
     /**
      * Web 服务
      */
@@ -49,6 +64,7 @@ class AppManager {
             }, 5000);
         });
     }
+    //#endmodule web
 
     //#module monitor
     /**
@@ -65,27 +81,25 @@ class AppManager {
     }
     //#endmodule monitor
 
-    //#module mq_consumer|mq_producer
+    //#module rabbitmq
     /**
      * 队列服务
      */
     public static startQueueJobs() {
-        //#module mq_producer
-        startQueueProducer();
-        //#endmodule mq_producer
-        //#module mq_consumer
+        startQueueProducer().then();
         loadQueueConsumers();
-        startQueueConsumers();
-        //#endmodule mq_consumer
+        startQueueConsumers().then();
     }
-    //#endmodule mq_consumer|mq_producer
+    //#endmodule rabbitmq
 
+    //#module ws_server
     /**
      * Websocket 服务
      */
     public static startWebsocketService() {
         wsServer.start();
     }
+    //#endmodule ws_server
 
     /**
      * 安全关闭服务
@@ -96,11 +110,21 @@ class AppManager {
         await CommonUtils.sleep(Consts.System.SHUTDOWN_WAIT_MS);
         try {
             // 按顺序停止服务
+            //#module web
             await httpServerComponent.shutdown();
+            //#endmodule web
+            //#module ws_server
             await wsServerComponent.shutdown();
+            //#endmodule ws_server
+            //#module rabbitmq
             await rabbitMqComponent.shutdown();
+            //#endmodule rabbitmq
+            //#module mongodb
             await mongodbComponent.shutdown();
+            //#endmodule mongodb
+            //#module redis
             await redisComponent.shutdown();
+            //#endmodule redis
         } catch (err) {
             Logger.error(err);
         } finally {
@@ -119,10 +143,20 @@ class AppManager {
 }
 
 if (require.main === module) {
+    //#module apm
     apm.isStarted();
+    //#endmodule apm
+    //#module rabbitmq
     AppManager.startQueueJobs();
+    //#endmodule rabbitmq
+    //#module monitor
     AppManager.startMonitorService();
+    //#endmodule monitor
+    //#module web
     AppManager.startWebService();
+    //#endmodule web
+    //#module ws_server
     AppManager.startWebsocketService();
+    //#endmodule ws_server
     AppManager.listenShutdownEvent();
 }

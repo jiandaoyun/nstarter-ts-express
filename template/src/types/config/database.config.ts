@@ -1,6 +1,3 @@
-//#module rabbitmq
-import { RabbitMQConfig } from 'nstarter-rabbitmq';
-//#endmodule rabbitmq
 //#module mongodb
 import { IMongodbConfig } from 'nstarter-mongodb';
 //#endmodule mongodb
@@ -22,7 +19,4 @@ export interface IDatabaseConf extends IBaseConf {
     //#module redis
     readonly redis: IRedisConfig;
     //#endmodule redis
-    //#module rabbitmq
-    readonly rabbitmq: RabbitMQConfig;
-    //#endmodule rabbitmq
 }

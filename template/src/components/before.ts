@@ -12,8 +12,8 @@ export const beforeLoad = () => {
         RequestLogger.registerTransport(transport);
     });
 
-    //#module grpc_server|grpc_client
+    //#module grpc
     // 加载 grpc proto buf 定义
-    initGrpcProtoPackages();
-    //#endmodule grpc_server|grpc_client
+    initGrpcProtoPackages().then();
+    //#endmodule grpc
 };
