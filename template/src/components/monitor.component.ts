@@ -7,8 +7,12 @@ import { metricsView } from 'nstarter-metrics';
 import { metricsMonitor, MetricsMonitor } from './lib/monitor';
 import { AbstractComponent } from './abstract.component';
 import { config } from '../config';
+//#module redis
 import { RedisComponent } from './redis.component';
+//#endmodule redis
+//#module mongodb
 import { MongodbComponent } from './mongodb.component';
+//#endmodule mongodb
 
 @component()
 export class MonitorComponent extends AbstractComponent {

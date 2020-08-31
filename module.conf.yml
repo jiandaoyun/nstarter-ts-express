@@ -147,8 +147,7 @@ modules:
     label: gRPC
     type: components
     files:
-      - src/components/rpc_server.component.ts
-      - src/components/rpc_client.component.ts
+      - src/components/grpc_server.component.ts
       - src/components/lib/grpc/**
       - src/services/grpc.service/**
       - resources/grpc/**

@@ -20,8 +20,10 @@ import {
     //#endmodule ws_server
     //#module rabbitmq
     rabbitMqComponent,
-    redisComponent,
     //#endmodule rabbitmq
+    //#module redis
+    redisComponent,
+    //#endmodule redis
     //#module monitor
     monitorComponent
     //#endmodule monitor
