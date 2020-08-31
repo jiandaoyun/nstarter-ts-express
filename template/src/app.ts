@@ -105,7 +105,9 @@ class AppManager {
      * 安全关闭服务
      */
     public static async gracefulShutdown() {
+        //#module monitor
         monitorComponent.setShutdownState();
+        //#endmodule monitor
         // 等待 readinessProbe 进入 fail 状态
         await CommonUtils.sleep(Consts.System.SHUTDOWN_WAIT_MS);
         try {

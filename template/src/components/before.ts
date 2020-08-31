@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import { Logger, RequestLogger } from 'nstarter-core';
 import { defaultTransports, requestTransports } from './lib/logger';
+//#module grpc
 import { initGrpcProtoPackages } from './lib/grpc';
+//#endmodule grpc
 
 export const beforeLoad = () => {
     // 初始化日志记录

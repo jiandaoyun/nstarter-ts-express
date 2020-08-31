@@ -4,7 +4,9 @@ import { ProducerEvents, RabbitMqProducer } from 'nstarter-rabbitmq';
 
 import { demoProducer } from './demo.producer';
 import { delayProducer } from './delay.producer';
+//#module monitor
 import { monitor } from '../../../components';
+//#endmodule monitor
 
 const producerList: RabbitMqProducer<any>[] = [
     demoProducer,
@@ -17,7 +19,9 @@ const producerList: RabbitMqProducer<any>[] = [
 export const listenProducerEvents = (producer: RabbitMqProducer<any>) => {
     const queueName = producer.queue.name;
     producer.on(ProducerEvents.publish, () => {
+        //#module monitor
         monitor.incQueueJobCount(queueName, 'publish');
+        //#endmodule monitor
     });
 };
 
