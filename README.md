@@ -1,60 +1,58 @@
 # nstarter-ts-express
 
-An Expressjs project template with Typescript for `nstarter`.
+基于 Express.js 框架的 `nstarter` 模板工程。
 
-This is a backend oriented project template based on MVCS architecture.
+本项目提供了一个采用 MVCS 架构设计的后台工程模板。针对 Typescript 环境。
 
-## Directory layout
+## 目录结构
 
 ```
 .
-├── template/                   # Template project root.
-│   ├── conf.d/                 # Project config file directory.
-│   ├── public/                 # Public resources for Web GUI.
-│   │   ├── js/                 # Scripts for browsers to use.
-│   │   └── css/                # Style sheets.
-│   ├── resources/              # Project service resource directory.
-│   │   │── grpc/               # GRPC proto files.
-│   │   └── i18n/               # Internationalization textual data.
-│   ├── src/                    # Project source code directory.
-│   │   ├── components/         # System core components.
-│   │   ├── config/             # Configuration loader.
-│   │   ├── constants/          # Shared project constants.
-│   │   ├── errors/             # Shared error declaration.
-│   │   ├── models/             # Database data structure model.
-│   │   ├── services/           # Database access methods called by controllers.
-│   │   ├── controllers/        # Methods to encapsulate business logic.
-│   │   ├── routes/             # Express request routes.
-│   │   │   └── middlewares/    # Middleware extensions for Express.
-│   │   ├── utils/              # Shared project utility methods.
-│   │   ├── plugins/            # Plugin
-│   │   │   ├── cron_job/       # Cron jobs.
-│   │   │   ├── monitor/        # Performance monitor by prometheus.
-│   │   │   └── rpc/            # GRPC server services & client methods.
-│   │   ├── types/              # Typescript type extensions.
-│   │   └── app.ts              # Main app file.
-│   ├── test/                   # Automated tests.
-│   ├── temp/                   # Temporary directory.
-│   ├── tools/                  # Project utilities for maintenance.
-│   ├── views/                  # View template files for Express.
-│   ├── config.schema.json      # Project configuration check schema for IDE integrate.
-│   ├── pm2.json                # PM2 process manger config file for starting server.
-│   ├── tsconfig.json           # Typescript options for template project.
-│   ├── tslint.json             # Tslint config for Typescript linting.
-│   ├── package.json            # Npm configuration for project with dependencies and tools.
-│   ├── LICENSE                 # Project license template.
-│   └── README.md               # Project readme template.
-├── package.json                # Npm release opitons for template project.
-├── module.conf.yml             # Template module description file for nstarter.
+├── template/                   # 模板工程根路径
+│   ├── conf.d/                 # 配置文件目录
+│   ├── public/                 # Web 公共资源目录
+│   │   ├── js/                 # 浏览器 javascript 脚本目录
+│   │   └── css/                # 浏览器样式表目录
+│   ├── resources/              # 服务端资源文件目录
+│   │   │── grpc/               # GRPC proto 结构定义文件
+│   │   └── i18n/               # 国际化资源文件
+│   ├── src/                    # 工程目录
+│   │   ├── components/         # 框架基础组件
+│   │   ├── config/             # 配置装载服务
+│   │   ├── constants/          # 常量定义
+│   │   ├── errors/             # 错误异常定义
+│   │   ├── models/             # 数据库存储模型定义
+│   │   ├── services/           # 业务方法
+│   │   ├── controllers/        # 请求处理方法
+│   │   ├── routes/             # Express 请求路由表
+│   │   │   └── middlewares/    # Express 中间件扩展
+│   │   ├── utils/              # 工程内部公用的工具方法
+│   │   ├── plugins/            # 插件扩展定义目录
+│   │   │   └── cron_job/       # 定时任务
+│   │   ├── types/              # 工程内部类型定义
+│   │   ├── apm.ts              # APM 探针加载入口
+│   │   └── app.ts              # 应用主程序入口
+│   ├── test/                   # 单元测试
+│   ├── temp/                   # 临时目录
+│   ├── tools/                  # 工程维护工具
+│   ├── views/                  # Express Web 视图模板
+│   ├── config.schema.json      # 配置结构校验 schema
+│   ├── tsconfig.json           # Typescript 配置文件
+│   ├── .eslintrc.js            # Eslint 规则检查配置文件
+│   ├── package.json            # npm 配置文件
+│   ├── LICENSE                 # 许可证说明
+│   └── README.md               # 工程说明文件
+├── package.json                # 模板工程发布配置
+├── module.conf.yml             # 模板组件定义配置
 └── README.md
 ```
 
-## Templating
+## 模板工程
 
-For details to create `nstarter` template, please read more about [templating](../nstarter/doc/templating.md).
+更多关于创建 `nstarter` 模板的说明，欢迎查阅相关 [文档](../nstarter/doc/templating.md).
 
 
-## License
+## 许可
 
 [MIT](./LICENSE)
 
