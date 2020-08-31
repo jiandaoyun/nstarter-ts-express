@@ -53,15 +53,16 @@ modules:
       - '@types/ioredis'
 
   - name: rabbitmq
-    label: RabbitMQ
+    label: Message Queue (Rabbitmq)
     type: components
     default: false
     files:
       - src/components/rabbitmq.component.ts
       - src/components/lib/database/amqp.connection.ts
       - src/constants/queue.ts
+      - src/services/queue.service/**
     config:
-      - database.rabbitmq
+      - components.rabbitmq
     packages:
       - nstarter-rabbitmq
 
@@ -110,19 +111,6 @@ modules:
       - redis
     packages:
       - socket.io-emitter
-
-  - name: rabbitmq
-    label: Message Queue (rabbitmq)
-    type: components
-    default: false
-    files:
-      - src/components/mq_producer.component.ts
-      - src/components/mq_consumer.component.ts
-      - src/services/queue.service/**
-    packages:
-      - nstarter-rabbitmq
-    config:
-      - components.rabbitmq
 
   - name: cron
     label: Cron Job
