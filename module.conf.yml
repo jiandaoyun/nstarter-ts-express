@@ -132,11 +132,13 @@ modules:
       - src/components/i18n.component.ts
       - src/components/lib/i18n.ts
       - typings/i18next-conv/**
+      - typings/i18next-scanner/**
       - resources/i18n/**
       - tools/i18n_scan.js
     packages:
       - i18next
       - i18next-conv
+      - i18next-scanner
       - '@types/i18next'
     config:
       - system.locale
