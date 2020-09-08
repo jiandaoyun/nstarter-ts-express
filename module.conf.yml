@@ -196,6 +196,7 @@ modules:
       - src/apm.ts
     package:
       - elastic-apm-node
+      - nstarter-apm
 
   - name: util_request
     label: 'npm: request'

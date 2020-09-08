@@ -1,5 +1,6 @@
 import { Logger } from 'nstarter-core';
 //#module apm
+import { apmConnector } from 'nstarter-apm';
 import { apm } from './apm';
 //#endmodule apm
 import { config } from './config';
@@ -149,6 +150,7 @@ class AppManager {
 if (require.main === module) {
     //#module apm
     apm.isStarted();
+    apmConnector.setApmAgent(apm);
     //#endmodule apm
     //#module rabbitmq
     AppManager.startQueueJobs();
