@@ -1,0 +1,56 @@
+html {
+    --title-height: 350px;
+    --title-margin-top: 56px;
+    --title-margin-bottom: 38px;
+    --title-width: 500px;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", Roboto, "Noto Sans CJK SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    cursor: default;
+    display: block;
+    margin: 0;
+    min-height: 100%;
+}
+
+.background {
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url('/images/home-background.webp');
+    opacity: 1;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    transition: opacity 700ms;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    margin-top: var(--title-margin-top);
+    min-height: calc(var(--title-height) + var(--title-margin-bottom));
+    position: relative;
+}
+
+h1.title-text {
+    display: block;
+    position: absolute;
+    left: calc(50% - var(--title-width) / 2);
+    bottom: var(--title-margin-bottom);
+    width: var(--title-width);
+    color: white;
+    font-size: 48px;
+    font-weight: normal;
+    text-shadow: 0.07em 0.07em #777;
+}

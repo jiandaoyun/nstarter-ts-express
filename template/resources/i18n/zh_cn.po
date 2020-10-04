@@ -14,4 +14,4 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "page.demo.title"
-msgstr "超越无限！"
+msgstr "我们的征途是星辰大海"
