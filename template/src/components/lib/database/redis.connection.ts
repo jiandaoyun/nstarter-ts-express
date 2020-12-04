@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import IORedis, { Redis, RedisOptions } from 'ioredis';
 import { Logger } from 'nstarter-core';
-import { IRedisConfig } from '../../../types/config/database.config';
+import { IRedisConfig } from '../../../entities/config/database.config';
 
 export class RedisConnector {
     public readonly connection: Redis;

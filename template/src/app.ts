@@ -1,4 +1,5 @@
 import { Logger } from 'nstarter-core';
+import './schema';
 //#module apm
 import { apmConnector } from 'nstarter-apm';
 import { apm } from './apm';

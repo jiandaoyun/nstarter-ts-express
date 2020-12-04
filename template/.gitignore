@@ -10,6 +10,8 @@
 package-lock.json
 config.schema.json
 
+/resources/*.schema.json
+
 .nyc_output/
 coverage/
 

@@ -18,6 +18,7 @@
     "eslint": "eslint --ext .js,.ts --config .eslintrc.js ./src",
     "eslint:html": "npm run eslint -- --output-file ./lint/eslint.html --format html",
     "circular": "nstarter-circular ./src",
+    "json-schema": "typescript-json-schema ./src/entities/**/*.ts * --out ./resources/entities.schema.json --required --excludePrivate --ignoreErrors --noExtraProps",
     "tool:i18n-scan": "ts-node ./tools/i18n_scan.ts",
     "tool:config-shema": "ts-node ./tools/config_schema.ts"
   },
@@ -98,7 +99,8 @@
     "rimraf": "2.6.3",
     "source-map-support": "0.5.12",
     "ts-node": "8.1.0",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "typescript-json-schema": "0.44.0"
   },
   "engines": {
     "node": ">=12.16.0 <13.0",

@@ -1,47 +1,28 @@
-import { ValidateFunction } from 'ajv';
+import { AbstractEntity } from 'nstarter-entity';
 
-import { RunEnv } from 'nstarter-core';
-import { Types } from '../entity.ajv';
-import { BaseEntity } from '../entity.base';
-import { ServerConfig } from './server.config';
-import { SystemConfig } from './system.config';
-import { DatabaseConfig } from './database.config';
-import { ComponentsConfig } from './components.config';
-import { IConfig } from '../../types/config';
+import { IServerConf } from './server.config';
+import { IDatabaseConf } from './database.config';
+import { ISystemConf } from './system.config';
+import { IComponentsConf } from './components.config';
 
-let validator: ValidateFunction = () => true;
+/**
+ * 配置对象实体
+ */
+export class Config extends AbstractEntity {
+    env: string;
+    hostname: string;
+    version: string;
+    home_path: string;
 
-export class ConfigEntity extends BaseEntity<IConfig> {
-    protected _validate = validator;
-
-    protected _schema = {
-        // Base attributes
-        env: Types.string({
-            enum: RunEnv,
-            default: RunEnv.develop,
-            required: true
-        }),
-        hostname: Types.string({ required: true }),
-        version: Types.string({ required: true }),
-        home_path: Types.string(),
-        // Configurations
-        server: Types.object({}, {
-            model: ServerConfig,
-            required: true
-        }),
-        database: Types.object({}, {
-            model: DatabaseConfig,
-            required: true
-        }),
-        system: Types.object({}, {
-            model: SystemConfig,
-            required: true
-        }),
-        components: Types.object({}, {
-            model: ComponentsConfig,
-            required: true
-        })
-    };
+    server: IServerConf;
+    database: IDatabaseConf;
+    system: ISystemConf;
+    components: IComponentsConf;
 }
 
-validator = new ConfigEntity().validator;
+export {
+    IServerConf,
+    IDatabaseConf,
+    ISystemConf,
+    IComponentsConf
+};
