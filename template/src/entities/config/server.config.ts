@@ -1,6 +1,5 @@
-import { IBaseConf } from './base.config';
 
-export interface IServerConf extends IBaseConf {
+export interface IServerConf {
     readonly http: {
         readonly port: number
     };

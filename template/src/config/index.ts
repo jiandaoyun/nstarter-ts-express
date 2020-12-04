@@ -5,7 +5,7 @@ import os from 'os';
 import { RunEnv } from 'nstarter-core';
 import { safeDump, safeLoad } from 'js-yaml';
 import { baseConf } from './base_conf';
-import { ConfigEntity } from '../entities/config';
+import { Config } from '../entities/config';
 
 export const pkg = JSON.parse(
     fs.readFileSync('./package.json', 'utf8')
@@ -19,8 +19,11 @@ const configFormat: Record<string, nconf.IFormat> = {
     json: nconf.formats.json
 };
 
+/**
+ * 配置装载器
+ */
 export class ConfigLoader {
-    private _conf: ConfigEntity;
+    private readonly _conf: Config;
 
     constructor() {
         nconf.use('memory');
@@ -31,26 +34,24 @@ export class ConfigLoader {
         // load default config
         nconf.defaults(baseConf);
 
-        this._conf = new ConfigEntity();
-        this._conf.setConfig({
-            env,
-            hostname: os.hostname(),
-            version: pkg.version,
-            home_path: nconf.any(['USERPROFILE', 'HOME']),
-            ...nconf.get()
-        });
-        if (!this._conf.isConfValid) {
+        try {
+            this._conf = new Config({
+                env,
+                hostname: os.hostname(),
+                version: pkg.version,
+                home_path: nconf.any(['USERPROFILE', 'HOME']),
+                ...nconf.get()
+            });
+        } catch (err) {
+            // 配置阶段 logger 未完成初始化
             console.error('Invalid config file, please check.');
-            const errMsgs = _.map(this._conf.validationErrors, (err) =>
-                `[config]#/${ err.dataPath }: ${ err.message }`
-            );
-            console.error(_.join(errMsgs, '\n'));
+            console.error(err.message);
             process.exit(1);
         }
     }
 
     public getConfig() {
-        return this._conf.getConfig();
+        return this._conf;
     }
 
     private _loadConf(path: string, env: string): void {

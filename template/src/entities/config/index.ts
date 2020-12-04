@@ -1,12 +1,14 @@
-import { IEntityConf } from '../entities';
+import { AbstractEntity } from 'nstarter-entity';
 
-import { IBaseConf } from './base.config';
 import { IServerConf } from './server.config';
 import { IDatabaseConf } from './database.config';
 import { ISystemConf } from './system.config';
 import { IComponentsConf } from './components.config';
 
-export interface IConfig extends IEntityConf {
+/**
+ * 配置对象实体
+ */
+export class Config extends AbstractEntity {
     env: string;
     hostname: string;
     version: string;
@@ -19,7 +21,6 @@ export interface IConfig extends IEntityConf {
 }
 
 export {
-    IBaseConf,
     IServerConf,
     IDatabaseConf,
     ISystemConf,
