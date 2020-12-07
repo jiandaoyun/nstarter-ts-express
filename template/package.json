@@ -18,9 +18,9 @@
     "eslint": "eslint --ext .js,.ts --config .eslintrc.js ./src",
     "eslint:html": "npm run eslint -- --output-file ./lint/eslint.html --format html",
     "circular": "nstarter-circular ./src",
-    "json-schema": "typescript-json-schema ./src/entities/**/*.ts * --out ./resources/entities.schema.json --required --excludePrivate --ignoreErrors --noExtraProps",
-    "tool:i18n-scan": "ts-node ./tools/i18n_scan.ts",
-    "tool:config-shema": "ts-node ./tools/config_schema.ts"
+    "json-schema": "typescript-json-schema \"./src/entities/**/*.ts\" \"*\" --out ./resources/entities.schema.json --required --excludePrivate --ignoreErrors --noExtraProps",
+    "config-shema": "typescript-json-schema \"./src/entities/config/*.ts\" Config --out ./config.schema.json --excludePrivate --ignoreErrors --noExtraProps --topRef",
+    "tool:i18n-scan": "ts-node ./tools/i18n_scan.ts"
   },
   "dependencies": {
     "@sentry/node": "4.1.1",
@@ -48,6 +48,7 @@
     "nconf": "0.10.0",
     "nstarter-apm": "0.1.0",
     "nstarter-core": "0.4.4",
+    "nstarter-entity": "0.2.1",
     "nstarter-grpc": "0.1.3-beta",
     "nstarter-metrics": "0.1.2-beta",
     "nstarter-mongodb": "0.1.1",
@@ -86,7 +87,7 @@
     "@types/socket.io": "2.1.2",
     "@types/socket.io-redis": "1.0.25",
     "@types/triple-beam": "1.3.0",
-    "acorn": "6.4.0",
+    "acorn": "6.4.2",
     "chai": "4.2.0",
     "chai-datetime": "1.5.0",
     "eslint": "6.8.0",
