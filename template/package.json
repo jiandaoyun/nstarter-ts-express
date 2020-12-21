@@ -15,11 +15,11 @@
     "prestart": "npm run build",
     "start": "node ./dist/app.js",
     "test": "nyc mocha --opts ./test/mocha.opts",
-    "eslint": "eslint --ext .js,.ts --config .eslintrc.js ./src",
+    "eslint": "eslint --ext .js,.ts ./src",
     "eslint:html": "npm run eslint -- --output-file ./lint/eslint.html --format html",
     "circular": "nstarter-circular ./src",
     "json-schema": "typescript-json-schema \"./src/entities/**/*.ts\" \"*\" --out ./resources/entities.schema.json --required --excludePrivate --ignoreErrors --noExtraProps",
-    "config-shema": "typescript-json-schema \"./src/entities/config/*.ts\" Config --out ./config.schema.json --excludePrivate --ignoreErrors --noExtraProps --topRef",
+    "config-schema": "typescript-json-schema \"./src/entities/config/*.ts\" Config --out ./config.schema.json --excludePrivate --ignoreErrors --noExtraProps --topRef",
     "tool:i18n-scan": "ts-node ./tools/i18n_scan.ts"
   },
   "dependencies": {

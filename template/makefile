@@ -1,23 +1,19 @@
 VERSION = $(shell node -pe "require('./package.json').version")
 DOCKER_IMG = app
 
-zip:
-	zip -rq ./build/release.zip \
-		public \
-		resources \
-		dist \
-		tools \
-		views \
-		package*.json \
-		*.md \
-		LICENSE \
-		makefile
-
-docker-build: zip
-	docker build \
+docker-build:
+	docker build --target=runtime \
+		--progress=plain \
 		-t ${DOCKER_IMG}:${VERSION} \
 		-t ${DOCKER_IMG}:latest \
-		.
+    	.
+
+docker-test:
+	docker build \
+ 		--target=archive \
+ 		--progress=plain \
+ 		--output type=local,dest=./ \
+ 		.
 
 docker-image:
 	docker run -it ${DOCKER_IMG} sh
@@ -26,4 +22,4 @@ clean:
 	rm -rf .nyc_output/ coverage/ dist/ tmp/ build/ lint/
 	rm -rf public/*
 
-.PHONY: lint test clean
+.PHONY: clean

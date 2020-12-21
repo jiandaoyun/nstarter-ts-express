@@ -1,5 +1,1 @@
-import { userRepo } from './user.repo';
-
-export {
-    userRepo
-};
+export { userRepo } from './user.repo';

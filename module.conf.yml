@@ -31,6 +31,7 @@ modules:
       - src/models/**
       - src/repositories/**
       - src/services/user.service.ts
+      - src/types/models/**
       - test/server/repositories/**
     config:
       - database.mongodb
@@ -152,6 +153,7 @@ modules:
       - src/components/grpc_server.component.ts
       - src/components/lib/grpc/**
       - src/services/grpc.service/**
+      - src/types/services/grpc/**
       - resources/grpc/**
     packages:
       - grpc
@@ -184,6 +186,7 @@ modules:
     files:
       - src/components/monitor.component.ts
       - src/plugins/monitor/**
+      - src/types/metrics/**
     conifg:
       - system.monitor
     package:

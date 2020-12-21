@@ -1,4 +1,32 @@
-FROM node:12.16.2-alpine
+ARG NODE_IMAGE=node:12.16.2-alpine
+
+# 构建环境容器
+FROM ${NODE_IMAGE} as build
+
+WORKDIR /var/opt/build
+
+COPY ./package.json ./package-lock.json ./
+RUN npm install
+
+COPY . .
+RUN npm run json-schema && \
+    npm run config-schema && \
+    npm run eslint:html && \
+    npm run build
+
+RUN mkdir -p ./build && \
+    mv ./public ./resources ./views \
+       ./dist ./tools \
+       package*.json *.md LICENSE makefile \
+       ./build
+
+# 输出结果
+FROM scratch as archive
+COPY --from=build /var/opt/build/lint ./lint
+COPY --from=build /var/opt/build/coverage ./coverage
+
+# 运行环境容器
+FROM ${NODE_IMAGE} as runtime
 
 USER root:root
 WORKDIR /var/app
@@ -8,9 +36,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' \
     apk add --no-cache tini
 
 ENV TZ=UTC
-ADD [ "./build/release.zip", "/tmp" ]
-RUN unzip -q /tmp/release.zip -d /var/app && ls -lh
-RUN npm install --production
+
+COPY ./package.json ./package-lock.json ./
+COPY --from=build /var/opt/build ./
+RUN ls -lh && npm install --production
 
 ENTRYPOINT ["/sbin/tini", "--"]
 VOLUME [ "/var/app/conf.d", "/var/app/log", "/var/app/temp" ]
