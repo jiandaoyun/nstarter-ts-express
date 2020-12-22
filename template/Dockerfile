@@ -38,8 +38,9 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' \
 ENV TZ=UTC
 
 COPY ./package.json ./package-lock.json ./
-COPY --from=build /var/opt/build ./
-RUN ls -lh && npm install --production
+RUN npm install --production
+
+COPY --from=build /var/opt/build/build ./
 
 ENTRYPOINT ["/sbin/tini", "--"]
 VOLUME [ "/var/app/conf.d", "/var/app/log", "/var/app/temp" ]
