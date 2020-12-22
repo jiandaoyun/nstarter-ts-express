@@ -3,14 +3,14 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = 'v10.15.0'
+        NODE_VERSION = '12.16.2'
         NODE_MIRROR = 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
     }
     stages {
         stage('Build') {
             steps {
                 nvm('version': env.NODE_VERSION) {
-                    sh "make docker-build"
+                    sh(script: "make docker-build", label: "docker")
                 }
             }
         }
