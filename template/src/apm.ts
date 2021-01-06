@@ -11,6 +11,9 @@ export const apm = apmAgent.start({
     captureBody: 'transactions',
     captureHeaders: true,
     transactionMaxSpans: 100,
+    // 未捕获异常处理会导致进程退出
+    // @see https://github.com/elastic/apm-agent-nodejs/issues/1261
+    captureExceptions: false,
     // 根据是否配置服务器连接控制是否启用 APM 监听
     active: !!process.env['ELASTIC_APM_SERVER_URL']
 });
