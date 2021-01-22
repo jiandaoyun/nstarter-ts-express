@@ -185,7 +185,7 @@ modules:
     type: devops
     files:
       - src/components/monitor.component.ts
-      - src/plugins/monitor/**
+      - src/components/lib/monitor/**
       - src/types/metrics/**
     conifg:
       - system.monitor
