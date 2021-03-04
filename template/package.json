@@ -12,7 +12,6 @@
   "scripts": {
     "build": "rimraf dist && tsc --build tsconfig.json",
     "bulid:watch": "tsc --build tsconfig.json --watch",
-    "prestart": "npm run build",
     "start": "node ./dist/app.js",
     "test": "nyc mocha --opts ./test/mocha.opts",
     "eslint": "eslint --ext .js,.ts ./src",
