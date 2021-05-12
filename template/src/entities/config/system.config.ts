@@ -76,9 +76,7 @@ export interface ISystemConf {
     };
     //#module monitor
     readonly monitor: {
-        readonly port?: number,
-        readonly metric_path: string,
-        readonly health_path: string
+        readonly port?: number
     };
     //#endmodule monitor
     readonly trusted_proxy: string[];

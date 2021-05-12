@@ -53,11 +53,11 @@ export class HttpServerComponent extends AbstractComponent {
 
         //#module web
         // view engine setup
-        app.set('views', config.server.static.views);
+        app.set('views', './views');
         app.set('view engine', 'pug');
         app.enable('view cache');
         // static file path
-        app.use(express.static(config.server.static.public));
+        app.use(express.static('./public'));
 
         // session store
         //#module redis
@@ -95,17 +95,11 @@ export class HttpServerComponent extends AbstractComponent {
         }
         //#module monitor
         app.use(this._monitorComponent.requestMonitorMiddleware);
-        if (config.system.monitor.port) {
-            // use monitor port
-            const monitorApp = express();
-            monitorApp.use(this._monitorComponent.metricsRouter);
-            monitorApp.use(this._monitorComponent.healthRouter);
-            this._monitor = http.createServer(monitorApp);
-        } else {
-            // use default app
-            app.use(this._monitorComponent.metricsRouter);
-            app.use(this._monitorComponent.healthRouter);
-        }
+
+        const monitorApp = express();
+        monitorApp.use(this._monitorComponent.metricsRouter);
+        monitorApp.use(this._monitorComponent.healthRouter);
+        this._monitor = http.createServer(monitorApp);
         //#endmodule monitor
 
         app.use('/', router);

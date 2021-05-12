@@ -1,7 +1,7 @@
 import { AbstractEntity } from 'nstarter-entity';
 
 import { IServerConf } from './server.config';
-import { IDatabaseConf } from './database.config';
+import { IStorageConf } from './storage.config';
 import { ISystemConf } from './system.config';
 import { IComponentsConf } from './components.config';
 
@@ -15,14 +15,14 @@ export class Config extends AbstractEntity {
     home_path: string;
 
     server: IServerConf;
-    database: IDatabaseConf;
+    storage: IStorageConf;
     system: ISystemConf;
     components: IComponentsConf;
 }
 
 export {
     IServerConf,
-    IDatabaseConf,
+    IStorageConf,
     ISystemConf,
     IComponentsConf
 };

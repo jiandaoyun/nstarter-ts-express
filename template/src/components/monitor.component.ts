@@ -6,7 +6,6 @@ import { component, injectComponent } from 'nstarter-core';
 import { metricsView } from 'nstarter-metrics';
 import { metricsMonitor, MetricsMonitor } from './lib/monitor';
 import { AbstractComponent } from './abstract.component';
-import { config } from '../config';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -39,16 +38,16 @@ export class MonitorComponent extends AbstractComponent {
     }
 
     /**
-     * Get express view for prometheus metrics
+     * Prometheus 监控指标采集视图
      */
     public get metricsRouter(): Router {
         const router = Router();
-        router.get(config.system.monitor.metric_path, metricsView);
+        router.get('/metrics', metricsView);
         return router;
     }
 
     /**
-     * Check if backend service ready.
+     * 检测后台服务是否可用
      */
     public isReady(): boolean {
         if (this._isShutDown) {
@@ -80,7 +79,7 @@ export class MonitorComponent extends AbstractComponent {
      */
     public get healthRouter(): Router {
         const router = Router();
-        router.get(config.system.monitor.health_path, (req, res) => {
+        router.get('/health_path', (req, res) => {
             res.set('Content-Type', 'text/plain');
             if (this.isReady()) {
                 res.status(httpStatus.OK).send('ok');
@@ -93,14 +92,11 @@ export class MonitorComponent extends AbstractComponent {
     }
 
     /**
-     * Get express middleware to record request metrics
+     * 用于跟踪记录 http 请求的监控中间件
      */
     public get requestMonitorMiddleware(): RequestHandler {
         return (req, res, next) => {
             const path = URL.parse(req.originalUrl).pathname;
-            if (path === config.system.monitor.metric_path) {
-                return next();
-            }
             const startTime = Date.now();
             res.on('finish', () => {
                 const duration = Date.now() - startTime;
@@ -109,9 +105,9 @@ export class MonitorComponent extends AbstractComponent {
                     status: res.statusCode,
                     path: ''
                 };
-                // record total request metrics
+                // 综合统计请求指标
                 this._monitor.recordRequest(meta, duration);
-                // record request metrics by path
+                // 按路径统计请求指标
                 if (path) {
                     this._monitor.recordRequest({ ...meta, path }, duration);
                 }

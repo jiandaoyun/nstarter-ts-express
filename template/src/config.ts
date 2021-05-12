@@ -4,8 +4,8 @@ import fs from 'fs';
 import os from 'os';
 import { RunEnv } from 'nstarter-core';
 import { safeDump, safeLoad } from 'js-yaml';
-import { baseConf } from './base_conf';
-import { Config } from '../entities/config';
+import { Config } from './entities/config';
+import path from 'path';
 
 export const pkg = JSON.parse(
     fs.readFileSync('./package.json', 'utf8')
@@ -29,17 +29,18 @@ export class ConfigLoader {
         nconf.use('memory');
         nconf.env();
         const env = RunEnv[nconf.get('NODE_ENV') as keyof typeof RunEnv] || RunEnv.develop;
-        // load config by environment
-        this._loadConf(`./conf.d/config.${ env }`, env);
-        // load default config
-        nconf.defaults(baseConf);
+        const homePath = nconf.any(['USERPROFILE', 'HOME']);
+        // 加载本地可选配置文件 (最高优先级)
+        this._loadConf(path.join(homePath, '.ns-app/config'), 'local');
+        // 加载配置文件
+        this._loadConf(`./conf.d/config`, env);
 
         try {
             this._conf = new Config({
                 env,
                 hostname: os.hostname(),
                 version: pkg.version,
-                home_path: nconf.any(['USERPROFILE', 'HOME']),
+                home_path: homePath,
                 ...nconf.get()
             });
         } catch (err) {

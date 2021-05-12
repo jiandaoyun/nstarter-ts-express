@@ -61,7 +61,7 @@ registerComponent(HttpServerComponent);
 export const httpServerComponent = getComponent<HttpServerComponent>(HttpServerComponent);
 export const httpServer = httpServerComponent.server;
 //#module monitor
-export const monitorServer = getComponent<HttpServerComponent>(HttpServerComponent).monitor;
+export const monitorServer = httpServerComponent.monitor;
 //#endmodule monitor
 
 //#module rabbitmq
