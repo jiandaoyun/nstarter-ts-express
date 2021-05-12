@@ -42,7 +42,7 @@ export interface IRedisConfig {
 }
 //#endmodule redis
 
-export interface IDatabaseConf {
+export interface IStorageConf {
     //#module mongodb
     readonly mongodb: IMongodbConfig;
     //#endmodule mongodb

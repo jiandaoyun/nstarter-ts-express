@@ -10,7 +10,7 @@ export class RedisComponent extends AbstractComponent {
 
     constructor() {
         super();
-        this._redis = new RedisConnector(config.database.redis, this._name);
+        this._redis = new RedisConnector(config.storage.redis, this._name);
         this.redis.connect(() => {
             this.redis.on('ready', () => {
                 this.setReady(true);

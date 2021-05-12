@@ -4,10 +4,6 @@ export interface IServerConf {
         readonly port: number
     };
     //#module web
-    readonly static: {
-        readonly views: string,
-        readonly public: string
-    };
     readonly session: {
         readonly secret: string,
         readonly name: string

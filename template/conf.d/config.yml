@@ -1,0 +1,73 @@
+server:
+  http:
+    port: 3000
+  session:
+    secret: '!passw0rd'
+    name: SID
+  cookie:
+    secret: '!passw0rd'
+    policy:
+      httpOnly: true
+      signed: true
+      secure: false
+
+storage:
+  mongodb:
+    servers:
+      - host: localhost
+        port: 27017
+    user: admin
+    password: '!passw0rd'
+    db: 'data'
+
+  redis:
+    name: 'redis'
+    host: localhost
+    port: 6379
+    password: '!passw0rd'
+
+system:
+  locale: en_us
+  timezone: UTC
+  log:
+    console:
+      enabled: true
+      level: 'info'
+      colorize: true
+    file:
+      enabled: false
+      level: 'info'
+      dir: './log/'
+      zip: true
+      rotate_days: 14
+    graylog:
+      enabled: false
+      level: 'info'
+      servers:
+        - host: localhost
+          port: 12201
+    sentry:
+      enabled: false
+      level: 'warn'
+      dsn: ''
+  req_log:
+    enabled: true
+  monitor:
+    port: 3100
+  trusted_proxy: []
+
+components:
+  rabbitmq:
+    brokers:
+      - host: localhost
+        port: 5672
+    protocol: amqp
+    user: guest
+    password: '!passw0rd'
+    vhost: /
+  grpc:
+    server:
+      port: 9050
+    clients:
+      - package: worker
+        address: localhost:9050
