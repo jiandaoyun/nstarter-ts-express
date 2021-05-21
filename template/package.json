@@ -14,7 +14,7 @@
     "bulid:watch": "tsc --build tsconfig.json --watch",
     "prestart": "npm run build",
     "start": "node ./dist/app.js",
-    "test": "nyc mocha --opts ./test/mocha.opts",
+    "test": "nyc mocha --config .mocharc.yml",
     "eslint": "eslint --ext .js,.ts ./src",
     "eslint:html": "npm run eslint -- --output-file ./lint/eslint.html --format html",
     "circular": "nstarter-circular ./src",

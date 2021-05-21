@@ -1,0 +1,11 @@
+require:
+  - ./test/ts-node
+  - source-map-support/register
+recursive: true
+ui: 'bdd'
+timeout: 5000
+trace-warnings: true
+exit: true
+reporter: 'min'
+spec:
+  - ./test/**/*.ts
