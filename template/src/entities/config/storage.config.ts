@@ -11,7 +11,7 @@ export interface IRedisConfig {
 
     /**
      * 端口
-     * @type integer
+     * @type number
      * @minimum 1
      * @maximum 65535
      * @default 6379
@@ -32,7 +32,7 @@ export interface IRedisConfig {
 
         /**
          * 端口
-         * @type integer
+         * @type number
          * @minimum 1
          * @maximum 65535
          * @default 26379
