@@ -1,6 +1,13 @@
 import { IReqLabels, MetricsMonitor as NsMetricsMonitor } from 'nstarter-metrics';
 import { IDemoLabels } from '../../../types/metrics';
-import { demoMetric, queueJobCountMetric, queueJobTimeHistogramMetric, queueJobTimeMetric } from './metrics';
+import {
+    demoMetric,
+    //#module rabbitmq
+    queueJobCountMetric,
+    queueJobTimeHistogramMetric,
+    queueJobTimeMetric
+    //#endmodule rabbitmq
+} from './metrics';
 
 /**
  * 监控指标扩展注册
@@ -23,6 +30,7 @@ export class MetricsMonitor extends NsMetricsMonitor {
     public recordDemo(labels: IDemoLabels) {
         demoMetric.inc(labels);
     }
+    //#module rabbitmq
 
     /**
      * 记录队列事件计数
@@ -43,6 +51,7 @@ export class MetricsMonitor extends NsMetricsMonitor {
         queueJobTimeMetric.inc(queue, duration);
         queueJobTimeHistogramMetric.observe(queue, duration);
     }
+    //#endmodule rabbitmq
 }
 
 export const metricsMonitor = new MetricsMonitor();
