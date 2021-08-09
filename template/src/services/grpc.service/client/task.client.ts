@@ -3,7 +3,8 @@ import { service } from 'nstarter-core';
 import {
     grpcClient,
     grpcUnaryCall,
-    grpcStreamingCall, StreamResult
+    grpcStreamingCall,
+    StreamResult
 } from 'nstarter-grpc';
 import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
 
