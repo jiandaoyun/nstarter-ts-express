@@ -1,7 +1,7 @@
 syntax = "proto3";
 package worker;
 
-service Task {
+service TaskService {
     rpc RunTask(TaskConf) returns (TaskResult) {}
     rpc RunTaskProgress(TaskConf) returns (stream TaskReply) {}
 }

@@ -1,7 +1,8 @@
 import { loadProtoPackage } from 'nstarter-grpc';
 
-export const initGrpcProtoPackages = async () => {
+export const initGrpcProtoPackages = () => {
     loadProtoPackage({
-        protoPath: './resources/grpc/worker.proto'
+        protoPath: './resources/grpc/worker.proto',
+        package: 'worker'
     });
 };
