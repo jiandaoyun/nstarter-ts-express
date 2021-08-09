@@ -61,6 +61,9 @@ modules:
     files:
       - src/components/rabbitmq.component.ts
       - src/components/lib/database/amqp.connection.ts
+      - src/components/monitor/metrics/queue_count.metric.ts
+      - src/components/monitor/metrics/queue_time.metric.ts
+      - src/components/monitor/metrics/queue_time_histo.metric.ts
       - src/constants/queue.ts
       - src/services/queue.service/**
     config:

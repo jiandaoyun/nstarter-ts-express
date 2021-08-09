@@ -5,9 +5,9 @@ import { IMongodbConfig } from 'nstarter-mongodb';
 //#module redis
 export interface IRedisConfig {
     /**
-     * 服务器地址
+     * 服务器地址 (非 sentinel 模式)
      */
-    readonly host: string;
+    readonly host?: string;
 
     /**
      * 端口
