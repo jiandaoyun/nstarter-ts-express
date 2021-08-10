@@ -3,11 +3,11 @@ import async from 'async';
 import { sendUnaryData, ServerWriteableStream } from 'grpc';
 
 import { service } from 'nstarter-core';
-import { grpcService, grpcUnaryMethod, grcpStreamingMethod } from 'nstarter-grpc';
+import { grpcService, grpcStreamingMethod, grpcUnaryMethod } from 'nstarter-grpc';
 
 import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
 
-@grpcService()
+@grpcService('worker', 'TaskService')
 @service()
 export class TaskHandlerService {
     /**
@@ -29,7 +29,7 @@ export class TaskHandlerService {
      * @param conf
      * @param call
      */
-    @grcpStreamingMethod()
+    @grpcStreamingMethod()
     public runTaskProgress(conf: TaskConf, call: ServerWriteableStream<TaskReply>) {
         const { id, job } = conf;
         async.eachSeries(_.times(11), (idx, callback) => {

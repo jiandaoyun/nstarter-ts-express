@@ -16,6 +16,6 @@ export const beforeLoad = () => {
 
     //#module grpc
     // 加载 grpc proto buf 定义
-    initGrpcProtoPackages().then();
+    initGrpcProtoPackages();
     //#endmodule grpc
 };

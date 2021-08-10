@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { ErrorHandler } from './middlewares/error.handler';
-import { demoController } from '../controllers';
+import { demoController, rpcController } from '../controllers';
 
 export const requestRouter = Router();
 
 requestRouter.post('/ping', demoController.doPing);
+requestRouter.get('/rpc/task', rpcController.doTask);
+requestRouter.get('/rpc/taskProcess', rpcController.doTaskProcess);
 requestRouter.use(ErrorHandler.requestErrorHandler);
 
 export const viewRouter = Router();

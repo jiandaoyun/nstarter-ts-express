@@ -4,16 +4,18 @@ import {
     grpcClient,
     grpcUnaryCall,
     grpcStreamingCall,
-    StreamingCallback
+    StreamResult
 } from 'nstarter-grpc';
 import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
 
-@grpcClient()
+@grpcClient('worker', 'TaskService')
 @service()
 export class TaskClientService {
     @grpcUnaryCall()
     public runTask(conf: TaskConf, callback: sendUnaryData<TaskResult>): void {}
 
     @grpcStreamingCall()
-    public runTaskProgress(conf: TaskConf, callback: StreamingCallback<TaskReply>) {}
+    public runTaskProgress(conf: TaskConf): StreamResult<TaskReply> {
+        return null;
+    }
 }
