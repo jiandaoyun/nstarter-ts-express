@@ -79,7 +79,10 @@ export class MonitorComponent extends AbstractComponent {
      */
     public get healthRouter(): Router {
         const router = Router();
-        router.get('/health_path', (req, res) => {
+        router.get('/liveness_check', (req, res) => {
+            return res.status(httpStatus.OK).send('ok').end();
+        });
+        router.get('/health_check', (req, res) => {
             res.set('Content-Type', 'text/plain');
             if (this.isReady()) {
                 res.status(httpStatus.OK).send('ok');
