@@ -2,6 +2,7 @@ import { Logger } from 'nstarter-core';
 import './schema';
 //#module apm
 import { apmConnector } from 'nstarter-apm';
+import { grpcService } from 'nstarter-grpc';
 import { apm } from './apm';
 //#endmodule apm
 import { config } from './config';
@@ -27,8 +28,9 @@ import {
     redisComponent,
     //#endmodule redis
     //#module monitor
-    monitorComponent
+    monitorComponent,
     //#endmodule monitor
+    grpcServer
 } from './components';
 //#module rabbitmq
 import { startQueueConsumers } from 'nstarter-rabbitmq';
@@ -69,6 +71,11 @@ class AppManager {
         });
     }
     //#endmodule web
+
+    public static startGrpc() {
+        grpcServer.start();
+
+    }
 
     //#module monitor
     /**
@@ -166,4 +173,6 @@ if (require.main === module) {
     AppManager.startWebsocketService();
     //#endmodule ws_server
     AppManager.listenShutdownEvent();
+
+    AppManager.startGrpc();
 }

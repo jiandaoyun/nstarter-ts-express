@@ -1,24 +1,22 @@
-import { registerSvc, getSvc } from 'nstarter-core';
-
+import { getSvc, registerSvc } from 'nstarter-core';
+import { TaskHandlerService } from './grpc.service/handler/task.handler';
+import { TaskClientService } from './grpc.service/client/task.client';
 import { PingService } from './ping.service';
 import { PongService } from './pong.service';
-//#module mongodb
-import { UserService } from './user.service';
-//#endmodule mongodb
-//#module rabbitmq
 import { QueueService } from './queue.service';
-//#endmodule rabbitmq
+import { UserService } from './user.service';
 
-//#module rabbitmq
+
 registerSvc(QueueService);
-//#endmodule rabbitmq
 registerSvc(UserService);
 registerSvc(PingService);
 registerSvc(PongService);
+registerSvc(TaskHandlerService);
+registerSvc(TaskClientService);
 
 export const userService = getSvc<UserService>(UserService);
 export const pingService = getSvc<PingService>(PingService);
 export const pongService = getSvc<PongService>(PongService);
-//#module rabbitmq
 export const queueService = getSvc<QueueService>(QueueService);
-//#endmodule rabbitmq
+export const rpcHandlerService = getSvc<TaskHandlerService>(TaskHandlerService);
+export const rpcClientService = getSvc<TaskClientService>(TaskClientService);
