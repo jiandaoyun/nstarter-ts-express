@@ -1,12 +1,19 @@
 import { Router } from 'express';
 import { ErrorHandler } from './middlewares/error.handler';
-import { demoController, rpcController } from '../controllers';
+import {
+    demoController,
+    //#module grpc_client
+    rpcController,
+    //#endmodule grpc_client
+} from '../controllers';
 
 export const requestRouter = Router();
 
 requestRouter.post('/ping', demoController.doPing);
+//#module grpc_client
 requestRouter.get('/rpc/task', rpcController.doTask);
 requestRouter.get('/rpc/taskProcess', rpcController.doTaskProcess);
+//#endmodule grpc_client
 requestRouter.use(ErrorHandler.requestErrorHandler);
 
 export const viewRouter = Router();

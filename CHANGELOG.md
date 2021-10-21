@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0
+
+* 依赖升级
+  - 升级 node.js -> 14.18.x
+  - 升级 typescript -> 4.4.x
+  - 使用 axios 替换 request
+* 修复
+  - 拆分 grpc server/client 组件的模板化配置
+
 ## 0.6.3-beta
 
 * 提供标准化容器构建环境
