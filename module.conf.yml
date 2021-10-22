@@ -149,13 +149,13 @@ modules:
     scripts:
       - tool:i18n-scan
 
-  - name: grpc
-    label: gRPC
+  - name: grpc_server
+    label: gRPC Server
     type: components
     files:
       - src/components/grpc_server.component.ts
       - src/components/lib/grpc/**
-      - src/services/grpc.service/**
+      - src/services/grpc.service/handler/**
       - src/types/services/grpc/**
       - resources/grpc/**
     packages:
@@ -163,7 +163,24 @@ modules:
       - '@grpc/proto-loader'
       - prodobufjs
     config:
-      - components.grpc
+      - components.grpc.server
+
+  - name: grpc_client
+    label: gRPC Client
+    type: components
+    files:
+      - src/components/grpc_client.component.ts
+      - src/components/lib/grpc/**
+      - src/services/grpc.service/client/**
+      - src/controllers/rpc.controller.ts
+      - src/types/services/grpc/**
+      - resources/grpc/**
+    packages:
+      - grpc
+      - '@grpc/proto-loader'
+      - prodobufjs
+    config:
+      - components.grpc.clients
 
   - name: graylog
     label: Graylog (Logging)
@@ -204,8 +221,8 @@ modules:
       - elastic-apm-node
       - nstarter-apm
 
-  - name: util_request
-    label: 'npm: request'
+  - name: util_axios
+    label: 'npm: axios'
     type: utils
     default: true
     packages:
