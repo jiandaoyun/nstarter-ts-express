@@ -10,7 +10,7 @@ export class RabbitMqComponent extends AbstractComponent {
 
     constructor() {
         super();
-        this._amqp = new AmqpConnector(config.components.rabbitmq, (err) => {
+        this._amqp = new AmqpConnector(config.components.rabbitmq, (err: Error) => {
             Logger.error(`Rabbitmq disconnected`, { err });
         });
         if (this._amqp.connection.isConnected()) {

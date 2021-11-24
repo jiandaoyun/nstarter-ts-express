@@ -2,11 +2,11 @@ import _, { Dictionary } from 'lodash';
 import { Server, ServerResponse } from 'http';
 import async from 'async';
 import SocketIO from 'socket.io';
-import SocketIORedis from 'socket.io-redis';
+import { createAdapter } from '@socket.io/redis-adapter';
 import cookieParser from 'cookie-parser';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { Logger } from 'nstarter-core';
 
 import { config } from '../../../config';
@@ -30,42 +30,48 @@ export class WebSocket {
                 cookie: config.server.cookie.policy
             }
         ));
-        const io = SocketIO(server, {
+        const io = new SocketIO.Server(server, {
             path: '/socket',
             serveClient: false,
-            origins: '*:*',
+            cors: {
+                origin: '*:*'
+            },
             transports: ['websocket'],
             allowRequest: (req, callback) => {
                 const res = new ServerResponse(req) as Response;
                 async.auto<Dictionary<never>, Error>({
                     // load cookies
                     cookie: (callback) => {
-                        buildCookie(req, res, callback);
+                        buildCookie(req as Request, res, callback);
                     },
                     // load session
                     session: ['cookie', (results, callback) => {
-                        buildSession(req, res, callback);
+                        buildSession(req as Request, res, callback);
                     }]
-                }, (err) => callback(0, !err));
+                }, (err) => callback(null, !err));
             },
-            adapter: SocketIORedis({
-                pubClient: redis,
-                subClient: redis
-            })
+            adapter: createAdapter(redis, redis)
         });
 
-        io.on('connection', (socket) => {
-            async.mapSeries(channels, (channel, callback) => {
-                channel.connect(socket, callback);
-            }, (err, roomKeys) => {
-                if (err || _.isEmpty(roomKeys)) {
-                    return socket.disconnect();
+        io.on('connection', async (socket) => {
+            const roomKeys = [];
+            for (const channel of channels) {
+                try {
+                    const roomKey = await channel.connect(socket);
+                    if (roomKey) {
+                        roomKeys.push(roomKey);
+                    }
+                } catch(err) {
+                    // 不处理异常
                 }
-                socket.on('error', (err) => {
-                    Logger.error(err);
-                });
-                return;
+            }
+            if (_.isEmpty(roomKeys)) {
+                return socket.disconnect();
+            }
+            socket.on('error', (err) => {
+                Logger.error(err);
             });
+            return;
         });
 
         return io;

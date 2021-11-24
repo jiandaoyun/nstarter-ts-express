@@ -9,7 +9,7 @@ registerCtl(DemoController);
 registerCtl(RpcController);
 //#endmodule grpc_client
 
-export const demoController = getCtl(DemoController);
+export const demoController = getCtl<DemoController>(DemoController);
 //#module grpc_client
-export const rpcController = getCtl(RpcController);
+export const rpcController = getCtl<RpcController>(RpcController);
 //#endmodule grpc_client

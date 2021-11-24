@@ -18,4 +18,4 @@ class UserRepo extends MongodbRepo {
     }
 }
 
-export const userRepo = repoProvider(UserRepo);
+export const userRepo = repoProvider<UserRepo>(UserRepo);
