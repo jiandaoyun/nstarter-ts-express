@@ -2,12 +2,23 @@
 import { RabbitMQConfig } from 'nstarter-rabbitmq';
 //#endmodule rabbitmq
 
+//#module grpc_client
+interface IGrpcClient {
+    readonly enable: boolean;
+    readonly package: string;
+    readonly address: string;
+    readonly useSsl: boolean;
+    readonly servername?: string;
+}
+//#endmodule grpc_client
+
 export interface IComponentsConf {
     //#module rabbitmq
     readonly rabbitmq: RabbitMQConfig;
     //#endmodule rabbitmq
     //#module grpc
     readonly grpc: {
+        //#module grpc_server
         readonly server: {
             /**
              * 端口号
@@ -17,10 +28,10 @@ export interface IComponentsConf {
              */
             readonly port: number
         },
-        readonly clients: {
-            readonly package: string,
-            readonly address: string
-        }[]
+        //#endmodule grpc_server
+        //#module grpc_client
+        readonly clients: IGrpcClient[]
+        //#endmodule grpc_client
     };
     //#endmodule grpc
 }

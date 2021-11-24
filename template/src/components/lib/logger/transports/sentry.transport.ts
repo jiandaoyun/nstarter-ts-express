@@ -33,7 +33,7 @@ export class SentryTransport extends Transport {
         });
     }
 
-    public log(info: any, callback: Function): void {
+    public log(info: any, callback: Callback): void {
         setImmediate(() => {
             this.emit('logged', info);
         });

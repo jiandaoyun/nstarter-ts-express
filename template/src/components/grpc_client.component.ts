@@ -16,12 +16,16 @@ export class GrpcClientComponent extends AbstractComponent {
     constructor() {
         super();
         const clients = config.components.grpc.clients;
-        _.forEach(clients, (client) =>{
-            registerGrpcClientConfig({
-                package: client.package,
-                address: client.address
-            });
-        });
+        if (clients) {
+            for (const client of clients) {
+                registerGrpcClientConfig({
+                    package: client.package,
+                    address: client.address,
+                    useSsl: client.useSsl,
+                    servername: client.servername
+                });
+            }
+        }
         this.setReady(true);
     }
 }

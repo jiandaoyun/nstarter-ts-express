@@ -101,9 +101,8 @@ modules:
       - web
     packages:
       - socket.io
-      - socket.io-redis
-      - '@types/socket.io'
-      - '@types/socket.io-redis'
+      - '@socket.io/redis-adapter'
+      - '@socket.io/redis-emitter'
 
   - name: ws_emitter
     label: Websocket Emitter

@@ -1,4 +1,4 @@
-import SocketIOEmitter, { Emitter } from 'socket.io-emitter';
+import { Emitter } from "@socket.io/redis-emitter";
 import { component, injectComponent } from 'nstarter-core';
 
 import { AbstractComponent } from './abstract.component';
@@ -15,7 +15,7 @@ export class WsEmitterComponent extends AbstractComponent {
     constructor() {
         super();
         const redis = this._redisComponent.redis;
-        this._emitter = SocketIOEmitter(redis);
+        this._emitter = new Emitter(redis);
         this.setReady(true);
     }
 
