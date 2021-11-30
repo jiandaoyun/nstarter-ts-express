@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Socket } from 'socket.io';
 import { Request } from 'express';
 
@@ -7,7 +8,7 @@ import { Consts } from '../../../../constants';
 class MessageChannel extends BaseChannel {
     public async connect(socket: Socket) {
         const session = (socket.request as Request).session;
-        const user = session?.user;
+        const user = _.get(session, 'user');
         if (!user) {
             return;
         }

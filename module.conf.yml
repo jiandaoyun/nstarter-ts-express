@@ -38,7 +38,6 @@ modules:
     packages:
       - nstarter-mongodb
       - mongoose
-      - '@types/mongoose'
 
   - name: redis
     label: Redis
@@ -158,9 +157,7 @@ modules:
       - src/types/services/grpc/**
       - resources/grpc/**
     packages:
-      - grpc
-      - '@grpc/proto-loader'
-      - prodobufjs
+      - nstarter-grpc
     config:
       - components.grpc.server
 
@@ -171,13 +168,10 @@ modules:
       - src/components/grpc_client.component.ts
       - src/components/lib/grpc/**
       - src/services/grpc.service/client/**
-      - src/controllers/rpc.controller.ts
       - src/types/services/grpc/**
       - resources/grpc/**
     packages:
-      - grpc
-      - '@grpc/proto-loader'
-      - prodobufjs
+      - nstarter-grpc
     config:
       - components.grpc.clients
 
@@ -217,7 +211,6 @@ modules:
     files:
       - src/apm.ts
     package:
-      - elastic-apm-node
       - nstarter-apm
 
   - name: util_axios

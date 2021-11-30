@@ -1,4 +1,4 @@
-ARG NODE_IMAGE=node:12.16.2-alpine
+ARG NODE_IMAGE=node:14.18.1-alpine
 
 # 构建环境容器
 FROM ${NODE_IMAGE} as build
@@ -43,5 +43,5 @@ RUN npm install --production
 COPY --from=build /var/opt/build/build ./
 
 ENTRYPOINT ["/sbin/tini", "--"]
-VOLUME [ "/var/app/conf.d", "/var/app/log", "/var/app/temp" ]
+VOLUME [ "/var/app/conf.d", "/var/app/log" ]
 EXPOSE 3000

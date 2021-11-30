@@ -3,8 +3,9 @@ import _ from 'lodash';
 import fs from 'fs';
 import os from 'os';
 import { RunEnv } from 'nstarter-core';
-import { safeDump, safeLoad } from 'js-yaml';
+import { dump, load } from 'js-yaml';
 import { Config } from './entities/config';
+import './schema';
 import path from 'path';
 
 export const pkg = JSON.parse(
@@ -13,8 +14,8 @@ export const pkg = JSON.parse(
 
 const configFormat: Record<string, nconf.IFormat> = {
     yml: {
-        parse: (str: string) => safeLoad(str),
-        stringify: (obj: object) => safeDump(obj)
+        parse: (str: string) => load(str),
+        stringify: (obj: object) => dump(obj)
     },
     json: nconf.formats.json
 };
@@ -63,7 +64,7 @@ export class ConfigLoader {
             }
             console.log(`Loading ${ env } config: "${ file }"`);
             nconf.file(env, { file, format });
-            // only load same env for one format
+            // 对于单一环境仅加载一种配置
             return false;
         });
     }

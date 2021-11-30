@@ -5,5 +5,9 @@ module.exports = {
     ],
     rules: {
 
+    },
+    globals: {
+        Constructor: "readable",
+        Callback: "readable"
     }
 };

@@ -16,7 +16,7 @@ export interface IComponentsConf {
     //#module rabbitmq
     readonly rabbitmq: RabbitMQConfig;
     //#endmodule rabbitmq
-    //#module grpc
+    //#module grpc_server|grpc_client
     readonly grpc: {
         //#module grpc_server
         readonly server: {
@@ -33,5 +33,5 @@ export interface IComponentsConf {
         readonly clients: IGrpcClient[]
         //#endmodule grpc_client
     };
-    //#endmodule grpc
+    //#endmodule grpc_server|grpc_client
 }

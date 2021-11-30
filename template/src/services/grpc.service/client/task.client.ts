@@ -1,4 +1,4 @@
-import { sendUnaryData } from 'grpc';
+import { sendUnaryData } from '@grpc/grpc-js';
 import { service } from 'nstarter-core';
 import {
     grpcClient,

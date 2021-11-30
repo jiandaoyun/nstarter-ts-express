@@ -6,7 +6,7 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import cookieParser from 'cookie-parser';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { Logger } from 'nstarter-core';
 
 import { config } from '../../../config';
@@ -42,11 +42,11 @@ export class WebSocket {
                 async.auto<Dictionary<never>, Error>({
                     // load cookies
                     cookie: (callback) => {
-                        buildCookie(req as Request, res, callback);
+                        buildCookie(req as Request, res, callback as NextFunction);
                     },
                     // load session
-                    session: ['cookie', (results, callback) => {
-                        buildSession(req as Request, res, callback);
+                    session: ['cookie', (results, callback ) => {
+                        buildSession(req as Request, res, callback as NextFunction);
                     }]
                 }, (err) => callback(null, !err));
             },
