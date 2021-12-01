@@ -5,8 +5,6 @@
 
 /log/
 
-/conf.d/config.override.*
-
 package-lock.json
 config.schema.json
 

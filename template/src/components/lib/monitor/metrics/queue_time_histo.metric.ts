@@ -4,13 +4,12 @@
  * @author kyle
  * @date 2020/6/15
  */
-import { Histogram } from 'prom-client';
-import { BaseMetric } from 'nstarter-metrics';
+import { BaseMetric, Histogram } from 'nstarter-metrics';
 
 /**
  * 队列执行时间分布统计
  */
-class QueueJobTimeHistogramMetric extends BaseMetric<Histogram> {
+class QueueJobTimeHistogramMetric extends BaseMetric<Histogram<string>> {
     protected _metric = new Histogram({
         name: 'fx_queue_job_time_histo',
         help: '队列任务时间分布',

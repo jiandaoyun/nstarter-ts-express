@@ -12,7 +12,7 @@ export class GrpcServerComponent extends AbstractComponent {
         this.setReady(true);
     }
 
-    public start() {
-        startGrpcServer(config.components.grpc.server);
+    public async start() {
+        await startGrpcServer(config.components.grpc.server);
     }
 }

@@ -61,7 +61,7 @@ class AppManager {
             process.exit(1);
         });
         httpServer.on('listening', () => {
-            Logger.info(`Listening on：${ port }`);
+            Logger.info(`App requests listening on：${ port }`);
         });
 
         process.on('SIGTERM', () => {
@@ -78,7 +78,9 @@ class AppManager {
      * Grpc 服务端
      */
     public static startGrpc() {
-        grpcServer.start();
+        const { port } = config.components.grpc.server;
+        grpcServer.start().then();
+        Logger.info(`Grpc service listening on：${ port }`);
     }
     //#endmodule grpc_server
 

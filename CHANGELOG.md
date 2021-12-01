@@ -6,13 +6,18 @@
   - 升级 node.js -> 14.18.x
   - 升级 typescript -> 4.4.x
 
+* 新特性
+  - 新增 ContextProvider 提供上下文参数跟踪能力
+
 * 组件升级
   - 升级 nstarter-grpc -> 0.3.x 并基于上游插件管理 grpc 依赖
   - 升级 nstarter-mongodb -> 0.2.x，移除 @types/mongoose 类型定义依赖
   - 升级 nstarter-apm -> 0.2.0，移除 elastic-apm-node 直接依赖
   - 升级 nstarter-rabbitmq -> 0.3.0
+  - 升级 nstarter-metrics -> 0.2.0
   - 升级 eslint-config-nstarter -> 2.1.x
   - 使用 axios 替换 request
+  - 升级 @sentry/node -> 6.15.0
   - 升级 socket.io -> 4.4.0
   - 使用 @socket.io/redis-adapter 取代 socket.io-redis
   - 使用 @socket.io/redis-emitter 取代 socket.io-emitter

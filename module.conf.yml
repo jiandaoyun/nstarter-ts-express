@@ -109,11 +109,10 @@ modules:
     default: false
     files:
       - src/components/ws_emitter.component.ts
-      - typings/socket.io-emitter/**
     dependencies:
       - redis
     packages:
-      - socket.io-emitter
+      - '@socket.io/redis-emitter'
 
   - name: cron
     label: Cron Job
@@ -203,7 +202,7 @@ modules:
     conifg:
       - system.monitor
     package:
-      - prom-client
+      - nstarter-metrics
 
   - name: apm
     label: Elastic APM
@@ -249,6 +248,5 @@ ignore_files:
   - lint/**
   - coverage/**
   - node_modules/**
-  - conf.d/config.override.*
   - package-lock.json
   - module.conf.yml

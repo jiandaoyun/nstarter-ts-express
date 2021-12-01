@@ -1,7 +1,7 @@
 import { BaseMetric, Counter } from 'nstarter-metrics';
 import { IDemoLabels } from '../../../../types/metrics';
 
-class DemoMetric extends BaseMetric<Counter> {
+class DemoMetric extends BaseMetric<Counter<string>> {
     protected _metric = new Counter({
         name: 'demo_count',
         help: 'Demo event count',
