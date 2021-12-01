@@ -75,6 +75,7 @@ if (fileLogConf.enabled) {
         ...baseFileLogOptions,
         level: fileLogConf.level,
         filename: 'app_%DATE%.log',
+        stream: undefined,
         format: format.combine(
             msgFilter(),
             format.timestamp(),
@@ -85,6 +86,7 @@ if (fileLogConf.enabled) {
         ...baseFileLogOptions,
         level: fileLogConf.level,
         filename: 'error_%DATE%.log',
+        stream: undefined,
         format: format.combine(
             errFilter(),
             format.timestamp(),

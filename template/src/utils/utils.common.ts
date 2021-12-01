@@ -1,11 +1,9 @@
 import { promisify } from 'util';
 
-export class CommonUtils {
-    public static getName() {
-        return;
-    }
-
-    public static async sleep (timeMs: number) {
-        return promisify(setTimeout)(timeMs);
-    }
-}
+/**
+ * 等待特定时间
+ * @param timeMs - 等待时间毫秒数
+ */
+export const sleep = async (timeMs: number) => {
+    return promisify(setTimeout)(timeMs);
+};

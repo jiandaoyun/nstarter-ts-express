@@ -5,9 +5,7 @@
 
 /log/
 
-/conf.d/config.override.*
 config.schema.json
-
 /resources/*.schema.json
 
 .nyc_output/

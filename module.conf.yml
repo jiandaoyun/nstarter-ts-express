@@ -38,7 +38,6 @@ modules:
     packages:
       - nstarter-mongodb
       - mongoose
-      - '@types/mongoose'
 
   - name: redis
     label: Redis
@@ -110,11 +109,10 @@ modules:
     default: false
     files:
       - src/components/ws_emitter.component.ts
-      - typings/socket.io-emitter/**
     dependencies:
       - redis
     packages:
-      - socket.io-emitter
+      - '@socket.io/redis-emitter'
 
   - name: cron
     label: Cron Job
@@ -158,9 +156,7 @@ modules:
       - src/types/services/grpc/**
       - resources/grpc/**
     packages:
-      - grpc
-      - '@grpc/proto-loader'
-      - prodobufjs
+      - nstarter-grpc
     config:
       - components.grpc.server
 
@@ -171,13 +167,10 @@ modules:
       - src/components/grpc_client.component.ts
       - src/components/lib/grpc/**
       - src/services/grpc.service/client/**
-      - src/controllers/rpc.controller.ts
       - src/types/services/grpc/**
       - resources/grpc/**
     packages:
-      - grpc
-      - '@grpc/proto-loader'
-      - prodobufjs
+      - nstarter-grpc
     config:
       - components.grpc.clients
 
@@ -209,7 +202,7 @@ modules:
     conifg:
       - system.monitor
     package:
-      - prom-client
+      - nstarter-metrics
 
   - name: apm
     label: Elastic APM
@@ -217,7 +210,6 @@ modules:
     files:
       - src/apm.ts
     package:
-      - elastic-apm-node
       - nstarter-apm
 
   - name: util_axios
@@ -256,6 +248,5 @@ ignore_files:
   - lint/**
   - coverage/**
   - node_modules/**
-  - conf.d/config.override.*
   - package-lock.json
   - module.conf.yml

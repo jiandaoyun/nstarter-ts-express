@@ -46,6 +46,7 @@ if (fileLogConf.enabled) {
         ...baseFileLogOptions,
         level: fileLogConf.level,
         filename: 'access_%DATE%.log',
+        stream: undefined,
         format: format.combine(
             format.timestamp(),
             formatter

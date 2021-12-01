@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import async from 'async';
-import { sendUnaryData, ServerWriteableStream } from 'grpc';
+import { ServerWritableStream } from '@grpc/grpc-js';
 
 import { service } from 'nstarter-core';
 import { grpcService, grpcStreamingMethod, grpcUnaryMethod } from 'nstarter-grpc';
@@ -16,12 +16,12 @@ export class TaskHandlerService {
      * @param callback
      */
     @grpcUnaryMethod()
-    public runTask(conf: TaskConf, callback: sendUnaryData<TaskResult>) {
+    public async runTask(conf: TaskConf): Promise<TaskResult> {
         const { id, job } = conf;
-        return callback(null, {
+        return {
             status: 'ok',
             result: job
-        });
+        };
     }
 
     /**
@@ -30,7 +30,7 @@ export class TaskHandlerService {
      * @param call
      */
     @grpcStreamingMethod()
-    public runTaskProgress(conf: TaskConf, call: ServerWriteableStream<TaskReply>) {
+    public runTaskProgress(conf: TaskConf, call: ServerWritableStream<TaskConf, TaskReply>) {
         const { id, job } = conf;
         async.eachSeries(_.times(11), (idx, callback) => {
             call.write({ message: `${ idx * 10 }% task: #${ id } ${ job }` });

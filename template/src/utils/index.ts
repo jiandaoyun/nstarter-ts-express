@@ -1,1 +1,1 @@
-export { CommonUtils } from './utils.common';
+export * as CommonUtils from './utils.common';

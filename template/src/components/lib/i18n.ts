@@ -47,14 +47,16 @@ export class I18n {
         await this._i18next.init({
             resources,
             ns: o.namespace,
-            whitelist: this._locales,
+            supportedLngs: this._locales,
             fallbackLng: o.defaultLocale,
+            compatibilityJSON: 'v3',
             lowerCaseLng: true,
             keySeparator: false,
             interpolation: {
-                escapeValue: false
+                escapeValue: false,
+                skipOnVariables: false
             }
-        });
+        }, undefined);
     }
 
     private async _loadTranslations() {

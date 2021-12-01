@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 //#endmodule web
 
 import { AbstractComponent } from './abstract.component';
-import { component, injectComponent, RequestLogger } from 'nstarter-core';
+import { component, injectComponent, RequestLogger, requestExtensionMiddleware, ContextProvider } from 'nstarter-core';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -85,10 +85,12 @@ export class HttpServerComponent extends AbstractComponent {
             extended: false
         }));
         app.use(cookieParser());
+        app.use(requestExtensionMiddleware);
         //#module i18n
         app.use(this._i18nComponent.i18n.middleware);
         //#endmodule i18n
 
+        app.use(ContextProvider.getMiddleware());
         // request log
         if (config.system.req_log.enabled) {
             app.use(RequestLogger.middleware);

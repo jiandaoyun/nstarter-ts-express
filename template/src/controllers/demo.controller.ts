@@ -1,6 +1,7 @@
-import { controller } from 'nstarter-core';
+import { ContextProvider, controller } from 'nstarter-core';
 import { Request, Response } from 'express';
 import { Errors } from '../errors';
+import { pingService } from '../services';
 
 @controller()
 export class DemoController {
@@ -23,6 +24,11 @@ export class DemoController {
 
     public async doPing(req: Request, res: Response) {
         const { body } = req;
-        return res.json({ 'msg': 'pong' });
+        const context = ContextProvider.getContext();
+        pingService.ping();
+        return res.json({
+            'msg': 'pong',
+            'traceId': context?.traceId
+        });
     }
 }
