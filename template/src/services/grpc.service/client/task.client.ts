@@ -6,7 +6,7 @@ import {
     grpcStreamingCall,
     StreamResult
 } from 'nstarter-grpc';
-import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
+import { TaskConf, TaskReply, TaskResult } from '../types';
 
 @grpcClient('worker', 'TaskService')
 @service()

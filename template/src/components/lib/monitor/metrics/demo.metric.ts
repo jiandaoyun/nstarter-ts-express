@@ -1,5 +1,5 @@
 import { BaseMetric, Counter } from 'nstarter-metrics';
-import { IDemoLabels } from '../../../../types/metrics';
+import { IDemoLabels } from './types';
 
 class DemoMetric extends BaseMetric<Counter<string>> {
     protected _metric = new Counter({

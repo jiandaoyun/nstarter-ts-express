@@ -1,4 +1,4 @@
-import { ExchangeType, queueFactory } from 'nstarter-rabbitmq';
+import { queueFactory } from 'nstarter-rabbitmq';
 import { amqp } from '../../../components';
 
 /**
