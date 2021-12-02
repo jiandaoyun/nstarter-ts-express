@@ -1,12 +1,11 @@
 import { Emitter } from "@socket.io/redis-emitter";
-import { component, injectComponent } from 'nstarter-core';
+import { BaseComponent, component, injectComponent } from 'nstarter-core';
 
-import { AbstractComponent } from './abstract.component';
 import { RedisComponent } from './redis.component';
 
 
 @component()
-export class WsEmitterComponent extends AbstractComponent {
+export class WsEmitterComponent extends BaseComponent {
     private readonly _emitter: Emitter;
 
     @injectComponent()

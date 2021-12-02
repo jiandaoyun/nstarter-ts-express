@@ -4,14 +4,12 @@
  * @date 2021/8/6
  */
 
-import { component } from 'nstarter-core';
+import { BaseComponent, component } from 'nstarter-core';
 import { registerGrpcClientConfig } from 'nstarter-grpc';
 import { config } from '../config';
-import { AbstractComponent } from './abstract.component';
-import _ from 'lodash';
 
 @component()
-export class GrpcClientComponent extends AbstractComponent {
+export class GrpcClientComponent extends BaseComponent {
 
     constructor() {
         super();

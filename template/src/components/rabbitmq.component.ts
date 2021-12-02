@@ -1,11 +1,10 @@
-import { component, Logger } from 'nstarter-core';
+import { BaseComponent, component, Logger } from 'nstarter-core';
 import { AmqpConnector, stopQueueConsumers } from 'nstarter-rabbitmq';
 
 import { config } from '../config';
-import { AbstractComponent } from './abstract.component';
 
 @component()
-export class RabbitMqComponent extends AbstractComponent {
+export class RabbitMqComponent extends BaseComponent {
     private readonly _amqp: AmqpConnector;
 
     constructor() {

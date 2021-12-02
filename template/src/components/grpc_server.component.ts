@@ -1,11 +1,10 @@
-import { component } from 'nstarter-core';
+import { BaseComponent, component } from 'nstarter-core';
 import { startGrpcServer } from 'nstarter-grpc';
 import { config } from '../config';
 
-import { AbstractComponent } from './abstract.component';
 
 @component()
-export class GrpcServerComponent extends AbstractComponent {
+export class GrpcServerComponent extends BaseComponent {
 
     constructor() {
         super();

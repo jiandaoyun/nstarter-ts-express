@@ -8,8 +8,14 @@ import connectRedis from 'connect-redis';
 import cookieParser from 'cookie-parser';
 //#endmodule web
 
-import { AbstractComponent } from './abstract.component';
-import { component, injectComponent, RequestLogger, requestExtensionMiddleware, ContextProvider } from 'nstarter-core';
+import {
+    component,
+    injectComponent,
+    RequestLogger,
+    requestExtensionMiddleware,
+    ContextProvider,
+    BaseComponent
+} from 'nstarter-core';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -26,7 +32,7 @@ import { router } from '../routes';
 //#endmodule web
 
 @component()
-export class HttpServerComponent extends AbstractComponent {
+export class HttpServerComponent extends BaseComponent {
     private readonly _server: http.Server;
     //#module monitor
     private readonly _monitor: http.Server;
