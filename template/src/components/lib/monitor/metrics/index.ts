@@ -1,3 +1,5 @@
+export * from './types';
+
 export { demoMetric } from './demo.metric';
 //#module rabbitmq
 export { queueJobCountMetric } from './queue_count.metric';

@@ -9,11 +9,15 @@
 * 新特性
   - 新增 ContextProvider 提供上下文参数跟踪能力
 
+* 规范变更
+  - 由 nstater-core 的 BaseComponent 取代 AbstractComponent
+  - 不在保留全局统一的 types 目录，而有各组件自行管理类型定义
+
 * 组件升级
   - 升级 nstarter-grpc -> 0.3.x 并基于上游插件管理 grpc 依赖
   - 升级 nstarter-mongodb -> 0.2.x，移除 @types/mongoose 类型定义依赖
   - 升级 nstarter-apm -> 0.2.0，移除 elastic-apm-node 直接依赖
-  - 升级 nstarter-rabbitmq -> 0.3.0
+  - 升级 nstarter-rabbitmq -> 0.4.0，增加支持上下文传递能力
   - 升级 nstarter-metrics -> 0.2.0
   - 升级 eslint-config-nstarter -> 2.1.x
   - 使用 axios 替换 request

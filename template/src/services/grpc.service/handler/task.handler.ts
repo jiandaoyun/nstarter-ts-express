@@ -5,7 +5,7 @@ import { ServerWritableStream } from '@grpc/grpc-js';
 import { service } from 'nstarter-core';
 import { grpcService, grpcStreamingMethod, grpcUnaryMethod } from 'nstarter-grpc';
 
-import { TaskConf, TaskReply, TaskResult } from '../../../types/services/grpc';
+import { TaskConf, TaskReply, TaskResult } from '../types';
 
 @grpcService('worker', 'TaskService')
 @service()
@@ -13,7 +13,6 @@ export class TaskHandlerService {
     /**
      * gRPC 单参数调用服务端示例
      * @param conf
-     * @param callback
      */
     @grpcUnaryMethod()
     public async runTask(conf: TaskConf): Promise<TaskResult> {

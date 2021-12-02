@@ -1,11 +1,10 @@
-import { component } from 'nstarter-core';
+import { BaseComponent, component } from 'nstarter-core';
 
-import { AbstractComponent } from './abstract.component';
 import { RedisConnector } from './lib/database/redis.connection';
 import { config } from '../config';
 
 @component()
-export class RedisComponent extends AbstractComponent {
+export class RedisComponent extends BaseComponent {
     private readonly _redis: RedisConnector;
 
     constructor() {

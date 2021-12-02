@@ -1,5 +1,5 @@
 import async from 'async';
-import { service } from 'nstarter-core';
+import { ContextProvider, service } from 'nstarter-core';
 import { ProducerEvents, RabbitMqProducer } from 'nstarter-rabbitmq';
 
 import { demoProducer } from './demo.producer';
@@ -41,7 +41,8 @@ export const startQueueProducer = async () => {
 @service()
 export class QueueService {
     public async sendNormalMessage(): Promise<void> {
-        await demoProducer.publish('demo:normal');
+        const context = ContextProvider.getContext();
+        return await demoProducer.publish('demo:normal', context);
     }
 
     public async sendDelayMessage(): Promise<void> {

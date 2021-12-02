@@ -1,11 +1,10 @@
-import { component } from 'nstarter-core';
+import { BaseComponent, component } from 'nstarter-core';
 import { MongodbConnector } from 'nstarter-mongodb';
 
-import { AbstractComponent } from './abstract.component';
 import { config } from '../config';
 
 @component()
-export class MongodbComponent extends AbstractComponent {
+export class MongodbComponent extends BaseComponent {
     private readonly _db: MongodbConnector;
 
     constructor() {

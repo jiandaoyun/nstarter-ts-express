@@ -1,7 +1,7 @@
 import { profiler } from 'nstarter-metrics';
 import { MongodbRepo, repoProvider } from 'nstarter-mongodb';
 import { userModel } from '../models/user.model';
-import { IUserModel } from '../types/models/user';
+import { IUserModel } from './types';
 
 class UserRepo extends MongodbRepo {
     public async createOne(user: IUserModel) {

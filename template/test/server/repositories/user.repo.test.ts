@@ -1,8 +1,7 @@
 import chai from 'chai';
 import mocha from 'mocha';
-import { userRepo } from '../../../src/repositories';
+import { userRepo, IUserModel } from '../../../src/repositories';
 import { userModel } from '../../../src/models/user.model';
-import { IUserModel } from '../../../src/types/models/user';
 
 const should = chai.should();
 

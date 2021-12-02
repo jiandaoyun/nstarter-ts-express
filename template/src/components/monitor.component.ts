@@ -2,10 +2,9 @@ import { RequestHandler, Router } from 'express';
 import URL from 'url';
 import httpStatus from 'http-status';
 
-import { component, injectComponent } from 'nstarter-core';
+import { BaseComponent, component, injectComponent } from 'nstarter-core';
 import { metricsView } from 'nstarter-metrics';
 import { metricsMonitor, MetricsMonitor } from './lib/monitor';
-import { AbstractComponent } from './abstract.component';
 //#module redis
 import { RedisComponent } from './redis.component';
 //#endmodule redis
@@ -14,7 +13,7 @@ import { MongodbComponent } from './mongodb.component';
 //#endmodule mongodb
 
 @component()
-export class MonitorComponent extends AbstractComponent {
+export class MonitorComponent extends BaseComponent {
     private readonly _monitor: MetricsMonitor;
     private _isShutDown = false;
 
