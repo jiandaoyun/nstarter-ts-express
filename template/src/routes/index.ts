@@ -7,6 +7,9 @@ import {
 export const requestRouter = Router();
 
 requestRouter.post('/ping', demoController.doPing);
+//#module rabbitmq
+requestRouter.post('/run_task', demoController.doStartQueueTask);
+//#endmodule rabbitmq
 requestRouter.use(ErrorHandler.requestErrorHandler);
 
 export const viewRouter = Router();
