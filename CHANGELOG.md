@@ -8,6 +8,7 @@
 
 * 新特性
   - 新增 ContextProvider 提供上下文参数跟踪能力
+  - 新增 securityMiddlewares 用于增强请求安全规范
 
 * 规范变更
   - 由 nstater-core 的 BaseComponent 取代 AbstractComponent

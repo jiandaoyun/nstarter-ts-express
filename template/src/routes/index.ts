@@ -4,6 +4,8 @@ import {
     demoController,
 } from '../controllers';
 
+export { securityMiddlewares } from './middlewares/security.handler';
+
 export const requestRouter = Router();
 
 requestRouter.post('/ping', demoController.doPing);

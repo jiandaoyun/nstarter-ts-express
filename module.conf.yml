@@ -85,6 +85,8 @@ modules:
       - pug
       - express
       - express-session
+      - helmet
+      - nocache
       - '@types/express'
       - '@types/express-session'
 
@@ -216,7 +218,7 @@ modules:
     type: utils
     default: true
     packages:
-      - requset
+      - axios
 
   - name: util_moment
     label: 'npm: moment & moment-timezone'
