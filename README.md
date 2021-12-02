@@ -24,6 +24,7 @@
 │   │   │   │   └── monitor     # 监控模块配置
 │   │   │   └── before.ts       # 组件启动前置加载项管理
 │   │   ├── constants/          # 常量定义
+│   │   ├── entities/           # 实体对象结构定义
 │   │   ├── errors/             # 错误异常定义
 │   │   ├── models/             # 数据库存储模型定义
 │   │   ├── services/           # 业务方法
