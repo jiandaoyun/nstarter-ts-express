@@ -12,6 +12,7 @@
 * 规范变更
   - 由 nstater-core 的 BaseComponent 取代 AbstractComponent
   - 不在保留全局统一的 types 目录，而有各组件自行管理类型定义
+  - 定时任务不再按照 component + plugin 的方式管理，改为直接作为 service
 
 * 组件升级
   - 升级 nstarter-grpc -> 0.3.x 并基于上游插件管理 grpc 依赖

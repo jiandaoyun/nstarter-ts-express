@@ -35,11 +35,11 @@ import {
 } from './components';
 //#module rabbitmq
 import { startQueueConsumers } from 'nstarter-rabbitmq';
-import {
-    startQueueProducer,
-    loadQueueConsumers
-} from './services/queue.service';
+import { startQueueProducer, loadQueueConsumers } from './services/queue.service';
 //#endmodule rabbitmq
+//#module cron
+import { startCronJobs } from './services/cron.service';
+//#endmodule cron
 import { CommonUtils } from './utils';
 import { Consts } from './constants';
 
@@ -110,6 +110,15 @@ class AppManager {
     }
     //#endmodule rabbitmq
 
+    //#module cron
+    /**
+     * 定时任务
+     */
+    public static startCronJobs() {
+        startCronJobs();
+    }
+    //#endmodule cron
+
     //#module ws_server
     /**
      * Websocket 服务
@@ -170,6 +179,9 @@ if (require.main === module) {
     //#module rabbitmq
     AppManager.startQueueJobs();
     //#endmodule rabbitmq
+    //#module cron
+    AppManager.startCronJobs();
+    //#endmodule cron
     //#module monitor
     AppManager.startMonitorService();
     //#endmodule monitor

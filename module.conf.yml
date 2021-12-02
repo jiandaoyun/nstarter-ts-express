@@ -119,8 +119,7 @@ modules:
     type: components
     default: false
     files:
-      - src/components/cron.component.ts
-      - src/plugins/cron_jobs/**
+      - src/services/cron.service/**
     packages:
       - cron
       - '@types/cron'

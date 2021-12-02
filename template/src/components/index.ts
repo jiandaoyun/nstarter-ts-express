@@ -50,12 +50,6 @@ registerComponent(WsEmitterComponent);
 export const wsEmitter = getComponent<WsEmitterComponent>(WsEmitterComponent).emitter;
 //#endmodule ws_emitter
 
-//#module cron
-import { CronComponent } from './cron.component';
-registerComponent(CronComponent);
-export const cron = getComponent<CronComponent>(CronComponent);
-//#endmodule cron
-
 //#module i18n
 import { I18nComponent } from './i18n.component';
 registerComponent(I18nComponent);
