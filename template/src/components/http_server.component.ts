@@ -28,7 +28,7 @@ import { MonitorComponent } from './monitor.component';
 
 //#module web
 import { config } from '../config';
-import { router } from '../routes';
+import { router, securityMiddlewares } from '../routes';
 //#endmodule web
 
 @component()
@@ -96,7 +96,12 @@ export class HttpServerComponent extends BaseComponent {
         app.use(this._i18nComponent.i18n.middleware);
         //#endmodule i18n
 
+        // 安全处理
+        app.use(securityMiddlewares);
+
+        // 上下文管理
         app.use(ContextProvider.getMiddleware());
+
         // request log
         if (config.system.req_log.enabled) {
             app.use(RequestLogger.middleware);
