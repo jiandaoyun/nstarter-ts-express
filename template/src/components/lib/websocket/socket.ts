@@ -40,17 +40,18 @@ export class WebSocket {
             allowRequest: (req, callback) => {
                 const res = new ServerResponse(req) as Response;
                 async.auto<Dictionary<never>, Error>({
-                    // load cookies
+                    // 加载 cookies
                     cookie: (callback) => {
                         buildCookie(req as Request, res, callback as NextFunction);
                     },
-                    // load session
+                    // 加载 session
                     session: ['cookie', (results, callback ) => {
                         buildSession(req as Request, res, callback as NextFunction);
                     }]
                 }, (err) => callback(null, !err));
             },
-            adapter: createAdapter(redis, redis)
+            // subscribe 模式不能共享同一个 Redis 连接，使用独立连接实例
+            adapter: createAdapter(redis, redis.duplicate())
         });
 
         io.on('connection', async (socket) => {

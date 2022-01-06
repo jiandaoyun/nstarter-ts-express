@@ -50,7 +50,7 @@
     "nstarter-grpc": "0.3.6",
     "nstarter-metrics": "0.2.1",
     "nstarter-mongodb": "0.2.3",
-    "nstarter-rabbitmq": "0.4.1",
+    "nstarter-rabbitmq": "0.4.2",
     "pug": "3.0.2",
     "reflect-metadata": "0.1.13",
     "socket.io": "4.4.0",

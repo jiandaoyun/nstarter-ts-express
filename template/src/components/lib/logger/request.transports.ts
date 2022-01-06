@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import winston, { format } from 'winston';
 import Transport from 'winston-transport';
-import RotateFileTransport, {
-    DailyRotateFileTransportOptions
-} from 'winston-daily-rotate-file';
+import RotateFileTransport from 'winston-daily-rotate-file';
 //#module graylog
 import Graylog2Transport from 'winston-graylog2';
 //#endmodule graylog
@@ -33,7 +31,7 @@ if (consoleLogConf.enabled) {
 // file transport
 const { file: fileLogConf } = config.system.log;
 if (fileLogConf.enabled) {
-    const baseFileLogOptions: DailyRotateFileTransportOptions = {
+    const baseFileLogOptions = {
         dirname: fileLogConf.dir || './log/',
         datePattern: 'YYYY-MM-DD',
         zippedArchive: fileLogConf.zip || true,
