@@ -118,6 +118,9 @@ export class HttpServerComponent extends BaseComponent {
         app.use('/', router);
         //#endmodule web
         this._server = http.createServer(app);
+        // NOTICE: https://github.com/nodejs/node/issues/27363
+        this._server.keepAliveTimeout = 70_000;
+        this._server.headersTimeout = 71_000;
     }
 
     public get trustedProxy() {
