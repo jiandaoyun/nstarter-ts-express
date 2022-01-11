@@ -11,6 +11,7 @@ import path from 'path';
 export const pkg = JSON.parse(
     fs.readFileSync('./package.json', 'utf8')
 );
+pkg.version = _.trim(fs.readFileSync('./VERSION', 'utf-8'));
 
 const configFormat: Record<string, nconf.IFormat> = {
     yml: {
