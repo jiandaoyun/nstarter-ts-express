@@ -40,12 +40,12 @@ const errFilter = format((info) =>
 
 // console transport
 const { console: consoleLogConf } = config.system.log;
-if (consoleLogConf.enabled) {
+if (consoleLogConf?.enabled) {
     const formats = [
         format.timestamp(),
         formatter
     ];
-    if (config.system.log.console.colorize) {
+    if (consoleLogConf.colorize) {
         formats.unshift(winston.format.colorize());
     }
     formats.unshift(levelFormatter());
@@ -59,7 +59,7 @@ if (consoleLogConf.enabled) {
 
 // file transport
 const { file: fileLogConf } = config.system.log;
-if (fileLogConf.enabled) {
+if (fileLogConf?.enabled) {
     const baseFileLogOptions = {
         dirname: fileLogConf.dir || './log/',
         datePattern: 'YYYY-MM-DD',
@@ -96,7 +96,7 @@ if (fileLogConf.enabled) {
 //#module graylog
 // graylog transport
 const { graylog: graylogConf } = config.system.log;
-if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
+if (graylogConf?.enabled && !_.isEmpty(graylogConf.servers)) {
     defaultTransports.push(new Graylog2Transport({
         level: graylogConf.level,
         graylog: {
@@ -115,7 +115,7 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
 //#module sentry
 // sentry transport
 const { sentry: sentryConf } = config.system.log;
-if (sentryConf.enabled && sentryConf.dsn) {
+if (sentryConf?.enabled && sentryConf.dsn) {
     defaultTransports.push(new SentryTransport({
         level: sentryConf.level,
         dsn: sentryConf.dsn,

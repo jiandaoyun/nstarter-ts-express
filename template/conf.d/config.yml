@@ -46,6 +46,12 @@ system:
       servers:
         - host: localhost
           port: 12201
+    loki:
+      enabled: false
+      level: 'info'
+      host: 'http://127.0.0.1:3100'
+      interval: 5
+      batching: true
     sentry:
       enabled: false
       level: 'warn'
@@ -69,5 +75,7 @@ components:
     server:
       port: 9050
     clients:
-      - package: worker
+      - enable: true
+        package: worker
         address: localhost:9050
+        useSsl: false

@@ -57,6 +57,7 @@
     "winston": "3.3.3",
     "winston-daily-rotate-file": "4.5.5",
     "winston-graylog2": "2.1.2",
+    "winston-loki": "6.0.4",
     "winston-transport": "4.4.0"
   },
   "devDependencies": {
