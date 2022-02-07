@@ -50,6 +50,25 @@ interface IGraylogConf extends ILogConf {
 }
 //#endmodule graylog
 
+//#module loki
+interface ILokiConf extends ILogConf {
+    readonly host: string;
+
+    /**
+     * 日志发送时间间隔 (秒)
+     * @type integer
+     * @default 5
+     */
+    readonly interval?: number;
+
+    /**
+     * 是否批量发送日志
+     * @default true
+     */
+    readonly batching?: boolean;
+}
+//#endmodule loki
+
 //#module sentry
 interface ISentryConf extends ILogConf {
     readonly dsn: string;
@@ -67,6 +86,9 @@ export interface ISystemConf {
         //#module graylog
         readonly graylog: IGraylogConf,
         //#endmodule graylog
+        //#module loki
+        readonly loki?: ILokiConf,
+        //#endmodule loki
         //#module sentry
         readonly sentry: ISentryConf
         //#endmodule sentry

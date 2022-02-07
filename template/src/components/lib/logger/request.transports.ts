@@ -5,17 +5,20 @@ import RotateFileTransport from 'winston-daily-rotate-file';
 //#module graylog
 import Graylog2Transport from 'winston-graylog2';
 //#endmodule graylog
+//#module loki
+import LokiTransport from 'winston-loki';
+//#endmodule loki
 
 import { config } from '../../../config';
 import { Consts } from '../../../constants';
 
 export const requestTransports: Transport[] = [];
 
-// custom log formatter
+// 自定义日志格式化方法
 const formatter = format.printf((info) =>
     `${ info.timestamp } - [ACCESS] ${ info.message }`);
 
-// console transport
+// 控制台日志记录
 const { console: consoleLogConf } = config.system.log;
 if (consoleLogConf.enabled) {
     const formats = [
@@ -28,7 +31,7 @@ if (consoleLogConf.enabled) {
     }));
 }
 
-// file transport
+// 文件日志记录
 const { file: fileLogConf } = config.system.log;
 if (fileLogConf.enabled) {
     const baseFileLogOptions = {
@@ -53,7 +56,7 @@ if (fileLogConf.enabled) {
 }
 
 //#module graylog
-// graylog transport
+// Graylog 日志记录
 const { graylog: graylogConf } = config.system.log;
 if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
     requestTransports.push(new Graylog2Transport({
@@ -70,3 +73,30 @@ if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
     }) as Transport);
 }
 //#endmodule graylog
+
+//#module loki
+// Grafana Loki 日志记录
+const { loki: lokiConf } = config.system.log;
+if (lokiConf?.enabled) {
+    requestTransports.push(new LokiTransport({
+        level: lokiConf.level,
+        host: lokiConf.host,
+        batching: lokiConf.batching,
+        interval: lokiConf.interval,
+        clearOnError: true,
+        format: format((info) => {
+            info.labels = _.pick(info.metadata, [
+                // note: 可在此扩展其他跟踪属性
+                'path', 'status', 'method', 'ip', 'req_id', 'duration'
+            ]);
+            return info;
+        })(),
+        labels: {
+            logger: 'request',
+            env: config.env,
+            hostname: config.hostname,
+            version: config.version
+        }
+    }) as Transport);
+}
+//#endmodule loki
