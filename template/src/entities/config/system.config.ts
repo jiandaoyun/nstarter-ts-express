@@ -81,16 +81,16 @@ export interface ISystemConf {
     //#endmodule i18n
     readonly timezone: string;
     readonly log: {
-        readonly console: IConsoleLogConf,
-        readonly file: IFileLogConf,
+        readonly console?: IConsoleLogConf,
+        readonly file?: IFileLogConf,
         //#module graylog
-        readonly graylog: IGraylogConf,
+        readonly graylog?: IGraylogConf,
         //#endmodule graylog
         //#module loki
         readonly loki?: ILokiConf,
         //#endmodule loki
         //#module sentry
-        readonly sentry: ISentryConf
+        readonly sentry?: ISentryConf
         //#endmodule sentry
     };
     readonly req_log: {

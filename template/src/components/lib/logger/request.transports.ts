@@ -20,7 +20,7 @@ const formatter = format.printf((info) =>
 
 // 控制台日志记录
 const { console: consoleLogConf } = config.system.log;
-if (consoleLogConf.enabled) {
+if (consoleLogConf?.enabled) {
     const formats = [
         format.timestamp(),
         formatter
@@ -33,7 +33,7 @@ if (consoleLogConf.enabled) {
 
 // 文件日志记录
 const { file: fileLogConf } = config.system.log;
-if (fileLogConf.enabled) {
+if (fileLogConf?.enabled) {
     const baseFileLogOptions = {
         dirname: fileLogConf.dir || './log/',
         datePattern: 'YYYY-MM-DD',
@@ -58,7 +58,7 @@ if (fileLogConf.enabled) {
 //#module graylog
 // Graylog 日志记录
 const { graylog: graylogConf } = config.system.log;
-if (graylogConf.enabled && !_.isEmpty(graylogConf.servers)) {
+if (graylogConf?.enabled && !_.isEmpty(graylogConf.servers)) {
     requestTransports.push(new Graylog2Transport({
         level: graylogConf.level,
         graylog: {
