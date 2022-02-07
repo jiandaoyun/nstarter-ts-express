@@ -84,13 +84,18 @@ if (lokiConf?.enabled) {
         batching: lokiConf.batching,
         interval: lokiConf.interval,
         clearOnError: true,
-        format: format((info) => {
-            info.labels = _.pick(info.metadata, [
-                // note: 可在此扩展其他跟踪属性
-                'path', 'status', 'method', 'ip', 'req_id', 'duration'
-            ]);
-            return info;
-        })(),
+        // Loki 日志格式化处理
+        format: format.combine(
+            format((info) => {
+                info.labels = _.pick(info.metadata, [
+                    // note: 可在此扩展其他跟踪属性
+                    'path', 'status', 'method', 'ip', 'req_id', 'duration'
+                ]);
+                delete info.metadata;
+                return info;
+            })(),
+            format.json()
+        ),
         labels: {
             logger: 'request',
             env: config.env,
