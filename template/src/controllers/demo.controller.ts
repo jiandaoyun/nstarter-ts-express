@@ -5,6 +5,9 @@ import {
     //#module rabbitmq
     queueService,
     //#endmodule rabbitmq
+    //#module mongodb
+    userService,
+    //#endmodule mongodb
     pingService,
 } from '../services';
 
@@ -51,6 +54,45 @@ export class DemoController {
             'traceId': context?.traceId
         });
     }
+
+    //#module mongodb
+    /**
+     * 创建用户请求示例
+     * @param req
+     * @param res
+     */
+    public async doCreateUser(req: Request, res: Response) {
+        const { username } = req.body;
+        const user = await userService.userCreate({
+            username,
+            nickname: username,
+            password: 'paS8w0rd',
+            salt: 'demo'
+        });
+        return res.json({
+            user: {
+                username: user.username,
+                nickname: user.nickname
+            }
+        });
+    }
+
+    /**
+     * 查找用户请求示例
+     * @param req
+     * @param res
+     */
+    public async doFindUser(req: Request, res: Response) {
+        const { username } = req.body;
+        const user = await userService.findUserByUsername(username);
+        return res.json({
+            user: {
+                username: user.username,
+                nickname: user.nickname
+            }
+        });
+    }
+    //#endmodule mongodb
 
     //#module rabbitmq
     /**

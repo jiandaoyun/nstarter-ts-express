@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+* 新增 nstarter-cache 模块示例
+
 ## 1.0.1
 
 * 支持 grafana loki 日志记录请求日志
