@@ -50,7 +50,8 @@ export class WebSocket {
                     }]
                 }, (err) => callback(null, !err));
             },
-            adapter: createAdapter(redis, redis)
+            // subscribe 模式不能共享同一个 Redis 连接，使用独立连接实例
+            adapter: createAdapter(redis, redis.duplicate())
         });
 
         io.on('connection', async (socket) => {
