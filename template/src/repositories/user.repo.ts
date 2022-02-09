@@ -5,9 +5,10 @@ import { IUserModel } from './types';
 
 class UserRepo extends MongodbRepo {
     public async createOne(user: IUserModel) {
-        return userModel.create([user], {
+        const docs = await userModel.create([user], {
             session: this._session
         });
+        return docs[0].toObject<IUserModel>();
     }
 
     @profiler()

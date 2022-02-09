@@ -15,7 +15,7 @@ export const mongodb = mongodbComponent.db;
 import { RedisComponent } from './redis.component';
 registerComponent(RedisComponent);
 export const redisComponent = getComponent<RedisComponent>(RedisComponent);
-export const redis = redisComponent;
+export const redis = redisComponent.redis;
 //#endmodule redis
 
 //#module rabbitmq
