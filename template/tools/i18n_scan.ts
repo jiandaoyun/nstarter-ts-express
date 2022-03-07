@@ -108,7 +108,7 @@ class I18nScanner {
     }
 }
 
-if (module.parent) {
+if (require.main === module) {
     module.exports = I18nScanner;
 } else {
     async.auto({
