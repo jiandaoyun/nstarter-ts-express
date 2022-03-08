@@ -10,7 +10,9 @@ import { PongService } from './pong.service';
 //#module rabbitmq
 import { QueueService } from './queue.service';
 //#endmodule rabbitmq
+//#module mongodb
 import { UserService } from './user.service';
+//#endmodule mongodb
 
 //#module rabbitmq
 registerSvc(QueueService);
@@ -25,7 +27,9 @@ registerSvc(TaskHandlerService);
 registerSvc(TaskClientService);
 //#endmodule grpc_client
 
+//#module mongodb
 export const userService = getSvc<UserService>(UserService);
+//#endmodule mongodb
 export const pingService = getSvc<PingService>(PingService);
 export const pongService = getSvc<PongService>(PongService);
 //#module rabbitmq

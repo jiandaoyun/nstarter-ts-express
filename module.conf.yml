@@ -155,7 +155,7 @@ modules:
       - src/components/grpc_server.component.ts
       - src/components/lib/grpc/**
       - src/services/grpc.service/handler/**
-      - src/types/services/grpc/**
+      - src/services/grpc.service/types/**
       - resources/grpc/**
     packages:
       - nstarter-grpc
@@ -169,7 +169,7 @@ modules:
       - src/components/grpc_client.component.ts
       - src/components/lib/grpc/**
       - src/services/grpc.service/client/**
-      - src/types/services/grpc/**
+      - src/services/grpc.service/types/**
       - resources/grpc/**
     packages:
       - nstarter-grpc
