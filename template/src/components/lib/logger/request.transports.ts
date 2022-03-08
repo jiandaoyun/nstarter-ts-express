@@ -89,7 +89,7 @@ if (lokiConf?.enabled) {
             format((info) => {
                 info.labels = _.pick(info.metadata, [
                     // note: 可在此扩展其他跟踪属性
-                    'path', 'status', 'method', 'ip', 'req_id', 'duration'
+                    'path', 'status', 'method', 'ip', 'request_id', 'duration'
                 ]);
                 delete info.metadata;
                 return info;

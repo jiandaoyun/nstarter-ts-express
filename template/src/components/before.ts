@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Logger, RequestLogger, ContextProvider } from 'nstarter-core';
-import { defaultTransports, requestTransports } from './lib/logger';
+import { defaultTransports, reqMetaFormatter, requestTransports } from './lib/logger';
 import { Context } from '../context';
 //#module grpc_server|grpc_client
 import { initGrpcProtoPackages } from './lib/grpc';
@@ -17,6 +17,8 @@ export const beforeLoad = () => {
     _.forEach(requestTransports, (transport) => {
         RequestLogger.registerTransport(transport);
     });
+
+    RequestLogger.setMetaFormatter(reqMetaFormatter);
 
     //#module grpc_server|grpc_client
     // 加载 grpc proto buf 定义

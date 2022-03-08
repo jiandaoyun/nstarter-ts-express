@@ -1,4 +1,6 @@
+//#module mongodb
 import { mongodb } from '../src/components';
+//#endmodule mongodb
 
 describe('connectDB', () => {
     //#module mongodb

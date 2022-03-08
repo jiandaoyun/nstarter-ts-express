@@ -8,8 +8,6 @@ declare global {
                 t: i18next.TFunction
             },
             requestId: string;
-            userAgent: string;
-            originalPath: string | null;
             getLocale(): string,
             setLocale(locale: string): void
         }

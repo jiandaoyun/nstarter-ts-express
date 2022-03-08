@@ -10,9 +10,9 @@ import cookieParser from 'cookie-parser';
 
 import {
     component,
+    initRequestId,
     injectComponent,
     RequestLogger,
-    requestExtensionMiddleware,
     ContextProvider,
     BaseComponent
 } from 'nstarter-core';
@@ -91,7 +91,7 @@ export class HttpServerComponent extends BaseComponent {
             extended: false
         }));
         app.use(cookieParser());
-        app.use(requestExtensionMiddleware);
+        app.use(initRequestId());
         //#module i18n
         app.use(this._i18nComponent.i18n.middleware);
         //#endmodule i18n
@@ -100,11 +100,13 @@ export class HttpServerComponent extends BaseComponent {
         app.use(securityMiddlewares);
 
         // 上下文管理
-        app.use(ContextProvider.getMiddleware());
+        app.use(ContextProvider.getMiddleware({
+            idGenerator: (req) => req.requestId
+        }));
 
         // request log
         if (config.system.req_log.enabled) {
-            app.use(RequestLogger.middleware);
+            app.use(RequestLogger.getMiddleware());
         }
         //#module monitor
         app.use(this._monitorComponent.requestMonitorMiddleware);
