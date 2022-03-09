@@ -88,18 +88,24 @@ if (lokiConf?.enabled) {
         format: format.combine(
             format((info) => {
                 info.labels = _.pick(info.metadata, [
-                    // note: 可在此扩展其他跟踪属性
-                    'path', 'status', 'method', 'ip', 'request_id', 'duration'
+                    'status', 'method'
                 ]);
+                // note: 对于离散动态属性，通过不同属性存储以避免跟踪性能问题
+                info.hostname = config.hostname;
+                const meta = _.pick(info.metadata, [
+                    // note: 可在此扩展其他跟踪属性
+                    'path', 'ip', 'request_id', 'duration'
+                ]);
+                _.extend(info, meta);
                 delete info.metadata;
                 return info;
             })(),
             format.json()
         ),
         labels: {
+            service: 'ns-app',
             logger: 'request',
             env: config.env,
-            hostname: config.hostname,
             version: config.version
         }
     }) as Transport);
