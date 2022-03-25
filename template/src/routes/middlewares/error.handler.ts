@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 
 export class ErrorHandler {
     public static viewErrorHandler: ErrorRequestHandler = ((err, req, res, next) => {
-        if (err && !err.isCustomError) {
+        if (err && !err.isNsError) {
             return res.status(httpStatus.BAD_REQUEST).end();
         }
         return res.status(httpStatus.BAD_REQUEST).render('error', {
@@ -13,7 +13,7 @@ export class ErrorHandler {
     });
 
     public static requestErrorHandler: ErrorRequestHandler = ((err, req, res, next) => {
-        if (err && !err.isCustomError) {
+        if (err && !err.isNsError) {
             return res.status(httpStatus.BAD_REQUEST).end();
         }
         return res.status(httpStatus.BAD_REQUEST).json({
