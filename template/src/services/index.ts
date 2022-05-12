@@ -17,7 +17,9 @@ import { UserService } from './user.service';
 //#module rabbitmq
 registerSvc(QueueService);
 //#endmodule rabbitmq
+//#module mongodb
 registerSvc(UserService);
+//#endmodule mongodb
 registerSvc(PingService);
 registerSvc(PongService);
 //#module grpc_server
