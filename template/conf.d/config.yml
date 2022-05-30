@@ -79,3 +79,6 @@ components:
         package: worker
         address: localhost:9050
         useSsl: false
+
+includes:
+  - ./conf.d/config.includes.yml

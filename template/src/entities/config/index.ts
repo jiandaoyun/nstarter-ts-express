@@ -13,6 +13,7 @@ export class Config extends AbstractEntity {
     hostname: string;
     version: string;
     home_path: string;
+    includes?: string[];
 
     server: IServerConf;
     storage: IStorageConf;
