@@ -3,7 +3,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { RunEnv } from 'nstarter-core';
-import { ConfigLoader } from 'nstarter-config';
+import { ConfigLoader, ConfigLoadEvents } from 'nstarter-config';
 import { Config } from './entities/config';
 import './schema';
 
@@ -11,7 +11,7 @@ const homePath = os.homedir();
 const version = _.trim(fs.readFileSync('./VERSION', 'utf-8'));
 const runEnv = RunEnv[process.env.NODE_ENV as keyof typeof RunEnv] || RunEnv.develop;
 
-export const config = new ConfigLoader<Config>(Config, {
+const loader = new ConfigLoader<Config>(Config, {
     files: [
         // 加载本地可选配置文件 (最高优先级)
         path.join(homePath, '.ns-app/config'),
@@ -26,4 +26,10 @@ export const config = new ConfigLoader<Config>(Config, {
         version,
         home_path: homePath,
     }
-}).getConfig();
+});
+
+loader.on(ConfigLoadEvents.init_failed, (err: Error) => {
+    process.exit(1);
+});
+
+export const config = loader.initialize().getConfig();
