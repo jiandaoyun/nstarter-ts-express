@@ -43,6 +43,7 @@
     "nocache": "3.0.1",
     "nstarter-apm": "0.2.1",
     "nstarter-cache": "0.1.1",
+    "nstarter-config": "0.1.0",
     "nstarter-core": "0.5.6",
     "nstarter-entity": "0.2.4",
     "nstarter-grpc": "0.3.6",
