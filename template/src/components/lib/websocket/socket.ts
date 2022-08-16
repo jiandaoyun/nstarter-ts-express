@@ -1,6 +1,7 @@
 import _, { Dictionary } from 'lodash';
 import { Server, ServerResponse } from 'http';
 import async from 'async';
+import { IRedis } from 'nstarter-redis';
 import SocketIO from 'socket.io';
 import { createAdapter } from '@socket.io/redis-adapter';
 import cookieParser from 'cookie-parser';
@@ -12,12 +13,11 @@ import { Logger } from 'nstarter-core';
 import { config } from '../../../config';
 
 import { channels } from './channels';
-import { Redis } from 'ioredis';
 
 const RedisStore = connectRedis(session);
 
 export class WebSocket {
-    public static createServer(redis: Redis, server: Server): SocketIO.Server {
+    public static createServer(redis: IRedis, server: Server): SocketIO.Server {
         const buildCookie = cookieParser(config.server.cookie.secret);
         const buildSession = session(_.extend(
             config.server.session,
