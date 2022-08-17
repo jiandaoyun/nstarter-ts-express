@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+* 使用 nstarter-redis 替代redis连接管理
+
 ## 1.1.1
 
 * 使用 nstarter-config 替代内部配置管理
