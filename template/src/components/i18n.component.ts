@@ -10,9 +10,11 @@ export class I18nComponent extends BaseComponent {
     constructor() {
         super();
         this._i18n = new I18n();
-        this._i18n.init().then(() => {
-            this.setReady(true);
-        });
+    }
+
+    public async init() {
+        await this.i18n.init();
+        this.setReady(true);
     }
 
     public get i18n() {

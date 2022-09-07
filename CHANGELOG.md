@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+* 升级 nstarter-core -> 0.6.0
+  * 支持组件异步初始化显式调度
+
 ## 1.1.2
 
 * 使用 nstarter-redis 替代redis连接管理

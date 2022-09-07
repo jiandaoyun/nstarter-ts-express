@@ -3,7 +3,7 @@ import { Logger, RequestLogger, ContextProvider } from 'nstarter-core';
 import { defaultTransports, reqMetaFormatter, requestTransports } from './lib/logger';
 import { Context } from '../context';
 //#module grpc_server|grpc_client
-import { initGrpcProtoPackages } from './lib/grpc';
+import { loadProtoPackage } from 'nstarter-grpc';
 //#endmodule grpc_server|grpc_client
 
 export const beforeLoad = () => {
@@ -22,6 +22,9 @@ export const beforeLoad = () => {
 
     //#module grpc_server|grpc_client
     // 加载 grpc proto buf 定义
-    initGrpcProtoPackages();
+    loadProtoPackage({
+        protoPath: './resources/grpc/worker.proto',
+        package: 'worker'
+    });
     //#endmodule grpc_server|grpc_client
 };

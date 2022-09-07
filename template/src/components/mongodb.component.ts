@@ -11,9 +11,11 @@ export class MongodbComponent extends BaseComponent {
         super();
         this._db = new MongodbConnector(config.storage.mongodb, this._name);
         this._db.setAsDefault();
-        this._db.connect().then(() => {
-            this.setReady(true);
-        });
+    }
+
+    public async init() {
+        await this._db.connect();
+        this.setReady(true);
     }
 
     public get db() {
@@ -25,7 +27,7 @@ export class MongodbComponent extends BaseComponent {
     }
 
     public async shutdown() {
+        await super.shutdown();
         await this._db.connection.close();
-        this.setReady(false);
     }
 }

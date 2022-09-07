@@ -6,12 +6,8 @@ import { config } from '../config';
 @component()
 export class GrpcServerComponent extends BaseComponent {
 
-    constructor() {
-        super();
-        this.setReady(true);
-    }
-
-    public async start() {
+    public async init() {
         await startGrpcServer(config.components.grpc.server);
+        this.setReady(true);
     }
 }

@@ -49,6 +49,15 @@ process.on('uncaughtException', (err) => {
 });
 
 class AppManager {
+    /**
+     * 初始化基础组件
+     */
+    public static async startBaseComponents() {
+        //#module mongodb
+        await mongodbComponent.init();
+        //#endmodule mongodb
+    }
+
     //#module web
     /**
      * Web 服务
@@ -79,7 +88,7 @@ class AppManager {
      */
     public static startGrpc() {
         const { port } = config.components.grpc.server;
-        grpcServer.start().then();
+        grpcServer.init().then();
         Logger.info(`Grpc service listening on：${ port }`);
     }
     //#endmodule grpc_server
@@ -169,30 +178,37 @@ class AppManager {
             await AppManager.gracefulShutdown();
         });
     }
+
+    public static async start() {
+        //#module apm
+        apm.isStarted();
+        apmConnector.setApmAgent(apm);
+        //#endmodule apm
+
+        await AppManager.startBaseComponents();
+
+        //#module rabbitmq
+        AppManager.startQueueJobs();
+        //#endmodule rabbitmq
+        //#module cron
+        AppManager.startCronJobs();
+        //#endmodule cron
+        //#module monitor
+        AppManager.startMonitorService();
+        //#endmodule monitor
+        //#module web
+        AppManager.startWebService();
+        //#endmodule web
+        //#module ws_server
+        AppManager.startWebsocketService();
+        //#endmodule ws_server
+        AppManager.listenShutdownEvent();
+        //#module grpc_server
+        AppManager.startGrpc();
+        //#endmodule grpc_server
+    }
 }
 
 if (require.main === module) {
-    //#module apm
-    apm.isStarted();
-    apmConnector.setApmAgent(apm);
-    //#endmodule apm
-    //#module rabbitmq
-    AppManager.startQueueJobs();
-    //#endmodule rabbitmq
-    //#module cron
-    AppManager.startCronJobs();
-    //#endmodule cron
-    //#module monitor
-    AppManager.startMonitorService();
-    //#endmodule monitor
-    //#module web
-    AppManager.startWebService();
-    //#endmodule web
-    //#module ws_server
-    AppManager.startWebsocketService();
-    //#endmodule ws_server
-    AppManager.listenShutdownEvent();
-    //#module grpc_server
-    AppManager.startGrpc();
-    //#endmodule grpc_server
+    AppManager.start().then();
 }
