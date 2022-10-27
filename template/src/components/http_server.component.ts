@@ -29,6 +29,7 @@ import { MonitorComponent } from './monitor.component';
 //#module web
 import { config } from '../config';
 import { router, securityMiddlewares } from '../routes';
+import { ErrorHandler } from '../routes/middlewares/error.handler';
 //#endmodule web
 
 @component()
@@ -118,6 +119,8 @@ export class HttpServerComponent extends BaseComponent {
         //#endmodule monitor
 
         app.use('/', router);
+        app.use(ErrorHandler.defaultErrorHandler);
+
         //#endmodule web
         this._server = http.createServer(app);
         // NOTICE: https://github.com/nodejs/node/issues/27363

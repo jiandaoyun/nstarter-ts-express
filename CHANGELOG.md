@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+* 支持请求 body 过 & 非法 json 的异常处理
+
 ## 1.2.0
 
 * 升级 nstarter-core -> 0.6.0
