@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0
+
+* 升级 nstarter 框架
+
+### Breaking
+* 升级 Node.js 版本要求 >= 18.12.0
+* 升级 typescript -> 4.9.5
+* 升级其他基础包
+
 ## 1.2.1
 
 * 支持请求 body 过 & 非法 json 的异常处理
