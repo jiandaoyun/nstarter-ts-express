@@ -100,7 +100,11 @@ export class I18n {
     public t(key: string, locale?: string, options?: TOptions): string {
         const targetLocale = locale || config.system.locale;
         const translator = this._getTranslator(targetLocale);
-        return translator(key, options);
+        if (options) {
+            return translator(key, options);
+        } else {
+            return translator(key);
+        }
     }
 
     public get middleware(): RequestHandler {

@@ -1,4 +1,4 @@
-ARG NODE_IMAGE=node:14.18.1-alpine
+ARG NODE_IMAGE=node:18.13.0-alpine
 
 # 构建环境容器
 FROM ${NODE_IMAGE} as build

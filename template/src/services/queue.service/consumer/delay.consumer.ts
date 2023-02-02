@@ -9,7 +9,7 @@ import { delayQueue } from '../queue';
  */
 export const delayConsumer = queueConsumerFactory(delayQueue, {
     run: async (message: IQueueMessage<string>): Promise<void> => {
-        const pushStamp = _.get(message, 'properties.headers.x-p-timestamp');
+        const pushStamp = _.get(message, 'properties.headers.x-p-timestamp') as number;
         Logger.info(`${ message.content }, delay: ${ Date.now() - pushStamp }(ms)`);
     }
 });

@@ -1,16 +1,16 @@
 import _ from 'lodash';
 import Transport, { TransportStreamOptions } from 'winston-transport';
-import { init, Severity, NodeOptions, withScope, captureException, captureMessage } from '@sentry/node';
+import { init, SeverityLevel, NodeOptions, withScope, captureException, captureMessage } from '@sentry/node';
 import { LEVEL } from 'triple-beam';
 import { config } from '../../../../config';
 
 interface SentryTransportOptions extends TransportStreamOptions, NodeOptions {}
 
-const sentryLevelMap: Record<string, Severity> = {
-    debug: Severity.Debug,
-    info: Severity.Info,
-    warn: Severity.Warning,
-    error: Severity.Error
+const sentryLevelMap: Record<string, SeverityLevel> = {
+    debug: 'debug',
+    info: 'info',
+    warn: 'warning',
+    error: 'error'
 };
 
 export class SentryTransport extends Transport {
@@ -37,10 +37,10 @@ export class SentryTransport extends Transport {
         setImmediate(() => {
             this.emit('logged', info);
         });
-        const level = _.get(sentryLevelMap, info[LEVEL], Severity.Error);
+        const level = _.get(sentryLevelMap, info[LEVEL], 'error');
         // @see https://github.com/winstonjs/winston#streams-objectmode-and-info-objects
         if (info.error) {
-            // error info
+            // error info：
             withScope((scope) => {
                 scope.setLevel(level);
                 captureException(info.error);
