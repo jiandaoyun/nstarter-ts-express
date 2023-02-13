@@ -15,7 +15,7 @@ export class WsServerComponent extends BaseComponent {
     @injectComponent()
     private _httpServerComponent: HttpServerComponent;
 
-    public start() {
+    public async init() {
         if (!this._server) {
             const redis = this._redisComponent.redis,
                 httpServer = this._httpServerComponent.server;

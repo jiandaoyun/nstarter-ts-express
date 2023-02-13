@@ -9,7 +9,7 @@ export const cronJobs = [
 /**
  * 启动定时任务
  */
-export const startCronJobs = () => {
+export const startCronJobs = async () => {
     _.forEach(cronJobs, (cronJob: BaseCronJob) => {
         if (!cronJob.isAutoStart) {
             cronJob.job.start();

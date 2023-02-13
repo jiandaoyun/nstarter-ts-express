@@ -1,5 +1,5 @@
-import { BaseComponent, component } from 'nstarter-core';
-import { startGrpcServer } from 'nstarter-grpc';
+import { BaseComponent, component, Logger } from 'nstarter-core';
+import { startGrpcServer, stopGrpcServer } from 'nstarter-grpc';
 import { config } from '../config';
 
 
@@ -7,7 +7,13 @@ import { config } from '../config';
 export class GrpcServerComponent extends BaseComponent {
 
     public async init() {
+        const { port } = config.components.grpc.server;
         await startGrpcServer(config.components.grpc.server);
         this.setReady(true);
+        Logger.info(`Grpc service listening on：${ port }`);
+    }
+
+    public async shutdown() {
+        await stopGrpcServer();
     }
 }

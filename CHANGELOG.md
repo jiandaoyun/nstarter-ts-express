@@ -1,8 +1,18 @@
 # Changelog
 
-## 0.2.0
+## 2.0.0
 
 * 升级 nstarter 框架
+* 基础组件包升级
+  - nstarter-apm -> 0.3.0
+  - nstarter-cache -> 0.2.0
+  - nstarter-config -> 0.2.0
+  - nstarter-core -> 1.0.0
+  - nstarter-entity -> 0.3.0
+  - nstarter-metrics -> 0.3.0
+  - nstarter-mongodb -> 0.3.0
+  - nstarter-rabbitmq -> 0.6.0
+* 基于 components 的 init 方法统一并简化组件初始化调度
 
 ### Breaking
 * 升级 Node.js 版本要求 >= 18.12.0
