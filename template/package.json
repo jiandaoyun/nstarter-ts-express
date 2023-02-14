@@ -49,7 +49,7 @@
     "nstarter-metrics": "0.3.0",
     "nstarter-mongodb": "0.3.0",
     "nstarter-rabbitmq": "0.6.1",
-    "nstarter-redis": "0.0.2",
+    "nstarter-redis": "0.2.0",
     "nstarter-utils": "0.1.1",
     "pug": "3.0.2",
     "reflect-metadata": "0.1.13",
