@@ -40,7 +40,7 @@ export class SentryTransport extends Transport {
         const level = _.get(sentryLevelMap, info[LEVEL], 'error');
         // @see https://github.com/winstonjs/winston#streams-objectmode-and-info-objects
         if (info.error) {
-            // error info：
+            // error info
             withScope((scope) => {
                 scope.setLevel(level);
                 captureException(info.error);
