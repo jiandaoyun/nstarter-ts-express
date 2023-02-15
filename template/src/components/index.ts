@@ -41,7 +41,6 @@ export const grpcClient = getComponent<GrpcClientComponent>(GrpcClientComponent)
 import { WsServerComponent } from './ws_server.component';
 registerComponent(WsServerComponent);
 export const wsServerComponent = getComponent<WsServerComponent>(WsServerComponent);
-export const wsServer = wsServerComponent;
 //#endmodule ws_server
 
 //#module ws_emitter
@@ -66,7 +65,4 @@ export const monitor = monitorComponent.monitor;
 import { HttpServerComponent } from './http_server.component';
 registerComponent(HttpServerComponent);
 export const httpServerComponent = getComponent<HttpServerComponent>(HttpServerComponent);
-export const httpServer = httpServerComponent.server;
-//#module monitor
-export const monitorServer = httpServerComponent.monitor;
 //#endmodule monitor

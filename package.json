@@ -1,6 +1,6 @@
 {
     "name": "nstarter-ts-express",
-    "version": "1.2.1",
+    "version": "2.0.0",
     "description": "基于 express 框架的 nstarter 模板工程",
     "repository": {
         "type": "git",

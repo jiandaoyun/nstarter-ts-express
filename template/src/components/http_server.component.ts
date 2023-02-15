@@ -14,7 +14,8 @@ import {
     injectComponent,
     RequestLogger,
     ContextProvider,
-    BaseComponent
+    BaseComponent,
+    Logger
 } from 'nstarter-core';
 //#module redis
 import { RedisComponent } from './redis.component';
@@ -150,7 +151,30 @@ export class HttpServerComponent extends BaseComponent {
     }
     //#endmodule monitor
 
+    public async init() {
+        const port = config.server.http.port;
+        this._server.listen(port);
+        this._server.on('error', (err) => {
+            Logger.error(err);
+            process.exit(1);
+        });
+        this._server.on('listening', () => {
+            Logger.info(`App requests listening on：${ port }`);
+        });
+        //#module monitor
+        // 监控统计服务
+        const monitorPort = config.system.monitor.port;
+        if (monitorPort) {
+            this._monitor.listen(monitorPort);
+            this._monitor.on('listening', () => {
+                Logger.info(`Monitor requests listening on：${ monitorPort }`);
+            });
+        }
+        //#endmodule monitor
+    }
+
     public async shutdown() {
+        Logger.info('web server shutting down');
         this._server.close();
     }
 }

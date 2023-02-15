@@ -4,20 +4,14 @@ import './schema';
 import { apmConnector } from 'nstarter-apm';
 import { apm } from './apm';
 //#endmodule apm
-import { config } from './config';
 import {
     //#module mongodb
     mongodbComponent,
     //#endmodule mongodb
     //#module web
-    httpServer,
     httpServerComponent,
     //#endmodule web
-    //#module monitor
-    monitorServer,
-    //#endmodule monitor
     //#module ws_server
-    wsServer,
     wsServerComponent,
     //#endmodule ws_server
     //#module rabbitmq
@@ -30,8 +24,11 @@ import {
     monitorComponent,
     //#endmodule monitor
     //#module grpc_server
-    grpcServer
+    grpcServer,
     //#endmodule grpc_server
+    //#module i18n
+    i18n
+    //#endmodule i18n
 } from './components';
 //#module rabbitmq
 import { startQueueConsumers } from 'nstarter-rabbitmq';
@@ -49,93 +46,17 @@ process.on('uncaughtException', (err) => {
 });
 
 class AppManager {
-    /**
-     * 初始化基础组件
-     */
-    public static async startBaseComponents() {
-        //#module mongodb
-        await mongodbComponent.init();
-        //#endmodule mongodb
-    }
-
-    //#module web
-    /**
-     * Web 服务
-     */
-    public static startWebService () {
-        const port = config.server.http.port;
-        httpServer.listen(port);
-        httpServer.on('error', (err) => {
-            Logger.error(err);
-            process.exit(1);
-        });
-        httpServer.on('listening', () => {
-            Logger.info(`App requests listening on：${ port }`);
-        });
-
-        process.on('SIGTERM', () => {
-            setTimeout(() => {
-                Logger.info('calling server close');
-                process.exit(0);
-            }, 5000);
-        });
-    }
-    //#endmodule web
-
-    //#module grpc_server
-    /**
-     * Grpc 服务端
-     */
-    public static startGrpc() {
-        const { port } = config.components.grpc.server;
-        grpcServer.init().then();
-        Logger.info(`Grpc service listening on：${ port }`);
-    }
-    //#endmodule grpc_server
-
-    //#module monitor
-    /**
-     * 监控统计服务
-     */
-    public static startMonitorService() {
-        const monitorPort = config.system.monitor.port;
-        if (monitorPort) {
-            monitorServer.listen(monitorPort);
-            monitorServer.on('listening', () => {
-                Logger.info(`Monitor requests listening on：${ monitorPort }`);
-            });
-        }
-    }
-    //#endmodule monitor
-
     //#module rabbitmq
     /**
      * 队列服务
      */
-    public static startQueueJobs() {
-        startQueueProducer().then();
+    public static async startQueueJobs() {
+        await rabbitMqComponent.init();
         loadQueueConsumers();
-        startQueueConsumers().then();
+        await startQueueConsumers();
+        await startQueueProducer();
     }
     //#endmodule rabbitmq
-
-    //#module cron
-    /**
-     * 定时任务
-     */
-    public static startCronJobs() {
-        startCronJobs();
-    }
-    //#endmodule cron
-
-    //#module ws_server
-    /**
-     * Websocket 服务
-     */
-    public static startWebsocketService() {
-        wsServer.start();
-    }
-    //#endmodule ws_server
 
     /**
      * 安全关闭服务
@@ -154,6 +75,9 @@ class AppManager {
             //#module ws_server
             await wsServerComponent.shutdown();
             //#endmodule ws_server
+            //#module grpc_server
+            await grpcServer.shutdown();
+            //#endmodule grpc_server
             //#module rabbitmq
             await rabbitMqComponent.shutdown();
             //#endmodule rabbitmq
@@ -185,27 +109,35 @@ class AppManager {
         apmConnector.setApmAgent(apm);
         //#endmodule apm
 
-        await AppManager.startBaseComponents();
+        // 基础组件
+        //#module mongodb
+        await mongodbComponent.init();
+        //#endmodule mongodb
+        //#module i18n
+        await i18n.init();
+        //#endmodule i18n
 
+        // 任务调度
         //#module rabbitmq
-        AppManager.startQueueJobs();
+        await AppManager.startQueueJobs();
         //#endmodule rabbitmq
         //#module cron
-        AppManager.startCronJobs();
+        await startCronJobs();
         //#endmodule cron
-        //#module monitor
-        AppManager.startMonitorService();
-        //#endmodule monitor
+
+        // 网络服务
         //#module web
-        AppManager.startWebService();
+        await httpServerComponent.init();
         //#endmodule web
         //#module ws_server
-        AppManager.startWebsocketService();
+        await wsServerComponent.init();
         //#endmodule ws_server
-        AppManager.listenShutdownEvent();
         //#module grpc_server
-        AppManager.startGrpc();
+        await grpcServer.init();
         //#endmodule grpc_server
+
+        // 监听关闭事件
+        AppManager.listenShutdownEvent();
     }
 }
 

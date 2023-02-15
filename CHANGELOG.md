@@ -1,5 +1,64 @@
 # Changelog
 
+## 2.0.0
+
+* 规范变更
+  - 基于 components 的 init 方法简化组件初始化调度
+
+* 基础环境升级
+  - 升级 node.js -> 18.12.x +
+  - 升级 typescript -> 4.9.x
+
+* 框架组件升级
+  - 升级 nstarter-core -> 1.0.0
+  - 升级 nstarter-apm -> 0.3.0
+  - 升级 nstarter-cache -> 0.2.0
+  - 升级 nstarter-config -> 0.2.0
+  - 升级 nstarter-entity -> 0.3.0
+  - 升级 nstarter-metrics -> 0.3.0
+    - ajv v6 -> v8
+    - 升级 nstarter-cache -> 0.2.0
+  - 升级 nstarter-mongodb -> 0.3.0
+  - 升级 nstarter-redis -> 0.2.x
+    - 移除 Connector 对外层服务的 name 管理行为
+    - 新增 lazyConnect 模式，支持手动调度异步初始化
+    - Connector 连接实例的泛型定义转由 getClient 方法控制
+    - 移除事件中的附加消息抛出
+  - 升级 nstarter-rabbitmq -> 0.6.0
+
+* 第三方组件升级
+  - @sentry/node -> 7.34.0
+  - @socket.io/redis-adapter -> 8.0.1
+  - @socket.io/redis-emitter -> 5.1.0
+  - async -> 3.2.4
+  - axios -> 1.3.0
+  - connect-redis -> 6.1.3
+  - cron -> 2.2.0
+  - express -> 4.18.2
+  - express-session -> 1.17.3
+  - helmet -> 6.0.1
+  - http-status -> 1.6.2
+  - i18next -> 22.4.9
+  - i18next-conv -> 13.1.0
+  - moment -> 2.29.4
+  - moment-timezone -> 0.5.40
+  - mongoose -> 6.9.1
+  - nocache -> 3.0.4
+  - socket.io -> 4.5.4
+  - winston -> 3.8.2
+  - winston-daily-rotate-file -> 4.7.1
+  - winston-loki -> 6.0.6
+  - winston-transport -> 4.5.0
+
+* 工具升级
+  - 升级 nstarter-circular -> 0.3.x
+  - 升级 rimraf -> 4.1.2
+  - 升级 ts-node -> 10.9.1
+  - 升级 i18next-scanner -> 4.1.1
+  - 升级 eslint -> 8.33.0
+  - 升级 eslint-config-nstarter -> 3.0.0
+
+
 ## 1.2.1
 
 * 支持请求 body 过 & 非法 json 的异常处理

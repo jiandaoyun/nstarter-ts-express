@@ -8,7 +8,7 @@ import { Consts } from '../../../../constants';
 class MessageChannel extends BaseChannel {
     public async connect(socket: Socket) {
         const session = (socket.request as Request).session;
-        const user = _.get(session, 'user');
+        const user = _.get(session, 'user') as any;
         if (!user) {
             return;
         }

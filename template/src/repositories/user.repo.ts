@@ -12,7 +12,7 @@ class UserRepo extends MongodbRepo {
     }
 
     @profiler()
-    public async findOneByUsername(username: string) {
+    public async findOneByUsername(username: string): Promise<IUserModel> {
         return userModel.findOne({ username }).setOptions({
             session: this._session
         }).lean(true);

@@ -9,15 +9,15 @@ export class RabbitMqComponent extends BaseComponent {
 
     constructor() {
         super();
-        this._amqp = new AmqpConnector(config.components.rabbitmq, (err: Error) => {
-            Logger.error(`Rabbitmq disconnected`, { err });
-        });
-        if (this._amqp.connection.isConnected()) {
+        this._amqp = new AmqpConnector(config.components.rabbitmq);
+    }
+
+    public async init() {
+        try {
+            await this._amqp.connect();
             this.setReady(true);
-        } else {
-            this._amqp.connection.once('connect', () => {
-                this.setReady(true);
-            });
+        } catch (err) {
+            Logger.error(`Rabbitmq connection failed`, { err });
         }
     }
 
